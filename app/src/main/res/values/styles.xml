@@ -1,0 +1,43 @@
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <!-- Base application theme. -->
+
+    <style name="AppTheme1" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorAccent</item>
+        <item name="android:windowFullscreen">false</item>
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+        <item name="android:statusBarColor" tools:targetApi="lollipop">#54CD98</item>
+    </style>
+
+    <style name="AppBarTextStyle" parent="@android:style/TextAppearance.Widget.TextView">
+        <item name="text_color">@color/white</item>
+        <item name="text_size">@dimen/sp20</item>
+        <item name="fontFamily">@font/roboto_medium</item>
+    </style>
+
+    <style name="App_EditTextStyle" parent="@android:style/Widget.EditText">
+        <item name="android:textColor">@color/black</item>
+        <item name="android:textColorHint">@color/light_grey</item>
+        <item name="android:textSize">@dimen/sp16</item>
+        <item name="fontFamily">@font/roboto_regular</item>
+        <item name="android:drawablePadding">@dimen/dp10</item>
+        <item name="android:background">@drawable/btm_line_shape</item>
+        <item name="android:padding">@dimen/dp10</item>
+        <item name="android:singleLine">true</item>
+        <item name="android:maxLines">1</item>
+    </style>
+
+    <style name="App_active_button" parent="@android:style/TextAppearance.Widget.TextView">
+        <item name="android:textColor">@color/white</item>
+        <item name="android:textSize">@dimen/sp16</item>
+        <item name="fontFamily">@font/roboto_regular</item>
+        <item name="android:background">@drawable/green_rounded_bg</item>
+        <item name="android:paddingTop">@dimen/dp10</item>
+        <item name="android:paddingBottom">@dimen/dp10</item>
+        <item name="android:gravity">center|center_vertical</item>
+        <item name="android:layout_gravity">center|center_vertical</item>
+    </style>
+
+</resources>

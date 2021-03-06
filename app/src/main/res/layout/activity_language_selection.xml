@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <LinearLayout
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:background="@drawable/main_bg"
+        tools:context=".activity.LanguageSelectionActivity">
+
+        <LinearLayout
+            android:gravity="center"
+            android:layout_gravity="center"
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1">
+
+            <ImageView
+                android:src="@mipmap/ic_launcher"
+                android:layout_width="@dimen/dp200"
+                android:layout_height="@dimen/dp150"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:gravity="center"
+            android:layout_marginRight="@dimen/dp25"
+            android:layout_marginLeft="@dimen/dp25"
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="2">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/tvTitle"
+                android:text="@string/select_your_language"
+                android:textColor="@color/black"
+                android:textSize="16sp"
+                android:layout_gravity="center"
+                android:gravity="center"
+                app:custom_fonts="@string/Roboto_Medium">
+            </TextView>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dp70"
+                android:id="@+id/tvEnglish"
+                android:text="@string/english"
+                android:textColor="@color/white"
+                android:textSize="@dimen/sp16"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:textAllCaps="true"
+                android:layout_marginTop="@dimen/dp15"
+                android:background="@drawable/green_round_shadow"
+                app:custom_fonts="@string/Roboto_Medium">
+            </TextView>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dp70"
+                android:id="@+id/tvHindi"
+                android:text="@string/hindi"
+                android:textColor="@color/white"
+                android:textSize="@dimen/sp16"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:textAllCaps="true"
+                android:background="@drawable/black_round_shadow"
+                app:custom_fonts="@string/Roboto_Medium">
+            </TextView>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dp70"
+                android:id="@+id/tvGujarati"
+                android:text="@string/gujarati"
+                android:textColor="@color/white"
+                android:textSize="@dimen/sp16"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:textAllCaps="true"
+                android:background="@drawable/green_round_shadow"
+                app:custom_fonts="@string/Roboto_Medium">
+            </TextView>
+        </LinearLayout>
+    </LinearLayout>
+</layout>

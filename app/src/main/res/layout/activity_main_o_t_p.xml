@@ -1,0 +1,224 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/splash_bg"
+        tools:context=".activity.LoginByOTPActivity">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/top_constraint"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/green"
+            android:paddingTop="@dimen/dp15"
+            android:paddingBottom="@dimen/dp15"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <ImageView
+                android:id="@+id/ivBack"
+                android:layout_width="@dimen/dp25"
+                android:layout_height="@dimen/dp25"
+                android:layout_marginLeft="@dimen/dp10"
+                android:src="@drawable/ic_back_arrow"
+                android:tint="@color/white"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                style="@style/AppBarTextStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/dp20"
+                android:text="@string/verify_number"
+                android:textColor="@color/white"
+                android:textSize="@dimen/sp18"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintLeft_toRightOf="@id/ivBack"
+                app:layout_constraintTop_toTopOf="parent" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/white_botton_rounded"
+            android:paddingStart="@dimen/dp20"
+            android:paddingLeft="@dimen/dp20"
+            android:paddingTop="@dimen/dp20"
+            android:paddingEnd="@dimen/dp20"
+            android:paddingRight="@dimen/dp20"
+            android:paddingBottom="@dimen/dp50"
+            app:layout_constraintTop_toBottomOf="@+id/top_constraint">
+
+            <TextView
+                android:id="@+id/tvTop"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/roboto_medium"
+                android:text="@string/verify_your_number"
+                android:textColor="@color/black"
+                android:textSize="@dimen/sp25"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:layout_marginTop="@dimen/dp5"
+                android:id="@+id/tvcontinue"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/roboto_regular"
+                android:text="@string/we_have_sent_otp_on_your_mobile_number"
+                android:textColor="@color/grey"
+                android:textSize="@dimen/sp17"
+                app:layout_constraintTop_toBottomOf="@id/tvTop" />
+
+            <TextView
+                android:layout_marginTop="@dimen/dp5"
+                android:id="@+id/tvmobile"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/roboto_regular"
+                android:text="69325 25591"
+                android:textColor="#272A3F"
+                android:textSize="@dimen/sp17"
+                app:layout_constraintTop_toBottomOf="@id/tvcontinue" />
+
+            <TextView
+                app:layout_constraintEnd_toStartOf="parent"
+                app:layout_constraintStart_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tvmobile"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/tvChangeNum"
+                android:text="@string/change_number"
+                android:textColor="@color/green"
+                android:background="@drawable/green_border_otp"
+                android:textSize="@dimen/sp14"
+                app:textAllCaps="true"
+                android:paddingLeft="@dimen/dp18"
+                android:paddingRight="@dimen/dp18"
+                android:paddingTop="@dimen/dp10"
+                android:paddingBottom="@dimen/dp10"
+                android:layout_marginTop="@dimen/dp20"
+                app:custom_fonts="@string/Roboto_Regular"/>
+
+
+            <LinearLayout
+                android:id="@+id/llEdit"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dp75"
+                android:layout_marginLeft="@dimen/dp20"
+                android:layout_marginTop="@dimen/dp15"
+                android:layout_marginRight="@dimen/dp20"
+                app:layout_constraintTop_toBottomOf="@id/tvChangeNum">
+
+                <EditText
+                    android:id="@+id/et1"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="@dimen/dp15"
+                    android:layout_weight="1"
+                    android:background="@drawable/light_green_bg"
+                    android:fontFamily="@font/roboto_medium"
+                    android:gravity="center"
+                    android:inputType="number"
+                    android:maxLength="1"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/sp20" />
+
+                <EditText
+                    android:id="@+id/et2"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="@dimen/dp15"
+                    android:layout_weight="1"
+                    android:background="@drawable/light_green_bg"
+                    android:fontFamily="@font/roboto_medium"
+                    android:gravity="center"
+                    android:inputType="number"
+                    android:maxLength="1"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/sp20" />
+
+                <EditText
+                    android:id="@+id/et3"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="@dimen/dp15"
+                    android:layout_weight="1"
+                    android:background="@drawable/light_green_bg"
+                    android:fontFamily="@font/roboto_medium"
+                    android:gravity="center"
+                    android:inputType="number"
+                    android:maxLength="1"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/sp20" />
+
+                <EditText
+                    android:id="@+id/et4"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:background="@drawable/light_green_bg"
+                    android:fontFamily="@font/roboto_medium"
+                    android:gravity="center"
+                    android:inputType="number"
+                    android:maxLength="1"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/sp20" />
+            </LinearLayout>
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                app:layout_constraintTop_toBottomOf="@+id/llEdit"
+                android:layout_marginTop="@dimen/dp10"
+                android:gravity="center"
+                android:id="@+id/const_time"
+                android:orientation="horizontal"
+                app:layout_constraintEnd_toStartOf="parent"
+                app:layout_constraintStart_toEndOf="parent"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    app:layout_constraintRight_toLeftOf="@id/tvResendOTP"
+                    app:layout_constraintTop_toTopOf="parent"
+                    android:id="@+id/tvTimeUP"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="01:30"
+                    android:layout_gravity="center"
+                    android:gravity="center"
+                    android:textSize="@dimen/sp16"
+                    android:textColor="@color/grey"
+                    app:custom_fonts="@string/Roboto_Bold"/>
+
+                <TextView
+                    android:id="@+id/tvResendOTP"
+                    android:layout_marginLeft="@dimen/dp10"
+                    app:layout_constraintLeft_toRightOf="@+id/tvTimeUP"
+                    app:layout_constraintTop_toTopOf="parent"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Resend OTP??"
+                    android:layout_gravity="center"
+                    android:gravity="center"
+                    android:textSize="@dimen/sp16"
+                    android:textColor="@color/green"
+                    app:custom_fonts="@string/Roboto_Regular"/>
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <TextView
+                android:id="@+id/btnOtp"
+                style="@style/App_active_button"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dp30"
+                android:text="@string/enter"
+                app:layout_constraintTop_toBottomOf="@id/const_time" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

@@ -1,0 +1,160 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/splash_bg">
+
+        <ScrollView
+            android:layout_marginBottom="@dimen/dp25"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:scrollbars="none"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/white_botton_rounded"
+                android:paddingStart="@dimen/dp20"
+                android:paddingLeft="@dimen/dp20"
+                android:paddingTop="@dimen/dp20"
+                android:paddingEnd="@dimen/dp20"
+                android:paddingRight="@dimen/dp20"
+                android:paddingBottom="@dimen/dp50"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <EditText
+                    android:id="@+id/edtName"
+                    style="@style/App_EditTextStyle"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/dp30"
+                    android:drawableStart="@drawable/ic_user_name"
+                    android:drawableLeft="@drawable/ic_user_name"
+                    android:drawableTint="@color/green"
+                    android:hint="@string/name"
+                    android:inputType="text"
+                    android:paddingStart="-2dp"
+                    android:paddingLeft="-2dp"
+                    app:layout_constraintTop_toBottomOf="@id/tvcontinue"
+                    tools:targetApi="m" />
+
+                <EditText
+                    android:id="@+id/edtEmail"
+                    style="@style/App_EditTextStyle"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/dp20"
+                    android:drawableStart="@drawable/ic_email"
+                    android:drawableLeft="@drawable/ic_email"
+                    android:drawableTint="@color/green"
+                    android:hint="@string/email_address"
+                    android:inputType="textEmailAddress"
+                    android:paddingStart="-2dp"
+                    android:paddingLeft="-2dp"
+                    app:layout_constraintTop_toBottomOf="@id/edtName"
+                    tools:targetApi="m" />
+
+                <EditText
+                    android:id="@+id/edtMobile"
+                    style="@style/App_EditTextStyle"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/dp20"
+                    android:drawableStart="@drawable/ic_mobile"
+                    android:drawableLeft="@drawable/ic_email"
+                    android:drawableTint="@color/green"
+                    android:hint="@string/mobile_number"
+                    android:inputType="number"
+                    android:paddingStart="-2dp"
+                    android:paddingLeft="-2dp"
+                    app:layout_constraintTop_toBottomOf="@id/edtEmail"
+                    tools:targetApi="m" />
+
+                <EditText
+                    android:id="@+id/edtClientId"
+                    style="@style/App_EditTextStyle"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/dp20"
+                    android:drawableStart="@drawable/ic_user"
+                    android:drawableLeft="@drawable/ic_user"
+                    android:drawableTint="@color/green"
+                    android:hint="@string/client_id"
+                    android:inputType="text"
+                    android:paddingStart="-0dp"
+                    android:paddingLeft="-0dp"
+                    app:layout_constraintTop_toBottomOf="@id/rlPass"
+                    tools:targetApi="m" />
+
+                <RelativeLayout
+                    android:id="@+id/rlPass"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/dp18"
+                    app:layout_constraintTop_toBottomOf="@id/edtMobile">
+
+                    <EditText
+                        android:id="@+id/edtPassword"
+                        style="@style/App_EditTextStyle"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:drawableStart="@drawable/ic_pass"
+                        android:drawableLeft="@drawable/ic_pass"
+                        android:drawableTint="@color/green"
+                        android:hint="@string/password"
+                        android:inputType="textPassword"
+                        android:paddingStart="-2dp"
+                        android:paddingLeft="-2dp"
+                        tools:targetApi="m" />
+
+                    <ImageView
+                        android:layout_width="@dimen/dp20"
+                        android:layout_height="@dimen/dp20"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
+                        android:paddingRight="@dimen/dp2"
+                        android:src="@drawable/ic_eye" />
+                </RelativeLayout>
+
+                <TextView
+                    android:id="@+id/tvcontinue"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/roboto_regular"
+                    android:text="Let's get started"
+                    android:textColor="@color/grey"
+                    android:textSize="@dimen/sp16"
+                    app:layout_constraintTop_toBottomOf="@id/tvTop" />
+
+                <TextView
+                    android:id="@+id/tvTop"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/roboto_medium"
+                    android:text="@string/register_in_to_grocery_app"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/sp25"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/btnRegister"
+                    style="@style/App_active_button"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/dp5"
+                    android:layout_marginTop="@dimen/dp25"
+                    android:layout_marginRight="@dimen/dp5"
+                    android:layout_weight="1"
+                    android:text="@string/register"
+                    app:layout_constraintTop_toBottomOf="@id/edtClientId" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+        </ScrollView>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

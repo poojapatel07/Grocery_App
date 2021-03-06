@@ -1,0 +1,203 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+<androidx.constraintlayout.widget.ConstraintLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/splash_bg"
+    tools:context=".activity.SelectRoleActivity">
+
+    <ScrollView
+        android:scrollbars="none"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/white_botton_rounded"
+            android:paddingStart="@dimen/dp20"
+            android:paddingLeft="@dimen/dp20"
+            android:paddingTop="@dimen/dp20"
+            android:paddingEnd="@dimen/dp20"
+            android:paddingRight="@dimen/dp20"
+            android:paddingBottom="@dimen/dp50"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <TextView
+                android:id="@+id/tvTop"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/roboto_medium"
+                android:text="@string/who_are_you"
+                android:textColor="@color/black"
+                android:textSize="@dimen/sp25"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/tvcontinue"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/roboto_regular"
+                android:text="Select Any One"
+                android:textColor="@color/grey"
+                android:textSize="@dimen/sp16"
+                app:layout_constraintTop_toBottomOf="@id/tvTop" />
+
+            <ImageView
+                android:id="@+id/ivLogo"
+                android:layout_width="@dimen/dp190"
+                android:layout_height="@dimen/dp190"
+                android:layout_marginTop="@dimen/dp30"
+                android:contentDescription="@string/todo"
+                android:src="@drawable/splash_logo"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tvcontinue" />
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                app:layout_constraintTop_toBottomOf="@id/ivLogo"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dp160"
+                android:layout_marginLeft="@dimen/dp10"
+                android:layout_marginRight="@dimen/dp10"
+                android:layout_marginTop="@dimen/dp40">
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:orientation="vertical"
+                    android:gravity="center"
+                    android:layout_width="0dp"
+                    android:id="@+id/retailer"
+                    app:layout_constraintRight_toLeftOf="@+id/customer"
+                    app:layout_constraintHorizontal_weight="1"
+                    android:layout_height="match_parent"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    android:background="@drawable/green_rounded">
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="0dp"
+                        android:id="@+id/top"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintBottom_toTopOf="@+id/bottom"
+                        app:layout_constraintVertical_weight="2">
+
+                        <ImageView
+                            app:layout_constraintBottom_toTopOf="parent"
+                            app:layout_constraintTop_toBottomOf="parent"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            android:layout_gravity="center"
+                            android:src="@drawable/ic_retailer"
+                            android:layout_width="@dimen/dp40"
+                            android:layout_height="@dimen/dp40"/>
+
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="0dp"
+                        android:id="@+id/bottom"
+                        app:layout_constraintTop_toBottomOf="@id/top"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintVertical_weight="1">
+
+                        <View
+                            android:id="@+id/view"
+                            app:layout_constraintTop_toTopOf="parent"
+                            android:background="#90ffffff"
+                            android:layout_width="match_parent"
+                            android:layout_height="1dp"/>
+
+                        <TextView
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintTop_toTopOf="parent"
+                            android:gravity="center"
+                            android:layout_marginTop="@dimen/dp5"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/roboto_medium"
+                            android:text="Retailer"
+                            android:textColor="@color/white"
+                            android:textSize="@dimen/sp20"/>
+
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:orientation="vertical"
+                    android:gravity="center"
+                    android:layout_width="0dp"
+                    android:id="@+id/customer"
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintLeft_toRightOf="@+id/retailer"
+                    app:layout_constraintHorizontal_weight="1"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="@dimen/dp30"
+                    app:layout_constraintTop_toTopOf="parent"
+                    android:background="@drawable/green_rounded">
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="0dp"
+                        android:id="@+id/top1"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintBottom_toTopOf="@+id/bottom1"
+                        app:layout_constraintVertical_weight="2">
+
+                        <ImageView
+                            app:layout_constraintBottom_toTopOf="parent"
+                            app:layout_constraintTop_toBottomOf="parent"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            android:layout_gravity="center"
+                            android:src="@drawable/ic_customer"
+                            android:layout_width="@dimen/dp40"
+                            android:layout_height="@dimen/dp40"/>
+
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="0dp"
+                        android:id="@+id/bottom1"
+                        app:layout_constraintTop_toBottomOf="@id/top1"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintVertical_weight="1">
+
+                        <View
+                            android:id="@+id/view1"
+                            app:layout_constraintTop_toTopOf="parent"
+                            android:background="#90ffffff"
+                            android:layout_width="match_parent"
+                            android:layout_height="1dp"/>
+
+                        <TextView
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintTop_toTopOf="parent"
+                            android:gravity="center"
+                            android:layout_marginTop="@dimen/dp5"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/roboto_medium"
+                            android:text="Customer"
+                            android:textColor="@color/white"
+                            android:textSize="@dimen/sp20"/>
+
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+                </androidx.constraintlayout.widget.ConstraintLayout>
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </ScrollView>
+</androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

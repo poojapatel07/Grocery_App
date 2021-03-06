@@ -1,0 +1,226 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <androidx.core.widget.NestedScrollView
+            android:id="@+id/nestedScroll"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <LinearLayout
+                    android:id="@+id/llTop"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/dp150"
+                    android:background="@drawable/white_botton_rounded"
+                    app:layout_constraintTop_toTopOf="parent">
+
+                    <LinearLayout
+                        android:id="@+id/llCategory"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:orientation="vertical"
+                        app:layout_constraintLeft_toLeftOf="parent">
+
+                        <RelativeLayout
+                            android:layout_width="@dimen/dp70"
+                            android:layout_height="@dimen/dp70"
+                            android:background="@drawable/light_green_circle"
+                            app:layout_constraintTop_toTopOf="parent">
+
+                            <ImageView
+                                android:layout_width="@dimen/dp25"
+                                android:layout_height="@dimen/dp25"
+                                android:layout_centerInParent="true"
+                                android:src="@drawable/ic_categories" />
+                        </RelativeLayout>
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:layout_marginTop="@dimen/dp8"
+                            android:gravity="center"
+                            android:text="@string/categories"
+                            android:textColor="@color/grey"
+                            android:textSize="@dimen/sp13" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/llFreebies"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:orientation="vertical"
+                        app:layout_constraintLeft_toLeftOf="parent">
+
+                        <RelativeLayout
+                            android:layout_width="@dimen/dp70"
+                            android:layout_height="@dimen/dp70"
+                            android:background="@drawable/light_green_circle"
+                            app:layout_constraintTop_toTopOf="parent">
+
+                            <ImageView
+                                android:layout_width="@dimen/dp25"
+                                android:layout_height="@dimen/dp25"
+                                android:layout_centerInParent="true"
+                                android:src="@drawable/ic_freebies" />
+                        </RelativeLayout>
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:layout_marginTop="@dimen/dp8"
+                            android:gravity="center"
+                            android:text="@string/freebies"
+                            android:textColor="@color/grey"
+                            android:textSize="@dimen/sp13" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/llTradeOffer"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:orientation="vertical"
+                        app:layout_constraintLeft_toLeftOf="parent">
+
+                        <RelativeLayout
+                            android:layout_width="@dimen/dp70"
+                            android:layout_height="@dimen/dp70"
+                            android:background="@drawable/light_green_circle"
+                            app:layout_constraintTop_toTopOf="parent">
+
+                            <ImageView
+                                android:layout_width="@dimen/dp25"
+                                android:layout_height="@dimen/dp25"
+                                android:layout_centerInParent="true"
+                                android:src="@drawable/ic_trade_" />
+                        </RelativeLayout>
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:layout_marginTop="@dimen/dp8"
+                            android:gravity="center"
+                            android:text="@string/trade_offers"
+                            android:textColor="@color/grey"
+                            android:textSize="@dimen/sp13" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/llOffer"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:orientation="vertical"
+                        app:layout_constraintLeft_toLeftOf="parent">
+
+                        <RelativeLayout
+                            android:layout_width="@dimen/dp70"
+                            android:layout_height="@dimen/dp70"
+                            android:background="@drawable/light_green_circle"
+                            app:layout_constraintTop_toTopOf="parent">
+
+                            <ImageView
+                                android:layout_width="@dimen/dp25"
+                                android:layout_height="@dimen/dp25"
+                                android:layout_centerInParent="true"
+                                android:src="@drawable/ic_offer_new" />
+                        </RelativeLayout>
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:layout_marginTop="@dimen/dp8"
+                            android:gravity="center"
+                            android:text="@string/offers"
+                            android:textColor="@color/grey"
+                            android:textSize="@dimen/sp13" />
+                    </LinearLayout>
+                </LinearLayout>
+
+                <ImageView
+                    android:id="@+id/ivFirstBanner"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/dp180"
+                    android:layout_marginTop="@dimen/dp5"
+                    android:scaleType="fitXY"
+                    android:src="@drawable/ic_launcher_background"
+                    app:layout_constraintTop_toBottomOf="@id/llTop" />
+
+                <TextView
+                    android:id="@+id/tvToday"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/dp10"
+                    android:layout_marginTop="@dimen/dp10"
+                    android:fontFamily="@font/roboto_medium"
+                    android:text="@string/today_s_special"
+                    android:textColor="@color/black_dark"
+                    android:textSize="@dimen/sp14"
+                    app:layout_constraintTop_toBottomOf="@id/ivFirstBanner" />
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/rvTodaySpecial"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintTop_toBottomOf="@id/tvToday"/>
+
+                <TextView
+                    android:id="@+id/tvBaseCate"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/dp10"
+                    android:layout_marginTop="@dimen/dp10"
+                    android:fontFamily="@font/roboto_medium"
+                    android:text="@string/base_category"
+                    android:textColor="@color/black_dark"
+                    android:textSize="@dimen/sp14"
+                    app:layout_constraintTop_toBottomOf="@id/rvTodaySpecial" />
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/rvBaseCategory"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingRight="@dimen/dp5"
+                    android:paddingLeft="@dimen/dp8"
+                    app:layout_constraintTop_toBottomOf="@id/tvBaseCate"/>
+
+                <ImageView
+                    android:id="@+id/ivLastBanner"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/dp180"
+                    android:layout_marginTop="@dimen/dp10"
+                    android:layout_marginBottom="@dimen/dp10"
+                    android:scaleType="fitXY"
+                    android:src="@drawable/ic_launcher_background"
+                    app:layout_constraintTop_toBottomOf="@id/rvBaseCategory" />
+
+                <Space
+                    app:layout_constraintTop_toBottomOf="@id/ivLastBanner"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/dp10"/>
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+        </androidx.core.widget.NestedScrollView>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>
