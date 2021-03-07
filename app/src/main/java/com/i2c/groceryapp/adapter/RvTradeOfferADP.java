@@ -13,19 +13,19 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.i2c.groceryapp.R;
 import com.i2c.groceryapp.activity.ProductDetailActivity;
 import com.i2c.groceryapp.databinding.ItemFreebiesBinding;
-import com.i2c.groceryapp.databinding.ItemTodaySpecialBinding;
+import com.i2c.groceryapp.databinding.ItemTradeOfferBinding;
 
-public class RvFreebiesADP extends RecyclerView.Adapter<RvFreebiesADP.MyViewHolder> {
+public class RvTradeOfferADP extends RecyclerView.Adapter<RvTradeOfferADP.MyViewHolder> {
     private Activity activity;
 
-    public RvFreebiesADP(Activity activity) {
+    public RvTradeOfferADP(Activity activity) {
         this.activity = activity;
     }
 
     public class MyViewHolder extends RecyclerView.ViewHolder {
-        ItemFreebiesBinding binding;
+         ItemTradeOfferBinding binding;
 
-        public MyViewHolder(@NonNull ItemFreebiesBinding itemView) {
+        public MyViewHolder(@NonNull ItemTradeOfferBinding itemView) {
             super(itemView.getRoot());
             binding = itemView;
 
@@ -40,14 +40,14 @@ public class RvFreebiesADP extends RecyclerView.Adapter<RvFreebiesADP.MyViewHold
 
     @NonNull
     @Override
-    public RvFreebiesADP.MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        ItemFreebiesBinding rvMyReferralItemBinding = DataBindingUtil.inflate(LayoutInflater.from(parent.getContext())
-                , R.layout.item_freebies, parent,false);
+    public RvTradeOfferADP.MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        ItemTradeOfferBinding rvMyReferralItemBinding = DataBindingUtil.inflate(LayoutInflater.from(parent.getContext())
+                , R.layout.item_trade_offer, parent,false);
         return new MyViewHolder(rvMyReferralItemBinding);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull RvFreebiesADP.MyViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull RvTradeOfferADP.MyViewHolder holder, int position) {
 
     }
 

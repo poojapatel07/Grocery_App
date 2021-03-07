@@ -7,6 +7,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -16,6 +17,8 @@ import android.view.ViewGroup;
 
 import com.i2c.groceryapp.R;
 import com.i2c.groceryapp.activity.FreebiesActivity;
+import com.i2c.groceryapp.activity.HomeActivity;
+import com.i2c.groceryapp.activity.TradeOfferActivity;
 import com.i2c.groceryapp.adapter.BaseCategoryADP;
 import com.i2c.groceryapp.adapter.RvTodaySpecialListADP;
 import com.i2c.groceryapp.databinding.FragmentHomeBinding;
@@ -32,15 +35,13 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_home,
-                container, false);
+        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_home, container, false);
         return binding.getRoot();
     }
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-
         setUpContorls(view);
     }
 
@@ -67,8 +68,9 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
 
     @Override
     public void onClick(View v) {
-        switch (v.getId()){
+        switch (v.getId()) {
             case R.id.llCategory:
+                getRootActivity().binding.viewPager.setCurrentItem(1);
                 break;
 
             case R.id.llFreebies:
@@ -76,10 +78,15 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
                 break;
 
             case R.id.llTradeOffer:
+                startActivity(new Intent(getActivity(), TradeOfferActivity.class));
                 break;
 
             case R.id.llOffer:
                 break;
         }
+    }
+
+    private HomeActivity getRootActivity() {
+        return (HomeActivity) getActivity();
     }
 }

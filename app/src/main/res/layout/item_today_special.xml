@@ -7,8 +7,9 @@
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/dp12"
         android:background="@color/white"
-        app:cardElevation="@dimen/dp8"
+        app:cardElevation="@dimen/dp5"
         app:cardCornerRadius="@dimen/dp12"
+        android:id="@+id/card_main"
         app:layout_constraintTop_toTopOf="parent">
 
         <androidx.constraintlayout.widget.ConstraintLayout
@@ -224,7 +225,7 @@
                                 android:layout_height="@dimen/dp22"
                                 android:background="@drawable/green_border_bg"
                                 android:orientation="horizontal"
-                                android:visibility="visible">
+                                android:visibility="gone">
 
                                 <TextView
                                     android:fontFamily="@font/roboto_medium"
@@ -264,7 +265,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:orientation="horizontal"
-                                android:visibility="gone">
+                                android:visibility="visible">
 
                                 <TextView
                                     android:fontFamily="@font/roboto_medium"
@@ -479,7 +480,7 @@
                 android:id="@+id/bottomMain"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:visibility="visible"
+                android:visibility="gone"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/topMain">
 

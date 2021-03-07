@@ -11,10 +11,8 @@ import androidx.databinding.DataBindingUtil;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.i2c.groceryapp.R;
-import com.i2c.groceryapp.activity.AllCategoryDetailActivity;
-import com.i2c.groceryapp.databinding.FragmentCategoryBinding;
+import com.i2c.groceryapp.activity.AllSubCategoryActivity;
 import com.i2c.groceryapp.databinding.ItemAllCategoryBinding;
-import com.i2c.groceryapp.databinding.ItemBaseItemBinding;
 
 public class RvAllCategoryADP extends RecyclerView.Adapter<RvAllCategoryADP.MyViewHolder> {
     private Activity activity;
@@ -35,7 +33,7 @@ public class RvAllCategoryADP extends RecyclerView.Adapter<RvAllCategoryADP.MyVi
             binding.rltop.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    activity.startActivity(new Intent(activity, AllCategoryDetailActivity.class));
+                    activity.startActivity(new Intent(activity, AllSubCategoryActivity.class));
                 }
             });
         }

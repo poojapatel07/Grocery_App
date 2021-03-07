@@ -14,8 +14,13 @@
         android:usesCleartextTraffic="true"
         tools:node="replace"
         tools:targetApi="m">
-        <activity android:name=".activity.FreebiesActivity"/>
-        <activity android:name=".activity.AllCategoryDetailActivity" />
+        <activity android:name=".activity.MyOrderActivity"/>
+        <activity android:name=".activity.MyFavouriteActivity" />
+        <activity android:name=".activity.NotifictionActivity" />
+        <activity android:name=".activity.TradeOfferActivity" />
+        <activity android:name=".activity.ProductDetailActivity" />
+        <activity android:name=".activity.FreebiesActivity" />
+        <activity android:name=".activity.AllSubCategoryActivity" />
         <activity android:name=".activity.SelectRoleActivity" />
         <activity android:name=".activity.OTPVerificationActivity" />
         <activity android:name=".activity.RegisterActivity" />
@@ -37,10 +42,10 @@
             android:name="org.apache.http.legacy"
             android:required="false" />
     </application>
-    <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.WAKE_LOCK" />
-
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+
+    <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />
 
 </manifest>

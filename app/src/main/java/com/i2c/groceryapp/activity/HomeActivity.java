@@ -1,9 +1,12 @@
 package com.i2c.groceryapp.activity;
+
 import androidx.core.content.ContextCompat;
+import androidx.core.view.GravityCompat;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.PorterDuff;
 import android.os.Bundle;
@@ -27,11 +30,11 @@ import com.i2c.groceryapp.utils.BaseActivity;
 import java.util.ArrayList;
 
 public class HomeActivity extends BaseActivity implements RvMenuADP.OpenFragment {
-    ActivityHomeBinding binding;
-    ArrayList<Fragment> fragments;
+    public ActivityHomeBinding binding;
+    private ArrayList<Fragment> fragments;
     private ArrayList<DataModel> arrayList = new ArrayList<>();
-    ArrayList<String> ALL_MENU = new ArrayList<>();
-    RvMenuADP adp;
+    private ArrayList<String> ALL_MENU = new ArrayList<>();
+    private RvMenuADP adp;
 
 
     @Override
@@ -42,12 +45,12 @@ public class HomeActivity extends BaseActivity implements RvMenuADP.OpenFragment
     }
 
     @Override
-    protected void setContent() { }
+    protected void setContent() {
+    }
 
     private void setUpControls() {
         serDrawerLayout();
-
-        fragments =new ArrayList<>();
+        fragments = new ArrayList<>();
 
         fragments.add(new HomeFragment());
         fragments.add(new CategoryFrgmt());
@@ -89,6 +92,13 @@ public class HomeActivity extends BaseActivity implements RvMenuADP.OpenFragment
                 binding.drawerLayout.openDrawer(Gravity.LEFT);
             }
         });
+
+        binding.ivNotification.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(HomeActivity.this, NotifictionActivity.class));
+            }
+        });
     }
 
     private void serDrawerLayout() {
@@ -118,6 +128,19 @@ public class HomeActivity extends BaseActivity implements RvMenuADP.OpenFragment
 
     @Override
     public void openFragmt(int pos) {
-        Log.e("TAG", "openFragmt:open_frg::::"+pos);
+        Log.e("TAG", "openFragmt:open_frg::::" + pos);
+        if (binding.drawerLayout.isDrawerOpen(GravityCompat.START)) {
+            binding.drawerLayout.closeDrawers();
+        }
+
+        switch (pos) {
+            case 0:
+                launchActivity(HomeActivity.this, MyOrderActivity.class);
+                break;
+
+            case 1:
+                launchActivity(HomeActivity.this, MyFavouriteActivity.class);
+                break;
+        }
     }
 }

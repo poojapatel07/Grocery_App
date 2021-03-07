@@ -1,32 +1,34 @@
 package com.i2c.groceryapp.activity;
-
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
 import androidx.recyclerview.widget.LinearLayoutManager;
+
 import android.os.Bundle;
 import android.view.View;
 import com.i2c.groceryapp.R;
-import com.i2c.groceryapp.adapter.RvFreebiesADP;
-import com.i2c.groceryapp.databinding.ActivityFreebiesBinding;
+import com.i2c.groceryapp.adapter.RvTradeOfferADP;
+import com.i2c.groceryapp.databinding.ActivityTradeOfferBinding;
+import com.i2c.groceryapp.utils.BaseActivity;
 
-
-public class FreebiesActivity extends AppCompatActivity {
-    ActivityFreebiesBinding binding;
-    private RvFreebiesADP adp;
+public class TradeOfferActivity extends BaseActivity {
+    ActivityTradeOfferBinding binding;
+    private RvTradeOfferADP adp;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        binding = DataBindingUtil.setContentView(this, R.layout.activity_freebies);
+        binding = DataBindingUtil.setContentView(this, R.layout.activity_trade_offer);
         setUpControls();
     }
 
+    @Override
+    protected void setContent() { }
+
     private void setUpControls() {
-        binding.rvFreebies.setHasFixedSize(false);
+        binding.rvTredeOffers.setHasFixedSize(false);
         LinearLayoutManager manager = new LinearLayoutManager(this);
-        binding.rvFreebies.setLayoutManager(manager);
-        adp = new RvFreebiesADP(this);
-        binding.rvFreebies.setAdapter(adp);
+        binding.rvTredeOffers.setLayoutManager(manager);
+        adp = new RvTradeOfferADP(this);
+        binding.rvTredeOffers.setAdapter(adp);
 
         binding.ivBack.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -34,5 +36,8 @@ public class FreebiesActivity extends AppCompatActivity {
                 onBackPressed();
             }
         });
+
     }
+
+
 }

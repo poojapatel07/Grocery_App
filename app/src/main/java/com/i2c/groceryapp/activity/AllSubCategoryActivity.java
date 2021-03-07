@@ -1,28 +1,28 @@
 package com.i2c.groceryapp.activity;
-
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
 import androidx.recyclerview.widget.LinearLayoutManager;
-
 import android.os.Bundle;
 import android.view.View;
-import android.widget.LinearLayout;
-
 import com.i2c.groceryapp.R;
 import com.i2c.groceryapp.adapter.RvAllCategoryDetailsADP;
-import com.i2c.groceryapp.databinding.ActivityAllCategoryDetailBinding;
-import com.i2c.groceryapp.databinding.ItemAllCategoryBinding;
+import com.i2c.groceryapp.databinding.ActivityAllSubcategoryBinding;
+import com.i2c.groceryapp.utils.BaseActivity;
 
-public class AllCategoryDetailActivity extends AppCompatActivity {
-    ActivityAllCategoryDetailBinding binding;
+
+public class AllSubCategoryActivity extends BaseActivity {
+    ActivityAllSubcategoryBinding binding;
     private RvAllCategoryDetailsADP allCategoryDetailsADP;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        binding = DataBindingUtil.setContentView(this, R.layout.activity_all_category_detail);
+        binding = DataBindingUtil.setContentView(this, R.layout.activity_all_subcategory);
         setUpControls();
+    }
+
+    @Override
+    protected void setContent() {
     }
 
     private void setUpControls() {

@@ -14,6 +14,10 @@ public class OfferFragment extends Fragment {
     public OfferFragment() {
     }
 
+    public static Fragment newInstance() {
+        return null;
+    }
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

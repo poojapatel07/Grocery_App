@@ -216,7 +216,7 @@
                 <Space
                     app:layout_constraintTop_toBottomOf="@id/ivLastBanner"
                     android:layout_width="match_parent"
-                    android:layout_height="@dimen/dp10"/>
+                    android:layout_height="@dimen/dp100"/>
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 

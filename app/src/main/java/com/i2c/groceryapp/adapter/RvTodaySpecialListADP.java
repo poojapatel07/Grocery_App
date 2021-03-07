@@ -1,6 +1,7 @@
 package com.i2c.groceryapp.adapter;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,6 +12,7 @@ import androidx.fragment.app.FragmentActivity;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.i2c.groceryapp.R;
+import com.i2c.groceryapp.activity.ProductDetailActivity;
 import com.i2c.groceryapp.databinding.ItemAllCategoryBinding;
 import com.i2c.groceryapp.databinding.ItemTodaySpecialBinding;
 
@@ -27,6 +29,13 @@ public class RvTodaySpecialListADP extends RecyclerView.Adapter<RvTodaySpecialLi
         public MyViewHolder(@NonNull ItemTodaySpecialBinding itemView) {
             super(itemView.getRoot());
             binding = itemView;
+
+           binding.cardMain.setOnClickListener(new View.OnClickListener() {
+               @Override
+               public void onClick(View v) {
+                   activity.startActivity(new Intent(activity, ProductDetailActivity.class));
+               }
+           });
         }
     }
 
