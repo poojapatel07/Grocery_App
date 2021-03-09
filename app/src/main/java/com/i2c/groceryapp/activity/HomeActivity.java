@@ -23,6 +23,7 @@ import com.i2c.groceryapp.databinding.ActivityHomeBinding;
 import com.i2c.groceryapp.fragment.CategoryFrgmt;
 import com.i2c.groceryapp.fragment.HomeFragment;
 import com.i2c.groceryapp.fragment.OfferFragment;
+import com.i2c.groceryapp.fragment.RiewBasketFragment;
 import com.i2c.groceryapp.model.DataModel;
 import com.i2c.groceryapp.model.MyData;
 import com.i2c.groceryapp.utils.BaseActivity;
@@ -55,7 +56,7 @@ public class HomeActivity extends BaseActivity implements RvMenuADP.OpenFragment
         fragments.add(new HomeFragment());
         fragments.add(new CategoryFrgmt());
         fragments.add(new OfferFragment());
-        fragments.add(new CategoryFrgmt());
+        fragments.add(new RiewBasketFragment());
 
         FragmentAdapter pagerAdapter = new FragmentAdapter(getSupportFragmentManager(), getApplicationContext(), fragments);
         binding.viewPager.setAdapter(pagerAdapter);
@@ -139,6 +140,30 @@ public class HomeActivity extends BaseActivity implements RvMenuADP.OpenFragment
                 break;
 
             case 1:
+                launchActivity(HomeActivity.this, MyFavouriteActivity.class);
+                break;
+
+            case 2:
+                launchActivity(HomeActivity.this, Become_prime_memberActivity.class);
+                break;
+
+            case 3:
+                launchActivity(HomeActivity.this, ProfileActivity.class);
+                break;
+
+            case 4:
+                launchActivity(HomeActivity.this, ChangeLanguageActivity.class);
+                break;
+
+            case 5:
+                launchActivity(HomeActivity.this, ChangePasswordActivity.class);
+                break;
+
+            case 6:
+                launchActivity(HomeActivity.this, ContactUsActivity.class);
+                break;
+
+            case 7:
                 launchActivity(HomeActivity.this, MyFavouriteActivity.class);
                 break;
         }

@@ -1,0 +1,242 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/splash_bg">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/top"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/green"
+            android:paddingTop="@dimen/dp5"
+            android:paddingBottom="@dimen/dp5"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <ImageView
+                android:id="@+id/ivBack"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/dp10"
+                android:layout_marginLeft="@dimen/dp10"
+                android:src="@drawable/ic_back_arrow"
+                android:tint="@color/white"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/dp20"
+                android:fontFamily="@font/roboto_medium"
+                android:text="@string/personal_information"
+                android:textColor="@color/white"
+                android:textSize="@dimen/sp18"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintLeft_toRightOf="@+id/ivBack"
+                app:layout_constraintTop_toTopOf="parent" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+         <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/white_botton_rounded"
+            android:paddingStart="@dimen/dp20"
+            android:paddingLeft="@dimen/dp20"
+            android:paddingEnd="@dimen/dp20"
+            android:paddingRight="@dimen/dp20"
+            android:paddingBottom="@dimen/dp50"
+             android:layout_marginBottom="@dimen/dp40"
+            app:layout_constraintTop_toBottomOf="@id/top">
+
+             <androidx.core.widget.NestedScrollView
+                 android:layout_width="match_parent"
+                 android:layout_height="match_parent"
+                 android:scrollbars="none">
+
+                 <androidx.constraintlayout.widget.ConstraintLayout
+                     android:layout_width="match_parent"
+                     android:layout_height="wrap_content">
+
+                     <EditText
+                         android:id="@+id/etName"
+                         style="@style/App_EditTextStyle"
+                         android:layout_width="match_parent"
+                         android:layout_height="wrap_content"
+                         android:layout_marginTop="@dimen/dp15"
+                         android:drawableTint="@color/green"
+                         android:fontFamily="@font/roboto_medium"
+                         android:hint="@string/name"
+                         android:inputType="text"
+                         app:layout_constraintTop_toTopOf="parent"
+                         tools:targetApi="m" />
+
+                     <EditText
+                         android:id="@+id/etEmail"
+                         style="@style/App_EditTextStyle"
+                         android:layout_width="match_parent"
+                         android:layout_height="wrap_content"
+                         android:layout_marginTop="@dimen/dp15"
+                         android:drawableTint="@color/green"
+                         android:fontFamily="@font/roboto_medium"
+                         android:hint="@string/email_address"
+                         android:inputType="textEmailAddress"
+                         app:layout_constraintTop_toBottomOf="@id/etName"
+                         tools:targetApi="m" />
+
+                     <EditText
+                         android:id="@+id/etDOB"
+                         style="@style/App_EditTextStyle"
+                         android:layout_width="match_parent"
+                         android:layout_height="wrap_content"
+                         android:layout_marginTop="@dimen/dp15"
+                         android:drawableTint="@color/green"
+                         android:fontFamily="@font/roboto_medium"
+                         android:hint="@string/date_of_birth"
+                         android:inputType="number"
+                         app:layout_constraintTop_toBottomOf="@id/etEmail"
+                         tools:targetApi="m" />
+
+                     <EditText
+                         android:id="@+id/etMobile"
+                         style="@style/App_EditTextStyle"
+                         android:layout_width="match_parent"
+                         android:layout_height="wrap_content"
+                         android:layout_marginTop="@dimen/dp15"
+                         android:drawableTint="@color/green"
+                         android:fontFamily="@font/roboto_medium"
+                         android:hint="Contact Number"
+                         android:inputType="number"
+                         app:layout_constraintTop_toBottomOf="@id/etDOB"
+                         tools:targetApi="m" />
+
+                     <androidx.constraintlayout.widget.ConstraintLayout
+                         android:layout_width="match_parent"
+                         android:layout_height="wrap_content"
+                         android:id="@+id/const_check"
+                         android:layout_marginTop="@dimen/dp10"
+                         app:layout_constraintTop_toBottomOf="@id/etMobile">
+
+                         <CheckBox
+                             android:id="@+id/checkbox"
+                             app:layout_constraintBottom_toBottomOf="parent"
+                             app:layout_constraintTop_toTopOf="parent"
+                             app:layout_constraintLeft_toLeftOf="parent"
+                             android:layout_width="wrap_content"
+                             android:layout_height="wrap_content"
+                             android:layout_gravity="center"
+                             android:drawableTint="@color/green"
+                             android:theme="@style/checkBoxStyle"/>
+
+                         <TextView
+                             app:layout_constraintBottom_toBottomOf="parent"
+                             app:layout_constraintTop_toTopOf="parent"
+                             android:layout_width="wrap_content"
+                             android:layout_height="wrap_content"
+                             android:layout_gravity="center"
+                             android:layout_marginLeft="-2dp"
+                             app:layout_constraintLeft_toRightOf="@+id/checkbox"
+                             android:text="Check if Contact number and whatsapp is same"
+                             android:textColor="#a4a3a3"
+                             android:textSize="@dimen/sp12"
+                             android:fontFamily="@font/roboto_regular" />
+                     </androidx.constraintlayout.widget.ConstraintLayout>
+
+                     <EditText
+                         android:id="@+id/etWP_NO"
+                         style="@style/App_EditTextStyle"
+                         android:layout_width="match_parent"
+                         android:layout_height="wrap_content"
+                         android:layout_marginTop="@dimen/dp15"
+                         android:drawableTint="@color/green"
+                         android:fontFamily="@font/roboto_medium"
+                         android:hint="Whatsapp Number"
+                         android:inputType="number"
+                         app:layout_constraintTop_toBottomOf="@id/const_check"
+                         tools:targetApi="m" />
+
+
+                     <EditText
+                         android:id="@+id/etShippingAdd"
+                         style="@style/App_EditTextStyle"
+                         android:layout_width="match_parent"
+                         android:layout_height="wrap_content"
+                         android:layout_marginTop="@dimen/dp15"
+                         android:drawableTint="@color/green"
+                         android:fontFamily="@font/roboto_medium"
+                         android:hint="Shipping Address"
+                         android:inputType="number"
+                         android:drawableRight="@drawable/ic_location"
+                         app:layout_constraintTop_toBottomOf="@id/etWP_NO"
+                         tools:targetApi="m" />
+
+                     <androidx.constraintlayout.widget.ConstraintLayout
+                         android:layout_width="match_parent"
+                         android:layout_height="wrap_content"
+                         android:id="@+id/const_check_1"
+                         android:layout_marginTop="@dimen/dp10"
+                         app:layout_constraintTop_toBottomOf="@id/etShippingAdd">
+
+                         <CheckBox
+                             android:id="@+id/checkbox_1"
+                             app:layout_constraintBottom_toBottomOf="parent"
+                             app:layout_constraintTop_toTopOf="parent"
+                             app:layout_constraintLeft_toLeftOf="parent"
+                             android:layout_width="wrap_content"
+                             android:layout_height="wrap_content"
+                             android:layout_gravity="center"
+                             android:drawableTint="@color/green"
+                             android:theme="@style/checkBoxStyle"/>
+
+                         <TextView
+                             app:layout_constraintBottom_toBottomOf="parent"
+                             app:layout_constraintTop_toTopOf="parent"
+                             android:layout_width="wrap_content"
+                             android:layout_height="wrap_content"
+                             android:layout_gravity="center"
+                             android:layout_marginLeft="-2dp"
+                             app:layout_constraintLeft_toRightOf="@+id/checkbox_1"
+                             android:text="Check if Contact number and whatsapp is same"
+                             android:textColor="#a4a3a3"
+                             android:textSize="@dimen/sp12"
+                             android:fontFamily="@font/roboto_regular" />
+                     </androidx.constraintlayout.widget.ConstraintLayout>
+
+                     <EditText
+                         android:id="@+id/etBillingAdd"
+                         style="@style/App_EditTextStyle"
+                         android:layout_width="match_parent"
+                         android:layout_height="wrap_content"
+                         android:layout_marginTop="@dimen/dp15"
+                         android:drawableTint="@color/green"
+                         android:fontFamily="@font/roboto_medium"
+                         android:hint="Billing Address"
+                         android:inputType="number"
+                         app:layout_constraintTop_toBottomOf="@id/const_check_1"
+                         tools:targetApi="m" />
+
+                     <TextView
+                         android:id="@+id/tvUpdateProfile"
+                         style="@style/App_active_button"
+                         android:layout_width="match_parent"
+                         android:layout_height="wrap_content"
+                         android:layout_marginTop="@dimen/dp25"
+                         android:layout_weight="1"
+                         android:text="Save"
+                         app:layout_constraintTop_toBottomOf="@id/etBillingAdd" />
+
+                     <Space
+                         app:layout_constraintTop_toBottomOf="@id/tvUpdateProfile"
+                         android:layout_width="match_parent"
+                         android:layout_height="@dimen/dp50"/>
+
+                 </androidx.constraintlayout.widget.ConstraintLayout>
+             </androidx.core.widget.NestedScrollView>
+         </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

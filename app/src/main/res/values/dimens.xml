@@ -45,4 +45,5 @@
     <dimen name="sp24">24sp</dimen>
     <dimen name="dp90">90dp</dimen>
     <dimen name="dp60">60dp</dimen>
+    <dimen name="dp45">45dp</dimen>
 </resources>
