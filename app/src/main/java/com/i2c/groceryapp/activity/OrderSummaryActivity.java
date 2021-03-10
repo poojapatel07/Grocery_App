@@ -2,18 +2,17 @@ package com.i2c.groceryapp.activity;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
-import androidx.recyclerview.widget.LinearLayoutManager;
 
 import android.os.Bundle;
 import android.view.View;
 
 import com.i2c.groceryapp.R;
-import com.i2c.groceryapp.adapter.OrderSummaryADP;
 import com.i2c.groceryapp.databinding.ActivityOrderSummaryBinding;
+import com.i2c.groceryapp.databinding.ItemOrderSummaryBinding;
+import com.i2c.groceryapp.utils.BaseActivity;
 
-public class OrderSummaryActivity extends AppCompatActivity {
+public class OrderSummaryActivity extends BaseActivity {
     ActivityOrderSummaryBinding binding;
-    private OrderSummaryADP adp;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -22,20 +21,17 @@ public class OrderSummaryActivity extends AppCompatActivity {
         setUpControls();
     }
 
-    private void setUpControls() {
-        binding.rvOrderSummary.setHasFixedSize(false);
-        LinearLayoutManager manager = new LinearLayoutManager(this);
-        binding.rvOrderSummary.setLayoutManager(manager);
-        
-        adp = new OrderSummaryADP(this);
-        binding.rvOrderSummary.setAdapter(adp);
+    @Override
+    protected void setContent() {}
 
+    private void setUpControls() {
         binding.ivBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 onBackPressed();
             }
         });
+
 
     }
 }

@@ -1,0 +1,256 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout>
+
+
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:id="@+id/rlTOP"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp50"
+        android:background="@color/white"
+        android:orientation="horizontal">
+
+        <ImageView
+            android:id="@+id/ivBack"
+            android:layout_width="@dimen/dp32"
+            android:layout_height="@dimen/dp32"
+            android:layout_centerVertical="true"
+            android:layout_gravity="center"
+            android:layout_marginLeft="@dimen/dp10"
+            android:src="@drawable/ic_back_arrow"/>
+
+        <TextView
+            android:id="@+id/tvTitle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_gravity="center"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="Review Basket"
+            android:textColor="@color/black"
+            android:textSize="@dimen/sp16" />
+
+
+        <LinearLayout
+            android:id="@+id/llClear"
+            android:layout_width="@dimen/dp60"
+            android:layout_height="@dimen/dp25"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="@dimen/dp5">
+
+            <TextView
+                android:id="@+id/tvClear"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:paddingRight="@dimen/dp5"
+                android:text="@string/clear_all"
+                android:textColor="@color/black"
+                android:textSize="@dimen/sp12"/>
+        </LinearLayout>
+    </RelativeLayout>
+
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scrollbars="none"
+        android:layout_below="@id/rlTOP">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dp8"
+                android:background="#d9d9d9" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:id="@+id/rvAllReviewBasket"
+                android:nestedScrollingEnabled="false">
+            </androidx.recyclerview.widget.RecyclerView>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dp120"/>
+        </LinearLayout>
+    </androidx.core.widget.NestedScrollView>
+
+    <LinearLayout
+        android:id="@+id/llNoData"
+        android:layout_centerInParent="true"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <RelativeLayout
+            android:id="@+id/rlBasket"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dp100"
+            android:gravity="center">
+
+            <ImageView
+                android:layout_width="@dimen/dp80"
+                android:layout_height="@dimen/dp80"
+                android:layout_centerInParent="true"
+                android:background="@drawable/light_green_circle">
+            </ImageView>
+
+            <ImageView
+                android:layout_width="@dimen/dp45"
+                android:layout_height="@dimen/dp45"
+                android:layout_centerInParent="true">
+            </ImageView>
+        </RelativeLayout>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/dp10"
+            android:gravity="center"
+            android:textColor="#a0a0a0"
+            android:textSize="@dimen/sp14">
+        </TextView>
+    </LinearLayout>
+
+    <LinearLayout
+        android:visibility="visible"
+        android:id="@+id/llBottom"
+        android:layout_alignParentBottom="true"
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:visibility="gone"
+            android:background="#d9d9d9"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:layout_gravity="center"
+                android:text="Reedem Points : 0"
+                android:textColor="@color/black"
+                android:textSize="@dimen/sp14"
+                android:layout_marginLeft="@dimen/dp10">
+            </TextView>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:text="6"
+                android:textColor="@color/black"
+                android:textSize="@dimen/sp14"
+                android:layout_marginRight="@dimen/dp10">
+            </TextView>
+        </LinearLayout>
+
+        <LinearLayout
+            android:background="#ececec"
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dp70">
+
+            <LinearLayout
+                android:layout_marginLeft="@dimen/dp10"
+                android:layout_gravity="center"
+                android:orientation="vertical"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content">
+
+                <LinearLayout
+                    android:orientation="horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:textColor="@color/green"
+                        android:textSize="@dimen/sp14" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/tvFinalPrice"
+                        android:layout_gravity="center"
+                        android:text="0"
+                        android:layout_marginLeft="@dimen/dp3"
+                        android:textColor="@color/green"
+                        android:textSize="@dimen/sp14" />
+
+                </LinearLayout>
+
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:id="@+id/tvTotalItem"
+                    android:text="Total Item : 0"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/sp14"
+                    android:layout_marginTop="@dimen/dp5">
+                </TextView>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/llContinue"
+                android:gravity="center"
+                android:padding="@dimen/dp8"
+                android:orientation="horizontal"
+                android:layout_gravity="center"
+                android:layout_marginRight="@dimen/dp8"
+                android:layout_width="0dp"
+                android:layout_weight="0.5"
+                android:layout_height="@dimen/dp45">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:layout_gravity="center"
+                    android:text="Continue"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/sp16">
+                </TextView>
+
+                <RelativeLayout
+                    android:layout_gravity="center"
+                    android:background="@drawable/white_circle"
+                    android:layout_width="@dimen/dp16"
+                    android:layout_height="@dimen/dp16">
+
+                    <ImageView
+                        android:tint="@color/green"
+                        android:layout_centerInParent="true"
+                        android:rotation="180"
+                        android:layout_width="@dimen/dp15"
+                        android:layout_height="@dimen/dp15"/>
+                </RelativeLayout>
+            </LinearLayout>
+        </LinearLayout>
+    </LinearLayout>
+
+</RelativeLayout>
+</layout>

@@ -1,0 +1,264 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/green"
+            android:paddingTop="@dimen/dp5"
+            android:paddingBottom="@dimen/dp5"
+            android:id="@+id/top"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <ImageView
+                android:id="@+id/ivBack"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/dp10"
+                android:layout_marginLeft="@dimen/dp10"
+                android:src="@drawable/ic_back_arrow"
+                android:tint="@color/white"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/order_summary"
+                android:textColor="@color/white"
+                android:textSize="@dimen/sp18"
+                android:layout_marginLeft="@dimen/dp20"
+                android:fontFamily="@font/roboto_medium"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintLeft_toRightOf="@+id/ivBack"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <ImageView
+                android:tint="@color/white"
+                android:layout_marginRight="@dimen/dp10"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_baseline_delete"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <androidx.core.widget.NestedScrollView
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:id="@+id/nestedScroll"
+            app:layout_constraintBottom_toTopOf="@id/const_bottom"
+            app:layout_constraintVertical_weight="1"
+            app:layout_constraintTop_toBottomOf="@id/top">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:id="@+id/tvOrderNum"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/dp15"
+                    android:layout_marginTop="@dimen/dp15"
+                    android:fontFamily="@font/roboto_medium"
+                    android:text="@string/order_id_186860"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/sp18"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/tvRight"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/dp15"
+                    android:layout_marginRight="@dimen/dp15"
+                    android:fontFamily="@font/roboto_medium"
+                    android:text="@string/status"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/sp16"
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/tvStatus"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="@dimen/dp15"
+                    android:fontFamily="@font/roboto_medium"
+                    android:text="@string/inactive"
+                    android:textColor="@color/green"
+                    android:textSize="@dimen/sp16"
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/tvRight" />
+
+                <TextView
+                    android:id="@+id/tvAdd"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/dp15"
+                    android:layout_marginTop="@dimen/dp15"
+                    android:fontFamily="@font/roboto_medium"
+                    android:text="@string/address_"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/sp16"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/tvStatus" />
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintTop_toBottomOf="@id/tvAdd">
+
+                    <View
+                        android:id="@+id/view"
+                        android:layout_width="match_parent"
+                        android:layout_height="0.8dp"
+                        android:layout_marginTop="@dimen/dp10"
+                        android:background="@color/green"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <TextView
+                        android:id="@+id/tvname"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/dp15"
+                        android:layout_marginTop="@dimen/dp15"
+                        android:fontFamily="@font/roboto_medium"
+                        android:text="@string/name_"
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/sp16"
+                        app:layout_constraintLeft_toLeftOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/view" />
+
+
+                    <TextView
+                        android:id="@+id/tvShp_add"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/dp15"
+                        android:layout_marginTop="@dimen/dp8"
+                        android:fontFamily="@font/roboto_regular"
+                        android:text="@string/shipping_address"
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/sp14"
+                        app:layout_constraintLeft_toLeftOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/tvname" />
+
+                    <TextView
+                        android:id="@+id/tvSetAdress"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/dp15"
+                        android:fontFamily="@font/roboto_regular"
+                        android:text="John sonasd"
+                        android:textColor="@color/grey"
+                        android:textSize="@dimen/sp14"
+                        app:layout_constraintLeft_toLeftOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/tvShp_add" />
+
+
+                    <TextView
+                        android:id="@+id/tvBill"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/dp15"
+                        android:layout_marginTop="@dimen/dp10"
+                        android:fontFamily="@font/roboto_regular"
+                        android:text="@string/billing_address"
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/sp14"
+                        app:layout_constraintLeft_toLeftOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/tvSetAdress" />
+
+                    <TextView
+                        android:id="@+id/tvBillingAddress"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/dp15"
+                        android:fontFamily="@font/roboto_regular"
+                        android:text="48 hvx  hhhh juhg gg gy"
+                        android:textColor="@color/grey"
+                        android:textSize="@dimen/sp14"
+                        app:layout_constraintLeft_toLeftOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/tvBill" />
+
+                    <View
+                        android:id="@+id/view1"
+                        android:layout_width="match_parent"
+                        android:layout_height="0.8dp"
+                        android:layout_marginTop="@dimen/dp15"
+                        android:background="@color/green"
+                        app:layout_constraintTop_toBottomOf="@id/tvBillingAddress" />
+
+                    <TextView
+                        android:id="@+id/tvItem"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/dp15"
+                        android:fontFamily="@font/roboto_regular"
+                        android:text="@string/item_details"
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/sp16"
+                        android:layout_marginTop="@dimen/dp15"
+                        app:layout_constraintLeft_toLeftOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/view1" />
+
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/rvOrderSummary"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="@dimen/dp5"
+                        android:nestedScrollingEnabled="false"
+                        app:layout_constraintTop_toBottomOf="@+id/tvItem" />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </androidx.core.widget.NestedScrollView>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/const_bottom"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="#F4F7FA"
+            android:paddingTop="@dimen/dp25"
+            android:paddingBottom="@dimen/dp25"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/nestedScroll">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/dp15"
+                android:fontFamily="@font/roboto_medium"
+                android:text="@string/item_details"
+                android:textColor="@color/grey"
+                android:textSize="@dimen/sp16"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="@dimen/dp15"
+                android:fontFamily="@font/roboto_medium"
+                android:text="RS. 170.00"
+                android:textColor="@color/green"
+                android:textSize="@dimen/sp16"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</layout>

@@ -11,7 +11,7 @@ import androidx.databinding.DataBindingUtil;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.i2c.groceryapp.R;
-import com.i2c.groceryapp.activity.OrderSummaryActivity;
+import com.i2c.groceryapp.activity.ViewAllOrderSummaryActivity;
 import com.i2c.groceryapp.databinding.ItemMyOrderBinding;
 
 
@@ -32,7 +32,7 @@ public class RvMyOrderADP extends RecyclerView.Adapter<RvMyOrderADP.MyViewHolder
             binding.cardMain.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    activity.startActivity(new Intent(activity, OrderSummaryActivity.class));
+                    activity.startActivity(new Intent(activity, ViewAllOrderSummaryActivity.class));
                 }
             });
         }
