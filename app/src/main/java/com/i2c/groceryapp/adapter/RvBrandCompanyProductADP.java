@@ -11,28 +11,28 @@ import androidx.databinding.DataBindingUtil;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.i2c.groceryapp.R;
-import com.i2c.groceryapp.activity.OrderSummaryActivity;
 import com.i2c.groceryapp.activity.ProductDetailActivity;
-import com.i2c.groceryapp.databinding.ItemFreebiesBinding;
+import com.i2c.groceryapp.databinding.ItemTradeOfferBinding;
 
-public class ReviewBasketADP extends RecyclerView.Adapter<ReviewBasketADP.MyViewHolder> {
+
+public class RvBrandCompanyProductADP extends RecyclerView.Adapter<RvBrandCompanyProductADP.MyViewHolder> {
     private Activity activity;
 
-    public ReviewBasketADP(Activity activity) {
+    public RvBrandCompanyProductADP(Activity activity) {
         this.activity = activity;
     }
 
     public class MyViewHolder extends RecyclerView.ViewHolder {
-        ItemFreebiesBinding binding;
+         ItemTradeOfferBinding binding;
 
-        public MyViewHolder(@NonNull ItemFreebiesBinding itemView) {
+        public MyViewHolder(@NonNull ItemTradeOfferBinding itemView) {
             super(itemView.getRoot());
             binding = itemView;
 
             binding.cardMain.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    activity.startActivity(new Intent(activity, OrderSummaryActivity.class));
+                    activity.startActivity(new Intent(activity, ProductDetailActivity.class));
                 }
             });
         }
@@ -40,14 +40,14 @@ public class ReviewBasketADP extends RecyclerView.Adapter<ReviewBasketADP.MyView
 
     @NonNull
     @Override
-    public ReviewBasketADP.MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        ItemFreebiesBinding rvMyReferralItemBinding = DataBindingUtil.inflate(LayoutInflater.from(parent.getContext())
-                , R.layout.item_freebies, parent,false);
+    public RvBrandCompanyProductADP.MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        ItemTradeOfferBinding rvMyReferralItemBinding = DataBindingUtil.inflate(LayoutInflater.from(parent.getContext())
+                , R.layout.item_trade_offer, parent,false);
         return new MyViewHolder(rvMyReferralItemBinding);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull ReviewBasketADP.MyViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull RvBrandCompanyProductADP.MyViewHolder holder, int position) {
 
     }
 

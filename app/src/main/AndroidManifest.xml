@@ -14,7 +14,11 @@
         android:usesCleartextTraffic="true"
         tools:node="replace"
         tools:targetApi="m">
-        <activity android:name=".activity.OrderSummaryActivity"></activity>
+        <activity android:name=".activity.BrandCompanyProductListActivity"/>
+        <activity android:name=".activity.ProductCategoryActivity" />
+        <activity android:name=".activity.AlphaBaticScrollActivity" />
+        <activity android:name=".activity.PaymentActivity" />
+        <activity android:name=".activity.OrderSummaryActivity" />
         <activity android:name=".activity.RateAppActivty" />
         <activity android:name=".activity.ContactUsActivity" />
         <activity android:name=".activity.ChangePasswordActivity" />

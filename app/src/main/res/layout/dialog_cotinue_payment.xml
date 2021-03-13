@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/dialog_white_bg"
+                app:layout_constraintTop_toTopOf="parent"
+                android:padding="@dimen/dp40">
+
+                <TextView
+                    android:id="@+id/tv1"
+                    android:gravity="center"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Congratulation"
+                    android:textSize="@dimen/sp25"
+                    android:fontFamily="@font/roboto_medium"
+                    android:textColor="@color/black_dark"
+                    app:layout_constraintTop_toTopOf="parent"/>
+
+
+                <TextView
+                    android:layout_marginTop="@dimen/dp20"
+                    android:id="@+id/tv2"
+                    app:layout_constraintTop_toBottomOf="@id/tv1"
+                    android:gravity="center"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Order Placed Successfully"
+                    android:textSize="@dimen/sp20"
+                    android:fontFamily="@font/roboto_regular"
+                    android:textColor="@color/black_dark"/>
+
+                <TextView
+                    android:id="@+id/tvOrderID"
+                    app:layout_constraintTop_toBottomOf="@id/tv2"
+                    android:gravity="center"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Order ID : 170867"
+                    android:textSize="@dimen/sp20"
+                    android:layout_marginTop="@dimen/dp20"
+                    android:fontFamily="@font/roboto_regular"
+                    android:textColor="@color/grey"/>
+
+                <TextView
+                    android:id="@+id/tvOrderAmount"
+                    app:layout_constraintTop_toBottomOf="@id/tvOrderID"
+                    android:gravity="center"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Order Amount : 3487"
+                    android:textSize="@dimen/sp20"
+                    android:fontFamily="@font/roboto_regular"
+                    android:textColor="@color/grey"/>
+
+                <TextView
+                    android:id="@+id/btnContinue"
+                    style="@style/App_active_button"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/dp25"
+                    android:layout_marginTop="@dimen/dp20"
+                    android:layout_marginRight="@dimen/dp25"
+                    android:text="Ok"
+                    app:layout_constraintTop_toBottomOf="@id/tvOrderAmount" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

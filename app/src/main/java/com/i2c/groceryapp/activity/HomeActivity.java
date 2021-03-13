@@ -100,6 +100,13 @@ public class HomeActivity extends BaseActivity implements RvMenuADP.OpenFragment
                 startActivity(new Intent(HomeActivity.this, NotifictionActivity.class));
             }
         });
+
+        binding.ivTag.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(HomeActivity.this, AlphaBaticScrollActivity.class));
+            }
+        });
     }
 
     private void serDrawerLayout() {

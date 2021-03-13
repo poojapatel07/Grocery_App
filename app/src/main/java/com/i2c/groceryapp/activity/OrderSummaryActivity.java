@@ -3,6 +3,7 @@ package com.i2c.groceryapp.activity;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 
@@ -32,6 +33,11 @@ public class OrderSummaryActivity extends BaseActivity {
             }
         });
 
-
+        binding.constContinue.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(OrderSummaryActivity.this, PaymentActivity.class));
+            }
+        });
     }
 }

@@ -1,0 +1,157 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+<androidx.constraintlayout.widget.ConstraintLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <RelativeLayout
+        android:background="@color/green"
+        app:layout_constraintTop_toTopOf="parent"
+        android:id="@+id/rlProduct"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp50">
+
+        <ImageView
+            android:id="@+id/ivBack"
+            android:paddingLeft="@dimen/dp10"
+            android:layout_centerVertical="true"
+            android:tint="@color/white"
+            android:src="@drawable/ic_back_arrow"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+
+        <TextView
+            android:id="@+id/tvProductName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="@dimen/dp20"
+            android:layout_marginRight="@dimen/dp15"
+            android:layout_toRightOf="@id/ivBack"
+            android:drawableTint="@color/white"
+            android:drawableRight="@drawable/ic_down_arrow"
+            android:text="@string/search"
+            android:textColor="@color/white"
+            android:textSize="@dimen/sp14" />
+
+        <View
+            android:layout_toRightOf="@id/ivBack"
+            android:layout_marginLeft="@dimen/dp20"
+            android:layout_marginRight="@dimen/dp15"
+            android:layout_width="match_parent"
+            android:layout_height="0.5dp"
+            android:layout_marginTop="@dimen/dp2"
+            android:layout_below="@id/tvProductName"
+            android:background="@color/white" />
+    </RelativeLayout>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp50"
+        android:id="@+id/rvBrandCategory"
+        android:background="#DFE8E4"
+        app:layout_constraintTop_toBottomOf="@+id/rlProduct">
+    </androidx.recyclerview.widget.RecyclerView>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp72"
+        android:background="#F4F7FA"
+        app:layout_constraintTop_toBottomOf="@id/rvBrandCategory"
+        android:id="@+id/rvBrandCompanyCategory">
+    </androidx.recyclerview.widget.RecyclerView>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp60"
+        android:background="@color/white"
+        android:id="@+id/const_sort"
+        app:layout_constraintTop_toBottomOf="@id/rvBrandCompanyCategory">
+
+        <TextView
+            android:layout_marginLeft="@dimen/dp15"
+            android:id="@+id/tvTotleItems"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingBottom="@dimen/dp5"
+            android:paddingTop="@dimen/dp5"
+            android:paddingRight="@dimen/dp16"
+            android:paddingLeft="@dimen/dp16"
+            android:text="@string/_2_items"
+            android:textColor="@color/black"
+            android:textSize="@dimen/sp14"
+            android:background="@drawable/grey_border_round"
+            android:fontFamily="@font/roboto_regular"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:layout_marginRight="@dimen/dp15"
+            android:background="@drawable/green_border_bg">
+
+            <ImageView
+                android:layout_marginLeft="@dimen/dp10"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                android:tint="@color/green"
+                android:src="@drawable/ic_sort"
+                android:layout_width="@dimen/dp20"
+                android:layout_height="@dimen/dp20"/>
+
+            <TextView
+                android:layout_marginLeft="@dimen/dp20"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                android:id="@+id/tvSort"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingBottom="@dimen/dp5"
+                android:paddingTop="@dimen/dp5"
+                android:paddingRight="@dimen/dp16"
+                android:paddingLeft="@dimen/dp16"
+                android:text="@string/sort"
+                android:textColor="@color/green"
+                android:textSize="@dimen/sp14"
+                android:fontFamily="@font/roboto_regular"/>
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:scrollbars="none"
+        app:layout_constraintTop_toBottomOf="@+id/const_sort">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/rvSubCategoryItem"
+                app:layout_constraintTop_toTopOf="parent"
+                android:nestedScrollingEnabled="false"
+                android:layout_marginTop="@dimen/dp3">
+            </androidx.recyclerview.widget.RecyclerView>
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.core.widget.NestedScrollView>
+
+    <RelativeLayout
+        android:visibility="gone"
+        android:background="#90292929"
+        android:id="@+id/rlSubCatBG"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
+</layout>
