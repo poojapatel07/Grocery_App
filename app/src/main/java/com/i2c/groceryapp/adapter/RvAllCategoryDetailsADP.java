@@ -2,6 +2,7 @@ package com.i2c.groceryapp.adapter;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,12 +15,17 @@ import com.i2c.groceryapp.R;
 import com.i2c.groceryapp.activity.ProductCategoryActivity;
 import com.i2c.groceryapp.databinding.ItemAllCategoryBinding;
 import com.i2c.groceryapp.databinding.ItemAllCategoryDetailsBinding;
+import com.i2c.groceryapp.model.Subcategories_list;
+
+import java.util.ArrayList;
 
 public class RvAllCategoryDetailsADP extends RecyclerView.Adapter<RvAllCategoryDetailsADP.MyViewHolder> {
     private Activity activity;
+    private ArrayList<Subcategories_list> arrayList = new ArrayList<>();
 
-    public RvAllCategoryDetailsADP(Activity activity) {
+    public RvAllCategoryDetailsADP(Activity activity, ArrayList<Subcategories_list> arrayList) {
         this.activity = activity;
+        this.arrayList = arrayList;
     }
 
     public class MyViewHolder extends RecyclerView.ViewHolder {
@@ -32,6 +38,7 @@ public class RvAllCategoryDetailsADP extends RecyclerView.Adapter<RvAllCategoryD
             binding.constMain.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
+                    Log.e("TAG", "onClick: CLICK:::"+arrayList.get(getAdapterPosition()).getBrand_id());
                     activity.startActivity(new Intent(activity, ProductCategoryActivity.class));
                 }
             });
@@ -48,11 +55,11 @@ public class RvAllCategoryDetailsADP extends RecyclerView.Adapter<RvAllCategoryD
 
     @Override
     public void onBindViewHolder(@NonNull RvAllCategoryDetailsADP.MyViewHolder holder, int position) {
-
+        holder.binding.tvSubCategory.setText(arrayList.get(position).getName());
     }
 
     @Override
     public int getItemCount() {
-        return 10;
+        return arrayList.size();
     }
 }

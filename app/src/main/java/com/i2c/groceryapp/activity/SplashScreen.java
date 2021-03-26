@@ -11,8 +11,9 @@ import android.os.Handler;
 import com.i2c.groceryapp.R;
 import com.i2c.groceryapp.databinding.ActivitySplashScreenBinding;
 import com.i2c.groceryapp.helper.LocaleHelper;
+import com.i2c.groceryapp.utils.BaseActivity;
 
-public class SplashScreen extends AppCompatActivity {
+public class SplashScreen extends BaseActivity {
     private ActivitySplashScreenBinding binding;
 
     @Override
@@ -22,15 +23,20 @@ public class SplashScreen extends AppCompatActivity {
         setUpControls();
     }
 
+    @Override
+    protected void setContent() {
+    }
+
     private void setUpControls() {
         int SPLASH_DISPLAY_LENGTH = 1000;
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
+                sessionManager.checkLogin();
 //                Intent mainIntent = new Intent(SplashScreen.this, LoginRegisterActivity.class);
-                Intent mainIntent = new Intent(SplashScreen.this, HomeActivity.class);
-                startActivity(mainIntent);
-                finish();
+//                Intent mainIntent = new Intent(SplashScreen.this, HomeActivity.class);
+//                startActivity(mainIntent);
+//                finish();
             }
         }, SPLASH_DISPLAY_LENGTH);
     }

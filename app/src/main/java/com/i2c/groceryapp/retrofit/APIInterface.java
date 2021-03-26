@@ -1,6 +1,14 @@
 package com.i2c.groceryapp.retrofit;
 
+import com.i2c.groceryapp.model.AddUpdateCart;
+import com.i2c.groceryapp.model.Category;
 import com.i2c.groceryapp.model.Data;
+import com.i2c.groceryapp.model.FavUnFavModel;
+import com.i2c.groceryapp.model.FavouriteModel;
+import com.i2c.groceryapp.model.ReviewCartModel;
+import com.i2c.groceryapp.model.Subcategories_list;
+import com.i2c.groceryapp.model.Todayspecial_list;
+import com.i2c.groceryapp.retrofit.response.ListResponse;
 import com.i2c.groceryapp.retrofit.response.RestResponse;
 
 import retrofit2.Call;
@@ -45,6 +53,67 @@ public interface APIInterface {
     Call<RestResponse<Data>> change_new_password(@Field(RequestParam.MOBILE) String mobile,
                                                  @Field(RequestParam.OTP) String otp,
                                                  @Field(RequestParam.NEW_PASSWORD) String new_password);
+
+    @FormUrlEncoded
+    @POST("home_list")
+    Call<RestResponse<Todayspecial_list>> homeList(@Field(RequestParam.API_TOKEN) String api_token);
+
+
+    @FormUrlEncoded
+    @POST("add_cart")
+    Call<AddUpdateCart> addToCart(@Field(RequestParam.API_TOKEN) String api_token,
+                                  @Field(RequestParam.PRODUCT_ID) String product_id,
+                                  @Field(RequestParam.QTY) String qty,
+                                  @Field(RequestParam.PRODUCT_MARGIN_ID) String product_margin_id);
+
+    @FormUrlEncoded
+    @POST("update_cart")
+    Call<AddUpdateCart> updateToCart(@Field(RequestParam.API_TOKEN) String api_token,
+                                     @Field(RequestParam.PRODUCT_ID) String product_id,
+                                     @Field(RequestParam.QTY) String qty,
+                                     @Field(RequestParam.PRODUCT_MARGIN_ID) String product_margin_id);
+
+    @FormUrlEncoded
+    @POST("add_favourite")
+    Call<FavUnFavModel> add_favourite(@Field(RequestParam.API_TOKEN) String api_token,
+                                      @Field(RequestParam.PRODUCT_ID) String product_id);
+
+    @FormUrlEncoded
+    @POST("update_favourite")
+    Call<FavUnFavModel> remove_favourite(@Field(RequestParam.API_TOKEN) String api_token,
+                                         @Field(RequestParam.PRODUCT_ID) String product_id);
+
+    @FormUrlEncoded
+    @POST("categories_list")
+    Call<ListResponse<Category>> categories_list(@Field(RequestParam.API_TOKEN) String api_token);
+
+
+    @FormUrlEncoded
+    @POST("subcategories_list")
+    Call<ListResponse<Subcategories_list>> subcategories_list(@Field(RequestParam.API_TOKEN) String api_token,
+                                                              @Field(RequestParam.CATEGORY_ID) String category_id);
+
+
+    @FormUrlEncoded
+    @POST("favourite_list")
+    Call<ListResponse<FavouriteModel>> favourite_list(@Field(RequestParam.API_TOKEN) String api_token);
+
+    @FormUrlEncoded
+    @POST("freebies_product_list")
+    Call<ListResponse<Todayspecial_list>> freebies_product_list(@Field(RequestParam.API_TOKEN) String api_token,
+                                                                @Field(RequestParam.PAGE_NO) String page_no);
+
+
+    @FormUrlEncoded
+    @POST("trade_product_list")
+    Call<ListResponse<Todayspecial_list>> trade_product_list(@Field(RequestParam.API_TOKEN) String api_token,
+                                                                @Field(RequestParam.PAGE_NO) String page_no);
+
+
+    @FormUrlEncoded
+    @POST("cart_list")
+    Call<ListResponse<ReviewCartModel>> cart_list(@Field(RequestParam.API_TOKEN) String api_token);
+
 
 
 }

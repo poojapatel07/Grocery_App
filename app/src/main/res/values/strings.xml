@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name" translatable="false">Grocery App</string>
+    <string name="app_name" translatable="false">FreshMandi</string>
 
     <string name="check_internet">"No Internet Connection! please try again"</string>
 

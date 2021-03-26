@@ -125,6 +125,7 @@
                                     android:textSize="@dimen/sp13"/>
 
                                 <View
+                                    android:visibility="gone"
                                     android:id="@+id/view_1"
                                     android:layout_width="@dimen/dp14"
                                     android:layout_height="1dp"
@@ -421,6 +422,18 @@
                                         app:custom_fonts="@string/Roboto_Medium" />
                                 </RelativeLayout>
 
+                                <TextView
+                                    android:id="@+id/tvCartQuny"
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_gravity="center"
+                                    android:layout_weight="1"
+                                    android:gravity="center"
+                                    android:text="5"
+                                    android:textColor="@color/green"
+                                    android:textSize="@dimen/sp14"
+                                    app:custom_fonts="@string/Roboto_Medium" />
+
                                 <RelativeLayout
                                     android:id="@+id/rlCartPlus"
                                     android:layout_width="0dp"
@@ -441,18 +454,6 @@
                                         app:custom_fonts="@string/Roboto_Medium" />
 
                                 </RelativeLayout>
-
-                                <TextView
-                                    android:id="@+id/tvCartQuny"
-                                    android:layout_width="0dp"
-                                    android:layout_height="wrap_content"
-                                    android:layout_gravity="center"
-                                    android:layout_weight="1"
-                                    android:gravity="center"
-                                    android:text="5"
-                                    android:textColor="@color/green"
-                                    android:textSize="@dimen/sp14"
-                                    app:custom_fonts="@string/Roboto_Medium" />
 
 
                             </LinearLayout>

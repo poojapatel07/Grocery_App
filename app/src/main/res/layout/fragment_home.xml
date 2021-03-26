@@ -156,14 +156,28 @@
                     </LinearLayout>
                 </LinearLayout>
 
-                <ImageView
-                    android:id="@+id/ivFirstBanner"
+                <RelativeLayout
+                    android:id="@+id/rlTop"
+                    app:layout_constraintTop_toBottomOf="@id/llTop"
                     android:layout_width="match_parent"
-                    android:layout_height="@dimen/dp180"
-                    android:layout_marginTop="@dimen/dp5"
-                    android:scaleType="fitXY"
-                    android:src="@drawable/ic_launcher_background"
-                    app:layout_constraintTop_toBottomOf="@id/llTop" />
+                    android:layout_height="wrap_content">
+
+                    <ImageView
+                        android:id="@+id/ivFirstBanner"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/dp180"
+                        android:layout_marginTop="@dimen/dp5"
+                        android:scaleType="fitXY"
+                        android:src="@drawable/ic_launcher_background"/>
+
+                    <ProgressBar
+                        android:backgroundTint="@color/green"
+                        android:layout_centerInParent="true"
+                        android:id="@+id/progressBar"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"/>
+                </RelativeLayout>
+
 
                 <TextView
                     android:id="@+id/tvToday"
@@ -175,13 +189,29 @@
                     android:text="@string/today_s_special"
                     android:textColor="@color/black_dark"
                     android:textSize="@dimen/sp14"
-                    app:layout_constraintTop_toBottomOf="@id/ivFirstBanner" />
+                    app:layout_constraintTop_toBottomOf="@id/rlTop" />
 
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/rvTodaySpecial"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     app:layout_constraintTop_toBottomOf="@id/tvToday"/>
+
+                <TextView
+                    android:visibility="gone"
+                    android:id="@+id/tvViewAll"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/dp10"
+                    android:layout_marginTop="@dimen/dp10"
+                    android:fontFamily="@font/roboto_medium"
+                    android:text="View all"
+                    android:layout_marginRight="@dimen/dp10"
+                    android:textColor="@color/black_dark"
+                    android:textSize="@dimen/sp14"
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/rvTodaySpecial" />
+
 
                 <TextView
                     android:id="@+id/tvBaseCate"
@@ -193,7 +223,7 @@
                     android:text="@string/base_category"
                     android:textColor="@color/black_dark"
                     android:textSize="@dimen/sp14"
-                    app:layout_constraintTop_toBottomOf="@id/rvTodaySpecial" />
+                    app:layout_constraintTop_toBottomOf="@id/tvViewAll" />
 
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/rvBaseCategory"
@@ -203,7 +233,30 @@
                     android:paddingLeft="@dimen/dp8"
                     app:layout_constraintTop_toBottomOf="@id/tvBaseCate"/>
 
-                <ImageView
+                <RelativeLayout
+                    android:id="@+id/rlbottom"
+                    app:layout_constraintTop_toBottomOf="@id/rvBaseCategory"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <ImageView
+                        android:id="@+id/ivLastBanner"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/dp180"
+                        android:layout_marginTop="@dimen/dp5"
+                        android:scaleType="fitXY"
+                        android:src="@drawable/ic_launcher_background"/>
+
+                    <ProgressBar
+                        android:backgroundTint="@color/green"
+                        android:layout_centerInParent="true"
+                        android:id="@+id/progressBottomBar"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"/>
+                </RelativeLayout>
+
+
+                <!--<ImageView
                     android:id="@+id/ivLastBanner"
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/dp180"
@@ -212,15 +265,22 @@
                     android:scaleType="fitXY"
                     android:src="@drawable/ic_launcher_background"
                     app:layout_constraintTop_toBottomOf="@id/rvBaseCategory" />
-
+-->
                 <Space
-                    app:layout_constraintTop_toBottomOf="@id/ivLastBanner"
+                    app:layout_constraintTop_toBottomOf="@id/rlbottom"
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/dp100"/>
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 
         </androidx.core.widget.NestedScrollView>
+
+        <RelativeLayout
+            android:visibility="gone"
+            android:id="@+id/rlMainBG"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="#90292929" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

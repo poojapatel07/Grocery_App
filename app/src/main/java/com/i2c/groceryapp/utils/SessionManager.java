@@ -1,13 +1,19 @@
 package com.i2c.groceryapp.utils;
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
+import com.i2c.groceryapp.activity.HomeActivity;
+import com.i2c.groceryapp.activity.LoginRegisterActivity;
+import com.i2c.groceryapp.activity.MainActivity;
 import com.i2c.groceryapp.model.Data;
+import com.i2c.groceryapp.model.Todayspecial_list;
 
 import java.lang.reflect.Type;
+import java.util.ArrayList;
 
 
 public class SessionManager {
@@ -66,17 +72,17 @@ public class SessionManager {
         editor.commit();
     }
 
-//    public void checkLogin() {
-//        if (this.getBoolen(Constant.IS_ALREADY_LOGIN)) {
-//            Intent login = new Intent(context, MainActivity.class);
-//            login.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
-//            context.startActivity(login);
-//        } else {
-//            Intent login = new Intent(context, AuthActivity.class);
-//            login.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
-//            context.startActivity(login);
-//        }
-//    }
+    public void checkLogin() {
+        if (this.getBoolen(Constant.IS_ALREADY_LOGIN)) {
+            Intent login = new Intent(context, HomeActivity.class);
+            login.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
+            context.startActivity(login);
+        } else {
+            Intent login = new Intent(context, LoginRegisterActivity.class);
+            login.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
+            context.startActivity(login);
+        }
+    }
 
 
 //    public void saveLoginData(User_data userData) {
@@ -124,6 +130,24 @@ public class SessionManager {
         String json = sharedPreferences.getString(Constant.LOGIN_USER_DATA, null);
         Type type = new TypeToken<Data>() {
         }.getType();
+        return gson.fromJson(json, type);
+    }
+
+    /*store service list*/
+    public ArrayList<Todayspecial_list> save_today_specialList(ArrayList<Todayspecial_list> homeBanners) {
+        Gson gson = new Gson();
+        String personString = gson.toJson(homeBanners);
+        editor.putString(Constant.TODAY_SPECIAL_LIST, personString);
+        editor.commit();
+        return homeBanners;
+    }
+
+    public ArrayList<Todayspecial_list> get_today_specialList() {
+        Gson gson = new Gson();
+        String json = sharedPreferences.getString(Constant.TODAY_SPECIAL_LIST, null);
+        Type type = new TypeToken<ArrayList<Todayspecial_list>>() {
+        }.getType();
+        String s = "{" + "data :" + json + "}";
         return gson.fromJson(json, type);
     }
 

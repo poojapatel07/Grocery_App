@@ -4,6 +4,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <androidx.cardview.widget.CardView
+        android:id="@+id/cardMain"
         android:layout_width="@dimen/dp180"
         android:layout_height="@dimen/dp150"
         android:layout_marginTop="@dimen/dp10"
@@ -24,12 +25,12 @@
                 android:layout_height="0dp"
                 android:layout_margin="@dimen/dp5"
                 android:src="@drawable/grocery_image"
-                app:layout_constraintBottom_toTopOf="@id/tvCategory"
+                app:layout_constraintBottom_toTopOf="@id/tvCategoryName"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintVertical_weight="1" />
 
             <TextView
-                android:id="@+id/tvCategory"
+                android:id="@+id/tvCategoryName"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/roboto_medium"

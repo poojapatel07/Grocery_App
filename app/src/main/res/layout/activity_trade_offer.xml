@@ -84,5 +84,12 @@
             app:layout_constraintTop_toTopOf="parent" />
 
 
+        <RelativeLayout
+            android:visibility="gone"
+            android:id="@+id/rlMainBG"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="#90292929" />
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

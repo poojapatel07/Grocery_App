@@ -6,6 +6,7 @@ public class RequestParam {
     public static final String PASSWORD = "password";
     public static final String DEVICE_TYPE = "device_type";
     public static final String DEVICE_TOKEN = "device_token";
+    public static final String API_TOKEN = "api_token";
 
     /*register*/
     public static final String NAME = "name";
@@ -19,6 +20,16 @@ public class RequestParam {
 
     /*new password*/
     public static final String NEW_PASSWORD = "new_password";
+
+    /*add to cart*/
+    public static final String PRODUCT_ID = "product_id";
+    public static final String QTY = "qty";
+    public static final String PRODUCT_MARGIN_ID = "product_margin_id";
+
+    /*sub category id*/
+    public static final String CATEGORY_ID = "categorie_id";
+
+    public static final String PAGE_NO = "page_no";
 }
 
 

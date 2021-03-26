@@ -20,7 +20,7 @@
                 android:layout_margin="@dimen/dp10"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                android:id="@+id/ivLike"
+                android:id="@+id/ivFavFreebies"
                 android:src="@drawable/ic_fav"
                 android:layout_width="@dimen/dp20"
                 android:layout_height="@dimen/dp20"/>
@@ -418,6 +418,19 @@
                                         app:custom_fonts="@string/Roboto_Medium" />
                                 </RelativeLayout>
 
+                                <TextView
+                                    android:id="@+id/tvCartQuny"
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_gravity="center"
+                                    android:layout_weight="1"
+                                    android:gravity="center"
+                                    android:text="5"
+                                    android:textColor="@color/green"
+                                    android:textSize="@dimen/sp14"
+                                    app:custom_fonts="@string/Roboto_Medium" />
+
+
                                 <RelativeLayout
                                     android:id="@+id/rlCartPlus"
                                     android:layout_width="0dp"
@@ -438,18 +451,6 @@
                                         app:custom_fonts="@string/Roboto_Medium" />
 
                                 </RelativeLayout>
-
-                                <TextView
-                                    android:id="@+id/tvCartQuny"
-                                    android:layout_width="0dp"
-                                    android:layout_height="wrap_content"
-                                    android:layout_gravity="center"
-                                    android:layout_weight="1"
-                                    android:gravity="center"
-                                    android:text="5"
-                                    android:textColor="@color/green"
-                                    android:textSize="@dimen/sp14"
-                                    app:custom_fonts="@string/Roboto_Medium" />
 
 
                             </LinearLayout>
@@ -477,10 +478,10 @@
             </androidx.constraintlayout.widget.ConstraintLayout>
 
             <androidx.constraintlayout.widget.ConstraintLayout
-                android:id="@+id/bottomMain"
+                android:id="@+id/LL_FreeProduct"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:visibility="gone"
+                android:visibility="visible"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/topMain">
 
