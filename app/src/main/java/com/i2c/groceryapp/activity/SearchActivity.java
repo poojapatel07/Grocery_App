@@ -1,20 +1,23 @@
 package com.i2c.groceryapp.activity;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.annotation.SuppressLint;
 import android.app.Dialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.View;
 import android.view.WindowManager;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.LinearLayout;
@@ -25,20 +28,14 @@ import android.widget.TextView;
 import com.google.gson.Gson;
 import com.i2c.groceryapp.R;
 import com.i2c.groceryapp.adapter.BrandCategoryItemADP;
-import com.i2c.groceryapp.adapter.RvAllCategoryDetailsADP;
-import com.i2c.groceryapp.adapter.RvBrandCompanyItemADP;
-import com.i2c.groceryapp.adapter.RvDialogProductListADP;
-import com.i2c.groceryapp.adapter.RvProductCategoryMOQListADP;
-import com.i2c.groceryapp.adapter.RvProduct_VerticleADP;
 import com.i2c.groceryapp.adapter.RvSearchMOQListADP;
-import com.i2c.groceryapp.adapter.RvProduct_VerticleADP;
-import com.i2c.groceryapp.databinding.ActivityProductCategoryBinding;
-import com.i2c.groceryapp.databinding.DialogProductlistBinding;
+import com.i2c.groceryapp.adapter.RvSearchProductListADP;
+import com.i2c.groceryapp.adapter.RvTodaysSpecialMOQListADP;
+import com.i2c.groceryapp.databinding.ActivitySearchBinding;
+import com.i2c.groceryapp.fragment.HomeFragment;
 import com.i2c.groceryapp.model.AddUpdateCart;
-import com.i2c.groceryapp.model.Brand_companies_list;
-import com.i2c.groceryapp.model.Brand_list;
+import com.i2c.groceryapp.model.Data;
 import com.i2c.groceryapp.model.FavUnFavModel;
-import com.i2c.groceryapp.model.Subcategories_list;
 import com.i2c.groceryapp.model.Todayspecial_list;
 import com.i2c.groceryapp.retrofit.APIClient;
 import com.i2c.groceryapp.retrofit.APIInterface;
@@ -55,28 +52,33 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class ProductCategoryActivity extends BaseActivity implements
-        BrandCategoryItemADP.CallMainBrandID, 
-        RvBrandCompanyItemADP.CallBrandCompanyId,
-        RvProduct_VerticleADP.OpenMOQDialog,
-        RvProduct_VerticleADP.AddFavouritetoAllProduct,
-        RvProduct_VerticleADP.AddToReviewCartList,
-        RvProduct_VerticleADP.UpdateReviewCart,
-        RvProductCategoryMOQListADP.CheckedMOQ,
-        RvProduct_VerticleADP.PassValue_ProductDeatlis, RvDialogProductListADP.CategoryIDFromHometoFrmgt
-{
-
-    ActivityProductCategoryBinding binding;
-    private BrandCategoryItemADP brand_adp;
-    private RvBrandCompanyItemADP brand_company_adp;
-    private RvProduct_VerticleADP adp;
-    private ArrayList<Todayspecial_list> allProductList = new ArrayList<>();
-    private ArrayList<Brand_list> brandlist = new ArrayList<>();
-    private ArrayList<Brand_companies_list> brandCompnaylist = new ArrayList<>();
-
+public class SearchActivity extends BaseActivity implements
+        RvSearchProductListADP.OpenMOQDialog,
+        RvSearchProductListADP.AddFavouritetoAllProduct,
+        RvSearchProductListADP.AddToReviewCartList,
+        RvSearchProductListADP.UpdateReviewCart,
+        RvSearchMOQListADP.CheckedMOQ,
+        RvSearchProductListADP.PassValue_ProductDeatlis {
+    
+    ActivitySearchBinding binding;
+    private RvSearchProductListADP adp;
+    private int MAIN_POS = 0;
+    private int PAGE_POS = 0;
     private int SORT_BY = 2;
-    private int POSITION = 0;
-    private int Str_Items;
+    boolean flag = true;
+    private int NEW_SEARCH = 0;
+    private Boolean Search_flag = false;
+    private Boolean IS_SEARCH = true;
+    private int SEARCH_PAGE_POS = 0;
+    private LinearLayoutManager manager;
+    private ArrayList<Todayspecial_list> allProductList = new ArrayList<>();
+
+    /*sort dialog*/
+    private RadioButton radioLowToHigh;
+    private RadioButton radioHighToLow;
+    private Boolean IsRadioSelected = true;
+    private int SORT_POS_LOW = 0;
+    private int SORT_POS_HIGH = 0;
 
     /*moq*/
     private Dialog dialog;
@@ -94,21 +96,14 @@ public class ProductCategoryActivity extends BaseActivity implements
     private int POSTION;
     private HashMap<Integer, Boolean> map = new HashMap<>();
     private TextView TXT_MOQ;
-    RvProductCategoryMOQListADP adp_moq;
+    RvSearchMOQListADP adp_moq;
     private String Other_margin_Qnty = "0";
-
-    /*sort*/
-    private RadioButton radioLowToHigh;
-    private RadioButton radioHighToLow;
-    private Boolean IsRadioSelected = true;
-    private ArrayList<Subcategories_list> arrayList = new ArrayList<>();
-    private Dialog dialog_product;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        binding = DataBindingUtil.setContentView(this, R.layout.activity_product_category);
+        binding = DataBindingUtil.setContentView(this, R.layout.activity_search);
         setUpControls();
     }
 
@@ -116,44 +111,14 @@ public class ProductCategoryActivity extends BaseActivity implements
     protected void setContent() {}
 
     private void setUpControls() {
-         //Brand Category RV
-        binding.rvBrandCategory.setHasFixedSize(false);
-        LinearLayoutManager manager = new LinearLayoutManager(this, RecyclerView.HORIZONTAL, false);
-        binding.rvBrandCategory.setLayoutManager(manager);
-
-        //Brand Company Category RV
-        binding.rvBrandCompanyCategory.setHasFixedSize(false);
-        LinearLayoutManager manager_sub_cat = new LinearLayoutManager(this, RecyclerView.HORIZONTAL, false);
-        binding.rvBrandCompanyCategory.setLayoutManager(manager_sub_cat);
-
-        //Sub Vertical Category Items RV
-        binding.rvSubCategoryItem.setHasFixedSize(false);
-        LinearLayoutManager manager1 = new LinearLayoutManager(this);
-        binding.rvSubCategoryItem.setLayoutManager(manager1);
-
-
-        binding.tvProductName.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-//                openDialogProductList();
-                callSubCaegoryList();
-            }
-        });
+        binding.rvSearchProduct.setHasFixedSize(false);
+         manager = new LinearLayoutManager(this);
+        binding.rvSearchProduct.setLayoutManager(manager);
 
         binding.ivBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 onBackPressed();
-            }
-        });
-
-        callAllProductAPI(POSITION, SORT_BY);
-
-        binding.rvSubCategoryItem.setOnScrollListener(new EndlessRecyclerOnScrollListenerNewGrid(manager) {
-            @Override
-            public void onLoadMore(int paramInt) {
-                POSITION += 1;
-                callAllProductAPI(POSITION, SORT_BY);
             }
         });
 
@@ -163,55 +128,75 @@ public class ProductCategoryActivity extends BaseActivity implements
                 openSortByDialog();
             }
         });
-    }
 
-    private void callSubCaegoryList() {
-        if (!CommonUtils.isInternetOn(this)) {
-            CommonUtils.showToast(this, getString(R.string.check_internet));
-            return;
-        }
-        showCustomLoader(this);
-        APIInterface apiInterface = APIClient.getClient().create(APIInterface.class);
-        Call<ListResponse<Subcategories_list>> callAPI = apiInterface.subcategories_list(
-                sessionManager.getStringValue(Constant.API_TOKEN),
-                sessionManager.getStringValue(Constant.BASE_CAT_ID));
+        MAIN_POS = 0;
+        callAllSearchProductAPI(true,PAGE_POS, "", SORT_BY);
 
-        callAPI.enqueue(new Callback<ListResponse<Subcategories_list>>() {
+
+       binding.rvSearchProduct.addOnScrollListener(new RecyclerView.OnScrollListener() {
             @Override
-            public void onResponse(Call<ListResponse<Subcategories_list>> call, Response<ListResponse<Subcategories_list>> response) {
-                if(response.body()!=null){
-                    if(response.body().getSuccess().equals("1")){
-                        arrayList.clear();
-                        arrayList = response.body().getData();
-//                        allCategoryDetailsADP = new RvAllCategoryDetailsADP(
-//                                ProductCategoryActivity.this, arrayList);
-//                        binding.rvCategoryDetail.setAdapter(allCategoryDetailsADP);
-
-                        if(arrayList.size()!=0){
-                            openDialogProductList();
-                        }else {
-                            showToast("Data not found");
-                        }
-                    }else if(response.body().getSuccess().equals("0")){
-
-                    }else {
-
-                    }
-                }
-                dismissCustomLoader();
+            public void onScrollStateChanged(@NonNull RecyclerView recyclerView, int newState) {
+                super.onScrollStateChanged(recyclerView, newState);
             }
 
             @Override
-            public void onFailure(Call<ListResponse<Subcategories_list>> call, Throwable t) {
-                dismissCustomLoader();
+            public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy) {
+                if (MAIN_POS == 0) {
+                    PAGE_POS += 1;
+                    callAllSearchProductAPI(false,PAGE_POS, "", SORT_BY);
+
+                } else if (MAIN_POS == 1) {
+                    SORT_POS_LOW += 1;
+                    callAllSearchProductAPI(false,SORT_POS_LOW, "", SORT_BY);
+                    Log.e("TAG", "onScrolled: LOW::::::::" + SORT_POS_LOW);
+
+                } else if (MAIN_POS == 2) {
+                    SORT_POS_HIGH += 1;
+                    callAllSearchProductAPI(false,SORT_POS_HIGH, "", SORT_BY);
+                    Log.e("TAG", "onScrolled: HIGH::::::::" + SORT_POS_HIGH);
+                }
+                super.onScrolled(recyclerView, dx, dy);
             }
         });
+
+        if (IS_SEARCH) {
+            binding.rvSearchProduct.setOnScrollListener(new EndlessRecyclerOnScrollListenerNewGrid(manager) {
+                @Override
+                public void onLoadMore(int paramInt) {
+                    if (MAIN_POS == 3) {
+                        SEARCH_PAGE_POS += 1;
+                        callAllSearchProductAPI(false,SEARCH_PAGE_POS,
+                                binding.etSearchProduct.getText().toString(),
+                                SORT_BY);
+                    }
+                }
+            });
+        }
+
+
+        binding.etSearchProduct.setOnKeyListener(new View.OnKeyListener() {
+            public boolean onKey(View v, int keyCode, KeyEvent event) {
+                if (event.getAction() == KeyEvent.ACTION_DOWN && keyCode == KeyEvent.KEYCODE_ENTER) {
+                    InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+                    imm.hideSoftInputFromWindow(v.getWindowToken(), 0);
+
+                    MAIN_POS = 3;
+                    flag = true;
+
+                    Search_flag = true;
+                    NEW_SEARCH++;
+                    callAllSearchProductAPI(true,SEARCH_PAGE_POS,
+                            binding.etSearchProduct.getText().toString(), SORT_BY);
+                    return true;
+                }
+                return false;
+            }
+        });
+
     }
 
-
-
     private void openSortByDialog() {
-        binding.rlSubCatBG.setVisibility(View.VISIBLE);
+        binding.rlMainBG.setVisibility(View.VISIBLE);
         final Dialog dialog = new Dialog(this, android.R.style.Theme_Translucent_NoTitleBar_Fullscreen);
         dialog.setContentView(R.layout.dialog_sorting_category);
 
@@ -223,7 +208,6 @@ public class ProductCategoryActivity extends BaseActivity implements
         getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
 
         int displayWidth = displayMetrics.widthPixels;
-        int displayHeight = displayMetrics.heightPixels;
 
         WindowManager.LayoutParams layoutParams = new WindowManager.LayoutParams();
         layoutParams.copyFrom(dialog.getWindow().getAttributes());
@@ -243,12 +227,17 @@ public class ProductCategoryActivity extends BaseActivity implements
             @Override
             public void onClick(View v) {
                 IsRadioSelected = true;
-
                 radioLowToHigh.setChecked(true);
                 radioHighToLow.setChecked(false);
                 dialog.dismiss();
                 SORT_BY = 2;
-                callAllProductAPI(0, SORT_BY);
+
+                MAIN_POS = 1;
+                flag = true;
+                SORT_POS_LOW = 0;
+                callAllSearchProductAPI(true,SORT_POS_LOW, "", SORT_BY);
+
+                Log.e("TAG", "onClick: START::::::::" + SORT_POS_LOW);
             }
         });
 
@@ -260,9 +249,16 @@ public class ProductCategoryActivity extends BaseActivity implements
                 radioLowToHigh.setChecked(false);
                 dialog.dismiss();
                 SORT_BY = 3;
-                callAllProductAPI(0, SORT_BY);
+
+                MAIN_POS = 2;
+                flag = true;
+                SORT_POS_HIGH = 0;
+                callAllSearchProductAPI(true,SORT_POS_HIGH, "", SORT_BY);
+                Log.e("TAG", "onClick: CLICK:::::" + SORT_POS_HIGH);
+
             }
         });
+
 
         if (IsRadioSelected) {
             radioLowToHigh.setChecked(true);
@@ -275,123 +271,76 @@ public class ProductCategoryActivity extends BaseActivity implements
         dialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
             @Override
             public void onDismiss(DialogInterface dialog) {
-                binding.rlSubCatBG.setVisibility(View.GONE);
+                binding.rlMainBG.setVisibility(View.GONE);
             }
         });
     }
 
-    private void openDialogProductList() {
-        DialogProductlistBinding productlistBinding;
-        binding.rlSubCatBG.setVisibility(View.VISIBLE);
-        dialog_product = new Dialog(this, android.R.style.Theme_Translucent_NoTitleBar_Fullscreen);
-
-        productlistBinding = DataBindingUtil.inflate(dialog_product.getLayoutInflater(),
-                R.layout.dialog_productlist, null, false);
-        dialog_product.setContentView(productlistBinding.getRoot());
-
-        dialog_product.setCancelable(false);
-        dialog_product.setCanceledOnTouchOutside(true);
-        dialog_product.getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
-
-        DisplayMetrics displayMetrics = new DisplayMetrics();
-        getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
-
-        int displayWidth = displayMetrics.widthPixels;
-        int displayHeight = displayMetrics.heightPixels;
-
-        WindowManager.LayoutParams layoutParams = new WindowManager.LayoutParams();
-        layoutParams.copyFrom(dialog_product.getWindow().getAttributes());
-
-        int dialogWindowWidth = (int) (displayWidth * 0.85f);
-
-        layoutParams.width = dialogWindowWidth;
-        layoutParams.height = layoutParams.WRAP_CONTENT;
-
-        dialog_product.getWindow().setAttributes(layoutParams);
-        dialog_product.show();
-
-        productlistBinding.rvProductList.setHasFixedSize(false);
-
-        LinearLayoutManager manager = new LinearLayoutManager(this);
-        productlistBinding.rvProductList.setLayoutManager(manager);
-
-        RvDialogProductListADP adp = new RvDialogProductListADP(this,
-                arrayList, this);
-        productlistBinding.rvProductList.setAdapter(adp);
-
-        dialog_product.setOnDismissListener(new DialogInterface.OnDismissListener() {
-            @Override
-            public void onDismiss(DialogInterface dialog) {
-                binding.rlSubCatBG.setVisibility(View.GONE);
-            }
-        });
-    }
-
-    private void callAllProductAPI(int position, int sortBy) {
+    private void callAllSearchProductAPI(Boolean isLoading, int page_pos, String search_product, int sortBy) {
         if(!isInternetOn(this)){
             showToast(getResources().getString(R.string.check_internet));
             return;
         }
 
-        showCustomLoader(this);
+        if(isLoading) {
+            showCustomLoader(this);
+        }
 
         APIInterface apiInterface = APIClient.getClient().create(APIInterface.class);
-        Call<ListResponse<Todayspecial_list>> callAPI = apiInterface.product_list(
+        Call<ListResponse<Todayspecial_list>> callAPI = apiInterface.all_search_product_list(
                 sessionManager.getStringValue(Constant.API_TOKEN),
-                String.valueOf(position),
-                sessionManager.getStringValue(Constant.SUB_CATEGORY_ID),
-                String.valueOf(sortBy),
-                sessionManager.getStringValue(Constant.BRAND_ID),
-                sessionManager.getStringValue(Constant.BRAND_COMPANY_ID_PRODUCT));
+                String.valueOf(page_pos), String.valueOf(sortBy), search_product);
 
         callAPI.enqueue(new Callback<ListResponse<Todayspecial_list>>() {
-            @SuppressLint("SetTextI18n")
             @Override
             public void onResponse(Call<ListResponse<Todayspecial_list>> call, Response<ListResponse<Todayspecial_list>> response) {
-                if(response.body()!=null){
-                    Log.e("TAG", "onResponse:HELLO:::"+new Gson().toJson(response.body()));
+                Log.e("TAG", "onResponse:CALLED::::"+new Gson().toJson(response.body()));
 
+                if(response.body()!=null){
                     if(response.body().getSuccess().equals("1")){
-                        allProductList.clear();
+                        if (flag) {
+                            allProductList.clear();
+                            flag = false;
+                        }
 
                         if (allProductList.size() == 0) {
                             allProductList.addAll(response.body().getData());
-                            adp = new RvProduct_VerticleADP(ProductCategoryActivity.this,
-                                    allProductList, ProductCategoryActivity.this,
-                                    ProductCategoryActivity.this, ProductCategoryActivity.this,
-                                    ProductCategoryActivity.this, ProductCategoryActivity.this);
-                            binding.rvSubCategoryItem.setAdapter(adp);
+                            adp = new RvSearchProductListADP(
+                                    SearchActivity.this,
+                                    allProductList, SearchActivity.this,
+                                    SearchActivity.this,
+                                    SearchActivity.this,
+                                    SearchActivity.this,
+                                    SearchActivity.this);
+                            binding.rvSearchProduct.setAdapter(adp);
                         } else {
                             allProductList.addAll(response.body().getData());
                         }
                         adp.notifyDataSetChanged();
 
-                        /*total*/
-                        Str_Items = allProductList.size();
-                        binding.tvTotleItems.setText(String.valueOf(Str_Items) + " " + "items");
+                        Log.e("TAG", "onResponse: SIZE:::::::::" + allProductList.size());
 
-                        //brand list
-                        brandlist.clear();
-                        brandlist.addAll(response.body().getBrand_list());
-                        brand_adp = new BrandCategoryItemADP(ProductCategoryActivity.this,
-                                brandlist, ProductCategoryActivity.this);
-                        binding.rvBrandCategory.setAdapter(brand_adp);
-                        brand_adp.notifyDataSetChanged();
-
-
-                        //brand company list
-                        brandCompnaylist.clear();
-                        brandCompnaylist.addAll(response.body().getBrand_companies_list());
-                        brand_company_adp = new RvBrandCompanyItemADP(
-                                ProductCategoryActivity.this, brandCompnaylist,
-                                ProductCategoryActivity.this);
-                        binding.rvBrandCompanyCategory.setAdapter(brand_company_adp);
-                        brand_company_adp.notifyDataSetChanged();
+                        if (Search_flag) {
+                            if (NEW_SEARCH > 0) {
+                                binding.rvSearchProduct.setOnScrollListener
+                                        (new EndlessRecyclerOnScrollListenerNewGrid(manager) {
+                                    @Override
+                                    public void onLoadMore(int paramInt) {
+                                        IS_SEARCH = false;
+                                        SEARCH_PAGE_POS += 1;
+                                        /*search*/
+                                        callAllSearchProductAPI(false,SEARCH_PAGE_POS,
+                                                binding.etSearchProduct.getText().toString(),
+                                                SORT_BY);
+                                    }
+                                });
+                            }
+                        }
 
                     }else if(response.body().getSuccess().equals("0")){
 
                     }
-                }else if(response.code() == 404){
+                }else if(response.code()==404){
 
                 }
                 dismissCustomLoader();
@@ -404,31 +353,13 @@ public class ProductCategoryActivity extends BaseActivity implements
         });
     }
 
-
-    @Override
-    public void callMainBrandId(String brand_id, String brand_compny_id) {
-        Log.e("TAG", "callMainBrandId: brand::::"+brand_id+" "+brand_compny_id);
-        POSITION = 0;
-        sessionManager.setStringValue(Constant.BRAND_ID, brand_id);
-        sessionManager.setStringValue(Constant.BRAND_COMPANY_ID_PRODUCT, brand_compny_id);
-        callAllProductAPI(POSITION, SORT_BY);
-    }
-
-    @Override
-    public void CallBrandCompanyID(String brand_company_id) {
-        Log.e("TAG", "CallBrandCompanyID: brand_company_id:::"+brand_company_id);
-        POSITION = 0;
-        sessionManager.setStringValue(Constant.BRAND_COMPANY_ID_PRODUCT, brand_company_id);
-        callAllProductAPI(POSITION, SORT_BY);
-    }
-
     public void openMoqDialog(String ProductName, String PRODUCT_ID, final int position,
                               TextView textview,
                               final String Quantity, float price, String margin, RelativeLayout addCart, LinearLayout llQnty,
                               TextView tvCartQnty, TextView MARGIN, TextView RETAIL,
                               TextView tvTotalPrice, TextView tvFree) {
 
-        binding.rlSubCatBG.setVisibility(View.VISIBLE);
+        binding.rlMainBG.setVisibility(View.VISIBLE);
         dialog = new Dialog(this, android.R.style.Theme_Translucent_NoTitleBar_Fullscreen);
         dialog.setContentView(R.layout.dialog_open_moq);
 
@@ -521,9 +452,9 @@ public class ProductCategoryActivity extends BaseActivity implements
                         TVFREE.setText("0");
                     }
 
-                    adp_moq = new RvProductCategoryMOQListADP(ProductCategoryActivity.this,
+                    adp_moq = new RvSearchMOQListADP(SearchActivity.this,
                             allProductList.get(POSTION).getOther_margin_list(),
-                            map, ProductCategoryActivity.this);
+                            map, SearchActivity.this);
                     rvMOQList.setAdapter(adp_moq);
                 }
             }
@@ -535,9 +466,9 @@ public class ProductCategoryActivity extends BaseActivity implements
             }
         }
 
-        adp_moq = new RvProductCategoryMOQListADP(this,
+        adp_moq = new RvSearchMOQListADP(this,
                 allProductList.get(POSTION).getOther_margin_list(), map,
-                ProductCategoryActivity.this);
+                SearchActivity.this);
         rvMOQList.setAdapter(adp_moq);
 
         TXT_MOQ = textview;
@@ -548,7 +479,7 @@ public class ProductCategoryActivity extends BaseActivity implements
         dialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
             @Override
             public void onDismiss(DialogInterface dialog) {
-                binding.rlSubCatBG.setVisibility(View.GONE);
+                binding.rlMainBG.setVisibility(View.GONE);
             }
         });
     }
@@ -577,13 +508,13 @@ public class ProductCategoryActivity extends BaseActivity implements
             public void onResponse(Call<FavUnFavModel> call, Response<FavUnFavModel> response) {
                 if(response.body()!=null){
                     if(response.body().getSuccess().equals("1")){
-                        CommonUtils.showToast(ProductCategoryActivity.this, response.body().getMessage());
+                        CommonUtils.showToast(SearchActivity.this, response.body().getMessage());
                         adp.updateIsFavData(position);
 
                     }else if(response.body().getSuccess().equals("0")){
-                        CommonUtils.showToast(ProductCategoryActivity.this, response.body().getMessage());
+                        CommonUtils.showToast(SearchActivity.this, response.body().getMessage());
                     }else {
-                        CommonUtils.showToast(ProductCategoryActivity.this, response.body().getMessage());
+                        CommonUtils.showToast(SearchActivity.this, response.body().getMessage());
                     }
                 }
                 CommonUtils.dismissCustomLoader();
@@ -596,7 +527,7 @@ public class ProductCategoryActivity extends BaseActivity implements
         });
 
     }
-
+    
     private void callRemoveFavouriteAPI(String product_id, int position) {
         if (!CommonUtils.isInternetOn(this)) {
             CommonUtils.showToast(this, getString(R.string.check_internet));
@@ -612,13 +543,13 @@ public class ProductCategoryActivity extends BaseActivity implements
             public void onResponse(Call<FavUnFavModel> call, Response<FavUnFavModel> response) {
                 if(response.body()!=null){
                     if(response.body().getSuccess().equals("1")){
-                        CommonUtils.showToast(ProductCategoryActivity.this, response.body().getMessage());
+                        CommonUtils.showToast(SearchActivity.this, response.body().getMessage());
                         adp.updateIsFavData(position);
 
                     }else if(response.body().getSuccess().equals("0")){
-                        CommonUtils.showToast(ProductCategoryActivity.this, response.body().getMessage());
+                        CommonUtils.showToast(SearchActivity.this, response.body().getMessage());
                     }else {
-                        CommonUtils.showToast(ProductCategoryActivity.this, response.body().getMessage());
+                        CommonUtils.showToast(SearchActivity.this, response.body().getMessage());
                     }
                 }
                 CommonUtils.dismissCustomLoader();
@@ -632,6 +563,7 @@ public class ProductCategoryActivity extends BaseActivity implements
         });
     }
 
+
     @Override
     public void addtoReviewCartList(String product_id, String quantity) {
         Log.d("TAG", "addtoReviewCartList returned: " + product_id);
@@ -639,12 +571,12 @@ public class ProductCategoryActivity extends BaseActivity implements
     }
 
     private void callAddToReviewCartAPI(String cart_product_id, String quantity, String margin_id) {
-        if (!CommonUtils.isInternetOn(ProductCategoryActivity.this)) {
-            CommonUtils.showToast(ProductCategoryActivity.this, getString(R.string.check_internet));
+        if (!CommonUtils.isInternetOn(SearchActivity.this)) {
+            CommonUtils.showToast(SearchActivity.this, getString(R.string.check_internet));
             return;
         }
 
-        CommonUtils.showCustomLoader(ProductCategoryActivity.this);
+        CommonUtils.showCustomLoader(SearchActivity.this);
 
         APIInterface apiInterface = APIClient.getClient().create(APIInterface.class);
         Call<AddUpdateCart> callAPI = apiInterface.addToCart(sessionManager.getStringValue(Constant.API_TOKEN),
@@ -656,12 +588,12 @@ public class ProductCategoryActivity extends BaseActivity implements
                 if (response.body() != null) {
                     Log.e("TAG", "onResponse: CALLED:::::" + new Gson().toJson(response.body()));
                     if (response.body().getSuccess().equals("1")) {
-                        CommonUtils.showToast(ProductCategoryActivity.this, response.body().getMessage());
+                        CommonUtils.showToast(SearchActivity.this, response.body().getMessage());
 
                     } else if (response.body().getSuccess().equals("0")) {
-                        CommonUtils.showToast(ProductCategoryActivity.this, response.body().getMessage());
+                        CommonUtils.showToast(SearchActivity.this, response.body().getMessage());
                     } else {
-                        CommonUtils.showToast(ProductCategoryActivity.this, response.body().getMessage());
+                        CommonUtils.showToast(SearchActivity.this, response.body().getMessage());
                     }
                 }
                 CommonUtils.dismissCustomLoader();
@@ -670,7 +602,7 @@ public class ProductCategoryActivity extends BaseActivity implements
             @Override
             public void onFailure(Call<AddUpdateCart> call, Throwable t) {
                 CommonUtils.dismissCustomLoader();
-                CommonUtils.showToast(ProductCategoryActivity.this, t.getMessage());
+                CommonUtils.showToast(SearchActivity.this, t.getMessage());
             }
         });
     }
@@ -682,11 +614,11 @@ public class ProductCategoryActivity extends BaseActivity implements
     }
 
     private void callUPdateCart(String update_pro_id, String product_quantity, String margin_id) {
-        if (!CommonUtils.isInternetOn(ProductCategoryActivity.this)) {
-            CommonUtils.showToast(ProductCategoryActivity.this, getString(R.string.check_internet));
+        if (!CommonUtils.isInternetOn(SearchActivity.this)) {
+            CommonUtils.showToast(SearchActivity.this, getString(R.string.check_internet));
             return;
         }
-        CommonUtils.showCustomLoader(ProductCategoryActivity.this);
+        CommonUtils.showCustomLoader(SearchActivity.this);
         APIInterface apiInterface = APIClient.getClient().create(APIInterface.class);
         Call<AddUpdateCart> callAPI = apiInterface.updateToCart(sessionManager.getStringValue(Constant.API_TOKEN),
                 update_pro_id, product_quantity, margin_id);
@@ -696,12 +628,12 @@ public class ProductCategoryActivity extends BaseActivity implements
             public void onResponse(Call<AddUpdateCart> call, Response<AddUpdateCart> response) {
                 if (response.body() != null) {
                     if (response.body().getSuccess().equals("1")) {
-                        CommonUtils.showToast(ProductCategoryActivity.this, response.body().getMessage());
+                        CommonUtils.showToast(SearchActivity.this, response.body().getMessage());
 
                     } else if (response.body().getSuccess().equals("0")) {
-                        CommonUtils.showToast(ProductCategoryActivity.this, response.body().getMessage());
+                        CommonUtils.showToast(SearchActivity.this, response.body().getMessage());
                     } else {
-                        CommonUtils.showToast(ProductCategoryActivity.this, response.body().getMessage());
+                        CommonUtils.showToast(SearchActivity.this, response.body().getMessage());
                     }
                 }
                 CommonUtils.dismissCustomLoader();
@@ -710,11 +642,10 @@ public class ProductCategoryActivity extends BaseActivity implements
             @Override
             public void onFailure(Call<AddUpdateCart> call, Throwable t) {
                 CommonUtils.dismissCustomLoader();
-                CommonUtils.showToast(ProductCategoryActivity.this, t.getMessage());
+                CommonUtils.showToast(SearchActivity.this, t.getMessage());
             }
         });
     }
-
 
 
     @Override
@@ -724,8 +655,7 @@ public class ProductCategoryActivity extends BaseActivity implements
                                        int cartQuanty, int In_Cart_qunty,
                                        String min_order_qunaty, int IS_FAV) {
 
-        Intent intent = new Intent(ProductCategoryActivity.this,
-                ProductDetailActivity.class);
+        Intent intent = new Intent(SearchActivity.this, ProductDetailActivity.class);
         intent.putExtra(Constant.PRODUCT_IMAGE, product_image);
         intent.putExtra(Constant.PRODUCT_ID, product_id);
         intent.putExtra(Constant.PRODUCT_NAME, product_name);
@@ -755,6 +685,7 @@ public class ProductCategoryActivity extends BaseActivity implements
         startActivity(intent);
 
     }
+
 
     @Override
     public void CheckedMOQ(int pos, String MOQ, String margin_id, String other_cart_qnty,
@@ -802,28 +733,9 @@ public class ProductCategoryActivity extends BaseActivity implements
             }
         }
 
-        adp_moq = new RvProductCategoryMOQListADP(ProductCategoryActivity.this,
+        adp_moq = new RvSearchMOQListADP(SearchActivity.this,
                 allProductList.get(POSTION).getOther_margin_list(), map,
-                ProductCategoryActivity.this);
+                SearchActivity.this);
         rvMOQList.setAdapter(adp_moq);
-    }
-
-    @Override
-    public void CategoryIdFromHomeToFrgmt(String sub_cate, String brand_id, String
-            brand_compny_id, String product_name) {
-        if(brand_id.equals("0") || brand_compny_id.equals("0")){
-            showToast("Data not found!");
-        }else {
-            sessionManager.setStringValue(Constant.SUB_CATEGORY_ID, sub_cate);
-            sessionManager.setStringValue(Constant.BRAND_ID, brand_id);
-            sessionManager.setStringValue(Constant.BRAND_COMPANY_ID_PRODUCT, brand_compny_id);
-
-            Log.e("TAG", "CategoryIdFromHomeToFrgmt: CHANGE::::" +
-                    "" + sub_cate + "  " + brand_id + "  " + brand_compny_id);
-
-            /*dialog dismiss*/
-            dialog_product.dismiss();
-            callAllProductAPI(0, SORT_BY);
-        }
     }
 }

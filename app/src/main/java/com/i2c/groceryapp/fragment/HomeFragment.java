@@ -36,6 +36,7 @@ import com.i2c.groceryapp.R;
 import com.i2c.groceryapp.activity.AllSubCategoryActivity;
 import com.i2c.groceryapp.activity.FreebiesActivity;
 import com.i2c.groceryapp.activity.HomeActivity;
+import com.i2c.groceryapp.activity.ProductDetailActivity;
 import com.i2c.groceryapp.activity.TradeOfferActivity;
 import com.i2c.groceryapp.adapter.BaseCategoryADP;
 import com.i2c.groceryapp.adapter.RvTodaySpecialListADP;
@@ -91,7 +92,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener,
     private HashMap<Integer, Boolean> map = new HashMap<>();
     private TextView TXT_MOQ;
     RvTodaysSpecialMOQListADP adp_moq;
-
+    private String Other_margin_Qnty = "0";
 
     public HomeFragment() {
 
@@ -274,7 +275,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener,
                         todaySpecialListADP = new RvTodaySpecialListADP(getActivity(),
                                 todayspecialListBeans, HomeFragment.this,
                                 HomeFragment.this, HomeFragment.this,
-                                HomeFragment.this);
+                                HomeFragment.this, HomeFragment.this);
 
                         binding.rvTodaySpecial.setAdapter(todaySpecialListADP);
                         todaySpecialListADP.notifyDataSetChanged();
@@ -581,6 +582,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener,
 
             @Override
             public void onFailure(Call<FavUnFavModel> call, Throwable t) {
+
                 CommonUtils.dismissCustomLoader();
             }
         });
@@ -594,13 +596,47 @@ public class HomeFragment extends Fragment implements View.OnClickListener,
     }
 
     @Override
-    public void passvalueProductDetail(int pos, String product_image, int product_id, String product_name, int product_mrp, float product_retail, String margin, float TotalPrice, int cartQuanty, int In_Cart_qunty, int min_order_qunaty, int IS_FAV) {
+    public void passvalueProductDetail(int pos, String product_image, String product_id,
+                                       String product_name, String product_mrp,
+                                       float product_retail, String margin, float TotalPrice,
+                                       int cartQuanty, int In_Cart_qunty,
+                                       String min_order_qunaty, int IS_FAV) {
 
+        Intent intent = new Intent(getActivity(), ProductDetailActivity.class);
+        intent.putExtra(Constant.PRODUCT_IMAGE, product_image);
+        intent.putExtra(Constant.PRODUCT_ID, product_id);
+        intent.putExtra(Constant.PRODUCT_NAME, product_name);
+        intent.putExtra(Constant.PRODUCT_MRP, product_mrp);
+        intent.putExtra(Constant.PRODUCT_IN_CART_QNTY, cartQuanty);
+        intent.putExtra(Constant.IS_CART, In_Cart_qunty);
+        intent.putExtra(Constant.PRODUCT_MOQ, min_order_qunaty);
+        intent.putExtra(Constant.PRODUCT_OTHER_MARGIN, Other_margin_Qnty);
+        intent.putExtra(Constant.PRODUCT_ISFAVOURITE, IS_FAV);
+
+        if (Other_margin_Qnty.equals("0")){
+            intent.putExtra(Constant.PRODUCT_TOTAL_PRICE, TotalPrice);
+            intent.putExtra(Constant.PRODUCT_RETAIL_PRICE, product_retail);
+            intent.putExtra(Constant.PRODUCT_MARGIN, margin);
+        }else {
+            intent.putExtra(Constant.PRODUCT_TOTAL_PRICE, Float.parseFloat(TVTOTALPRICE.getText().toString()));
+            intent.putExtra(Constant.PRODUCT_RETAIL_PRICE, Float.parseFloat(TVRETAIL.getText().toString()));
+            intent.putExtra(Constant.PRODUCT_MARGIN, TVMARGIN.getText().toString());
+        }
+
+        if (todayspecialListBeans.get(pos).getOther_margin_list().size() != 0) {
+            intent.putExtra(Constant.PRODUCT_MARGIN_ID, MARGIN_ID);
+        } else {
+            intent.putExtra(Constant.PRODUCT_MARGIN_ID, " ");
+        }
+
+        startActivity(intent);
+        
     }
 
     @Override
     public void CheckedMOQ(int pos, String MOQ, String margin_id, String other_cart_qnty,
                            String MARGIN, String price) {
+        Other_margin_Qnty = other_cart_qnty;
         check_box.setChecked(false);
         TVMARGIN.setText(MARGIN);
         TVRETAIL.setText(String.valueOf(price));

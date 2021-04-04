@@ -478,7 +478,7 @@
             </androidx.constraintlayout.widget.ConstraintLayout>
 
             <androidx.constraintlayout.widget.ConstraintLayout
-                android:id="@+id/LL_FreeProduct"
+                android:id="@+id/bottomMain"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:visibility="visible"
@@ -524,15 +524,30 @@
                             android:background="@drawable/green_bottm_right_round" />
 
                         <TextView
+                            app:layout_constraintBottom_toTopOf="@+id/tvBottom"
+                            app:layout_constraintTop_toTopOf="parent"
                             android:id="@+id/tvFree"
                             android:layout_width="match_parent"
-                            android:layout_height="match_parent"
+                            android:layout_height="wrap_content"
                             android:fontFamily="@font/roboto_medium"
                             android:gravity="center"
-                            android:text="0\nFree"
+                            android:text="0"
+                            android:layout_marginTop="@dimen/dp5"
                             android:textColor="@color/white"
-                            android:textSize="@dimen/sp14"
-                            app:custom_fonts="@string/Roboto_Medium" />
+                            android:textSize="@dimen/sp14" />
+
+                        <TextView
+                            android:layout_marginBottom="@dimen/dp5"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            android:id="@+id/tvBottom"
+                            app:layout_constraintTop_toBottomOf="@+id/tvFree"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/roboto_medium"
+                            android:gravity="center"
+                            android:text="Free"
+                            android:textColor="@color/white"
+                            android:textSize="@dimen/sp14"/>
                     </androidx.constraintlayout.widget.ConstraintLayout>
 
                     <androidx.constraintlayout.widget.ConstraintLayout

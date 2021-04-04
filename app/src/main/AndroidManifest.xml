@@ -14,7 +14,11 @@
         android:usesCleartextTraffic="true"
         tools:node="replace"
         tools:targetApi="m">
-        <activity android:name=".activity.TodaySpecialActivity"/>
+
+        <activity android:name=".activity.SearchActivity"
+            android:windowSoftInputMode="stateHidden" />
+
+        <activity android:name=".activity.TodaySpecialActivity" />
         <activity android:name=".activity.BrandCompanyProductListActivity" />
         <activity android:name=".activity.ProductCategoryActivity" />
         <activity android:name=".activity.AlphaBaticScrollActivity" />
@@ -40,8 +44,9 @@
         <activity android:name=".activity.RegisterActivity" />
         <activity android:name=".activity.LoginByOTPActivity" />
         <activity android:name=".activity.LoginActivity" />
-        <activity android:name=".activity.HomeActivity"
-            android:windowSoftInputMode="stateHidden"/>
+        <activity
+            android:name=".activity.HomeActivity"
+            android:windowSoftInputMode="stateHidden" />
         <activity android:name=".activity.LanguageSelectionActivity" />
         <activity android:name=".activity.MainActivity" />
         <activity android:name=".activity.LoginRegisterActivity" />
@@ -57,10 +62,13 @@
             android:name="org.apache.http.legacy"
             android:required="false" />
     </application>
-    <uses-permission android:name="android.permission.WAKE_LOCK" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />
-
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
 
 </manifest>

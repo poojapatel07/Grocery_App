@@ -24,7 +24,7 @@ public class Product_details {
 
     private String mrp_price;
 
-    private String retail_price;
+    private float retail_price;
 
     private String min_qty_for_free;
 
@@ -112,11 +112,11 @@ public class Product_details {
         this.mrp_price = mrp_price;
     }
 
-    public String getRetail_price() {
+    public float getRetail_price() {
         return retail_price;
     }
 
-    public void setRetail_price(String retail_price) {
+    public void setRetail_price(float retail_price) {
         this.retail_price = retail_price;
     }
 

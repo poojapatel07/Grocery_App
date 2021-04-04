@@ -211,7 +211,7 @@
                         app:layout_constraintTop_toTopOf="parent"/>
 
                     <TextView
-                        android:id="@+id/tvDispatchDate"
+                        android:id="@+id/tvDispatchedDate"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="@dimen/dp2"
@@ -225,7 +225,7 @@
                         app:layout_constraintTop_toBottomOf="@id/tvDispatch"/>
 
                     <TextView
-                        android:id="@+id/tvDispatchTime"
+                        android:id="@+id/tvDiapatchTime"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="@dimen/dp2"
@@ -236,7 +236,7 @@
                         app:custom_fonts="@string/Roboto_Medium"
                         app:layout_constraintLeft_toLeftOf="parent"
                         app:layout_constraintRight_toRightOf="parent"
-                        app:layout_constraintTop_toBottomOf="@id/tvDispatchDate"/>
+                        app:layout_constraintTop_toBottomOf="@id/tvDispatchedDate"/>
 
 
                 </androidx.constraintlayout.widget.ConstraintLayout>

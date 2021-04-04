@@ -168,4 +168,24 @@ public class OTPVerificationActivity extends BaseActivity implements View.OnClic
             }.start();
         }
     }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        if (countDownTimer != null) {
+            countDownTimer.cancel();
+        }
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        if (countDownTimer != null) {
+            countDownTimer.cancel();
+        }
+    }
+
+
 }
+
+

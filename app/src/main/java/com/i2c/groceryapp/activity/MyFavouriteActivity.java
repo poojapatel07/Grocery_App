@@ -294,7 +294,7 @@ public class MyFavouriteActivity extends BaseActivity implements
     @Override
     public void openMoqDialog(String ProductName, String PRODUCT_ID, final int position,
                               TextView textview, final String Quantity,
-                              String price, String margin,
+                              float price, String margin,
                               RelativeLayout addCart, LinearLayout llQnty,
                               TextView tvCartQnty, TextView MARGIN, TextView RETAIL,
                               TextView tvTotalPrice, final TextView tvFree) {
@@ -480,7 +480,7 @@ public class MyFavouriteActivity extends BaseActivity implements
 
     @Override
     public void passvalueProductDetail(int product_pos, String product_image, String product_id,
-                                       String product_name, String product_mrp, String product_retail,
+                                       String product_name, String product_mrp, float product_retail,
                                        String margin, float TotalPrice,
                                        int cartQuanty, String In_Cart_qunty, String min_order_qunaty) {
 
@@ -514,7 +514,4 @@ public class MyFavouriteActivity extends BaseActivity implements
         }
         startActivity(intent);
     }
-
-
-
 }

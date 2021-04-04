@@ -112,7 +112,9 @@
                 android:layout_height="match_parent"
                 android:orientation="vertical">
 
-                <include layout="@layout/drawer_nav_header" />
+                <include
+                    android:id="@+id/header"
+                    layout="@layout/drawer_nav_header" />
 
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/rvMenuList"

@@ -6,6 +6,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.databinding.DataBindingUtil;
@@ -16,16 +17,22 @@ import com.i2c.groceryapp.activity.ProductCategoryActivity;
 import com.i2c.groceryapp.databinding.ItemAllCategoryBinding;
 import com.i2c.groceryapp.databinding.ItemAllCategoryDetailsBinding;
 import com.i2c.groceryapp.model.Subcategories_list;
+import com.i2c.groceryapp.utils.Constant;
+import com.i2c.groceryapp.utils.SessionManager;
 
 import java.util.ArrayList;
 
 public class RvAllCategoryDetailsADP extends RecyclerView.Adapter<RvAllCategoryDetailsADP.MyViewHolder> {
     private Activity activity;
     private ArrayList<Subcategories_list> arrayList = new ArrayList<>();
+    private SessionManager sessionManager;
 
     public RvAllCategoryDetailsADP(Activity activity, ArrayList<Subcategories_list> arrayList) {
         this.activity = activity;
         this.arrayList = arrayList;
+        if(activity!=null){
+            sessionManager = new SessionManager(activity);
+        }
     }
 
     public class MyViewHolder extends RecyclerView.ViewHolder {
@@ -38,8 +45,22 @@ public class RvAllCategoryDetailsADP extends RecyclerView.Adapter<RvAllCategoryD
             binding.constMain.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Log.e("TAG", "onClick: CLICK:::"+arrayList.get(getAdapterPosition()).getBrand_id());
-                    activity.startActivity(new Intent(activity, ProductCategoryActivity.class));
+                    if(arrayList.get(getAdapterPosition()).getBrand_id().equals("0")||
+                            arrayList.get(getAdapterPosition()).getBrand_companie_id().equals("0")){
+                        Toast.makeText(activity, "No data found!", Toast.LENGTH_SHORT).show();
+
+                    }else {
+                        sessionManager.setStringValue(Constant.SUB_CATEGORY_ID,
+                                arrayList.get(getAdapterPosition()).getSubcategorie_id());
+
+                        sessionManager.setStringValue(Constant.BRAND_ID,
+                                arrayList.get(getAdapterPosition()).getBrand_id());
+
+                        sessionManager.setStringValue(Constant.BRAND_COMPANY_ID_PRODUCT,
+                                arrayList.get(getAdapterPosition()).getBrand_companie_id());
+
+                        activity.startActivity(new Intent(activity, ProductCategoryActivity.class));
+                    }
                 }
             });
         }

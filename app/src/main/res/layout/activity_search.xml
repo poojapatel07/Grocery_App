@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:id="@+id/llTop"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dp55"
+            android:background="@color/green"
+            android:orientation="horizontal"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <ImageView
+                android:id="@+id/ivBack"
+                android:layout_width="@dimen/dp25"
+                android:layout_height="@dimen/dp25"
+                android:layout_gravity="center"
+                android:tint="@color/white"
+                android:layout_marginLeft="@dimen/dp10"
+                android:src="@drawable/ic_back_arrow" />
+
+            <LinearLayout
+                android:id="@+id/llSearchProduct"
+                android:layout_width="0dp"
+                android:layout_height="@dimen/dp35"
+                android:layout_gravity="center"
+                android:layout_marginStart="@dimen/dp8"
+                android:layout_marginLeft="@dimen/dp8"
+                android:layout_marginEnd="@dimen/dp12"
+                android:layout_marginRight="@dimen/dp12"
+                android:layout_weight="1"
+                android:background="@drawable/light_green_search">
+
+                <EditText
+                    android:id="@+id/etSearchProduct"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="@dimen/dp5"
+                    android:layout_marginRight="@dimen/dp5"
+                    android:background="@null"
+                    android:fontFamily="@font/roboto_regular"
+                    android:inputType="text"
+                    android:paddingLeft="@dimen/dp12"
+                    android:hint="@string/search"
+                    android:textAllCaps="true"
+                    android:textColor="@color/white"
+                    android:textColorHint="@color/white"
+                    android:textSize="@dimen/sp12" />
+            </LinearLayout>
+        </LinearLayout>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/const_sort"
+            android:layout_marginTop="@dimen/dp15"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/llTop"
+            android:layout_marginRight="@dimen/dp10"
+            android:background="@drawable/green_border_bg">
+
+            <ImageView
+                android:layout_marginLeft="@dimen/dp10"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                android:tint="@color/green"
+                android:src="@drawable/ic_sort"
+                android:layout_width="@dimen/dp20"
+                android:layout_height="@dimen/dp20"/>
+
+            <TextView
+                android:layout_marginLeft="@dimen/dp20"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                android:id="@+id/tvSort"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingBottom="@dimen/dp5"
+                android:paddingTop="@dimen/dp5"
+                android:paddingRight="@dimen/dp16"
+                android:paddingLeft="@dimen/dp16"
+                android:text="@string/sort"
+                android:textColor="@color/green"
+                android:textSize="@dimen/sp14"
+                android:fontFamily="@font/roboto_regular"/>
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/rvSearchProduct"
+            app:layout_constraintTop_toBottomOf="@id/const_sort"/>
+
+        <RelativeLayout
+            android:visibility="gone"
+            android:background="#90292929"
+            android:id="@+id/rlMainBG"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+        </RelativeLayout>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

@@ -1,11 +1,13 @@
 package com.i2c.groceryapp.activity;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.core.content.ContextCompat;
 import androidx.core.view.GravityCompat;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.PorterDuff;
@@ -13,8 +15,10 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
+import android.widget.Button;
 import android.widget.LinearLayout;
 
+import com.bumptech.glide.Glide;
 import com.google.android.material.tabs.TabLayout;
 import com.i2c.groceryapp.R;
 import com.i2c.groceryapp.adapter.FragmentAdapter;
@@ -26,9 +30,18 @@ import com.i2c.groceryapp.fragment.OfferFragment;
 import com.i2c.groceryapp.fragment.RiewBasketFragment;
 import com.i2c.groceryapp.model.DataModel;
 import com.i2c.groceryapp.model.MyData;
+import com.i2c.groceryapp.retrofit.APIClient;
+import com.i2c.groceryapp.retrofit.APIInterface;
+import com.i2c.groceryapp.retrofit.response.RestResponse;
 import com.i2c.groceryapp.utils.BaseActivity;
+import com.i2c.groceryapp.utils.Constant;
 
 import java.util.ArrayList;
+import java.util.ResourceBundle;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class HomeActivity extends BaseActivity implements RvMenuADP.OpenFragment {
     public ActivityHomeBinding binding;
@@ -107,9 +120,24 @@ public class HomeActivity extends BaseActivity implements RvMenuADP.OpenFragment
                 startActivity(new Intent(HomeActivity.this, AlphaBaticScrollActivity.class));
             }
         });
+
+        binding.etSearchProduct.setFocusable(false);
+        binding.etSearchProduct.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(HomeActivity.this, SearchActivity.class));
+            }
+        });
     }
 
     private void serDrawerLayout() {
+        binding.header.tvUserName.setText(sessionManager.getLoginData().getName());
+        Glide.with(this)
+                .load(sessionManager.getLoginData().getLogo())
+                .placeholder(R.mipmap.ic_launcher_round)
+                .error(R.mipmap.ic_launcher_round)
+                .into(binding.header.ivProfile);
+
         binding.rvMenuList.setHasFixedSize(false);
 
         LinearLayoutManager manager_menu = new LinearLayoutManager(this);
@@ -171,8 +199,68 @@ public class HomeActivity extends BaseActivity implements RvMenuADP.OpenFragment
                 break;
 
             case 7:
-                launchActivity(HomeActivity.this, MyFavouriteActivity.class);
+                openAlertDalog();
                 break;
         }
     }
+
+    private void openAlertDalog() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setMessage("Are you sure you want to Logout?")
+                .setCancelable(false)
+                .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        callLogoutAPI();
+                    }
+                })
+                .setNegativeButton("No", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        dialog.cancel();
+                    }
+                });
+
+        AlertDialog alert = builder.create();
+        alert.show();
+
+        Button nbutton = alert.getButton(DialogInterface.BUTTON_NEGATIVE);
+        nbutton.setTextColor(Color.parseColor("#b0c916"));
+        Button pbutton = alert.getButton(DialogInterface.BUTTON_POSITIVE);
+        pbutton.setTextColor(Color.parseColor("#b0c916"));
+    }
+
+    private void callLogoutAPI() {
+        if(!isInternetOn(this)){
+            showToast(getResources().getString(R.string.check_internet));
+            return;
+        }
+        showCustomLoader(this);
+
+        APIInterface apiInterface = APIClient.getClient().create(APIInterface.class);
+        Call<RestResponse<String>> callAPI = apiInterface.logout(sessionManager.getStringValue(
+                Constant.API_TOKEN));
+
+        callAPI.enqueue(new Callback<RestResponse<String>>() {
+            @Override
+            public void onResponse(Call<RestResponse<String>> call, Response<RestResponse<String>> response) {
+                if(response.body()!=null){
+                    if(response.body().getSuccess().equals("1")){
+                        showToast(response.body().getMessage());
+                        launchActivityWithClearStack(HomeActivity.this, LoginRegisterActivity.class);
+
+                    }else if(response.body().getSuccess().equals("0")){
+                        showToast(response.body().getMessage());
+                    }
+                }else {
+
+                }
+                dismissCustomLoader();
+            }
+
+            @Override
+            public void onFailure(Call<RestResponse<String>> call, Throwable t) {
+               dismissCustomLoader();
+            }
+        });
+    }
+
 }

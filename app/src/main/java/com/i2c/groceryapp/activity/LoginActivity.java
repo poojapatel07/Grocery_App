@@ -108,9 +108,9 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
             binding.edtPassword.setError("Enter Password");
             binding.edtPassword.requestFocus();
 
-        } else if (binding.edtPassword.getText().toString().length() < 8) {
-            binding.edtPassword.setError("Password must be 8 char long!");
-            binding.edtPassword.requestFocus();
+//        } else if (binding.edtPassword.getText().toString().length() < 8) {
+//            binding.edtPassword.setError("Password must be 8 char long!");
+//            binding.edtPassword.requestFocus();
         } else {
             callLoginAPI();
         }

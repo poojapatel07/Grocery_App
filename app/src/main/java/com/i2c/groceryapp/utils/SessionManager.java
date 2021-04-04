@@ -11,7 +11,6 @@ import com.i2c.groceryapp.activity.LoginRegisterActivity;
 import com.i2c.groceryapp.activity.MainActivity;
 import com.i2c.groceryapp.model.Data;
 import com.i2c.groceryapp.model.Todayspecial_list;
-
 import java.lang.reflect.Type;
 import java.util.ArrayList;
 
@@ -75,11 +74,11 @@ public class SessionManager {
     public void checkLogin() {
         if (this.getBoolen(Constant.IS_ALREADY_LOGIN)) {
             Intent login = new Intent(context, HomeActivity.class);
-            login.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
+            login.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
             context.startActivity(login);
         } else {
             Intent login = new Intent(context, LoginRegisterActivity.class);
-            login.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
+            login.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
             context.startActivity(login);
         }
     }

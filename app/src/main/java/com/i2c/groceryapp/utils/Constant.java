@@ -73,6 +73,10 @@ public class Constant {
     public static final String MYORDER_ARRAY = "my_order_array";
     public static final String PRODUCT_FAVOURITE_ADD = "product_favourite_add";
     public static final String IS_FAVOURITE = "is_favourite";
+    public static final String BRAND_COMPANY_ID = "brand_company_id";
+    public static final String SUB_CATEGORY_ID = "sub_category_id";
+    public static final String BRAND_ID = "brand_id";
+    public static final String BRAND_COMPANY_ID_PRODUCT = "brand_company_id_product";
 
 
     public static String ANDRO_IS_USER_ALREADY_LOGGED_IN = "andro_is_user_already_logged_in";

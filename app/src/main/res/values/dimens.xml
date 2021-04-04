@@ -49,4 +49,5 @@
     <dimen name="dp32">32dp</dimen>
     <dimen name="dp72">72dp</dimen>
     <dimen name="dp48">48dp</dimen>
+    <dimen name="dp110">110dp</dimen>
 </resources>

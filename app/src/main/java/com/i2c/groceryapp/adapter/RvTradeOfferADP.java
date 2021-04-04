@@ -166,7 +166,7 @@ public class RvTradeOfferADP extends RecyclerView.Adapter<RvTradeOfferADP.MyView
                         free_product = free / Integer.parseInt(freebies_arraylist.get(getAdapterPosition()).getMin_qty_for_free());
                     }
 
-                    binding.tvFree.setText(String.valueOf(free_product));
+                    binding.tvFree.setText(String.valueOf(free_product)+"\nFree");
                     Price = freebies_arraylist.get(getAdapterPosition()).getRetail_price();
                     STR_PRICE = Price*first_moq;
                     binding.tvTotalPrice.setText(String.valueOf(STR_PRICE));
@@ -190,7 +190,7 @@ public class RvTradeOfferADP extends RecyclerView.Adapter<RvTradeOfferADP.MyView
                         int free = first_moq * Integer.parseInt(freebies_arraylist.get(getAdapterPosition()).getPro_qty_for_free());
                         int add_free = free / Integer.parseInt(freebies_arraylist.get(getAdapterPosition()).getMin_qty_for_free());
 
-                        binding.tvFree.setText(String.valueOf(Integer.valueOf(binding.tvFree.getText().toString()) + add_free));
+                        binding.tvFree.setText(String.valueOf(Integer.valueOf(binding.tvFree.getText().toString()) + add_free)+"\nFree");
                     }
 
                     int a = Integer.valueOf(binding.tvCartQuny.getText().toString());
@@ -242,7 +242,7 @@ public class RvTradeOfferADP extends RecyclerView.Adapter<RvTradeOfferADP.MyView
                             int free = first_moq * Integer.parseInt(freebies_arraylist.get(getAdapterPosition()).getPro_qty_for_free());
                             int add_free = free / Integer.parseInt(freebies_arraylist.get(getAdapterPosition()).getMin_qty_for_free());
 
-                            binding.tvFree.setText(String.valueOf(Integer.valueOf(binding.tvFree.getText().toString()) - add_free));
+                            binding.tvFree.setText(String.valueOf(Integer.valueOf(binding.tvFree.getText().toString()) - add_free)+"\nFree");
                         }
 
                     } else {
@@ -372,10 +372,10 @@ public class RvTradeOfferADP extends RecyclerView.Adapter<RvTradeOfferADP.MyView
                         Integer.parseInt(freebies_arraylist.get(position).getPro_qty_for_free());
                 int free_product = free / Integer.parseInt(freebies_arraylist.get(position).getMin_qty_for_free());
 
-                holder.binding.tvFree.setText(String.valueOf(free_product));
+                holder.binding.tvFree.setText(String.valueOf(free_product)+"\nFree");
 
             } else {
-                holder.binding.tvFree.setText("0");
+                holder.binding.tvFree.setText("0"+"\nFree");
             }
         }
 

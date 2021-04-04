@@ -58,14 +58,14 @@ public class RvMyFavouriteADP extends RecyclerView.Adapter<RvMyFavouriteADP.MyVi
 
     public interface PassValue_ProductDeatlis{
         void passvalueProductDetail(int pos,String product_image, String product_id,
-                                    String product_name, String product_mrp, String product_retail,
+                                    String product_name, String product_mrp, float product_retail,
                                     String margin, float TotalPrice,
                                     int cartQuanty, String In_Cart_qunty, String min_order_qunaty);
     }
 
     public interface OpenMOQDialog{
         void openMoqDialog(String productName, String Product_ID, int position, TextView text,
-                           String quantity, String price, String margin, RelativeLayout addCart, LinearLayout llQnty,
+                           String quantity, float price, String margin, RelativeLayout addCart, LinearLayout llQnty,
                            TextView tvCart, TextView tvMargin, TextView tvRetail, TextView tvTotal, TextView tvFree);
     }
 
@@ -141,7 +141,7 @@ public class RvMyFavouriteADP extends RecyclerView.Adapter<RvMyFavouriteADP.MyVi
                     }
 
                     binding.tvFree.setText(String.valueOf(free_product));
-                    Price = Float.parseFloat(favourite_list.get(getAdapterPosition()).getProduct_details().getRetail_price());
+                    Price = favourite_list.get(getAdapterPosition()).getProduct_details().getRetail_price();
                     STR_PRICE = Price*first_moq;
                     binding.tvTotalPrice.setText(String.valueOf(STR_PRICE));
                 }
@@ -296,7 +296,6 @@ public class RvMyFavouriteADP extends RecyclerView.Adapter<RvMyFavouriteADP.MyVi
                                 Integer.valueOf(binding.tvCartQuny.getText().toString()),
                                 favourite_list.get(getAdapterPosition()).getIn_cart_qty(),
                                 favourite_list.get(getAdapterPosition()).getProduct_details().getMin_order_qty());
-
                     }
                 }
             });

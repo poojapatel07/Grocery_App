@@ -45,4 +45,7 @@
         <item name="android:textColorSecondary">#a4a3a3</item>
     </style>
 
+    <style name="DialogTheme" parent="Theme.AppCompat.Light.Dialog">
+        <item name="colorAccent">@color/green</item>
+    </style>
 </resources>

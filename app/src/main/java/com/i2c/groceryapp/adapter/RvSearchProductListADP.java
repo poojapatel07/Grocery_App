@@ -16,14 +16,12 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.i2c.groceryapp.R;
-import com.i2c.groceryapp.activity.HomeActivity;
-import com.i2c.groceryapp.activity.ProductDetailActivity;
 import com.i2c.groceryapp.databinding.ItemTodaySpecialBinding;
 import com.i2c.groceryapp.model.Todayspecial_list;
 
 import java.util.ArrayList;
 
-public class RvTodaySpecialListADP extends RecyclerView.Adapter<RvTodaySpecialListADP.MyViewHolder> {
+public class RvSearchProductListADP extends RecyclerView.Adapter<RvSearchProductListADP.MyViewHolder> {
     private Activity activity;
     boolean flag = false;
     private OpenMOQDialog openDialogMOQ;
@@ -42,13 +40,13 @@ public class RvTodaySpecialListADP extends RecyclerView.Adapter<RvTodaySpecialLi
     int free_product;
     int free;
 
-    public RvTodaySpecialListADP(Activity activity,
-                                 ArrayList<Todayspecial_list> allProductList,
-                                 OpenMOQDialog openDialogMOQ,
-                                 AddFavouritetoAllProduct addtoFavourite,
-                                 AddToReviewCartList addToReviewCartList,
-                                 UpdateReviewCart updateReviewCart,
-                                 PassValue_ProductDeatlis passValue_productDeatlis) {
+    public RvSearchProductListADP(Activity activity,
+                                  ArrayList<Todayspecial_list> allProductList,
+                                  OpenMOQDialog openDialogMOQ,
+                                  AddFavouritetoAllProduct addtoFavourite,
+                                  AddToReviewCartList addToReviewCartList,
+                                  UpdateReviewCart updateReviewCart,
+                                  PassValue_ProductDeatlis passValue_productDeatlis) {
         this.activity = activity;
         this.openDialogMOQ = openDialogMOQ;
         this.allProductList = allProductList;
@@ -328,14 +326,14 @@ public class RvTodaySpecialListADP extends RecyclerView.Adapter<RvTodaySpecialLi
 
     @NonNull
     @Override
-    public RvTodaySpecialListADP.MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public RvSearchProductListADP.MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         ItemTodaySpecialBinding rvMyReferralItemBinding = DataBindingUtil.inflate(LayoutInflater.from(parent.getContext())
                 , R.layout.item_today_special, parent, false);
         return new MyViewHolder(rvMyReferralItemBinding);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull RvTodaySpecialListADP.MyViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull RvSearchProductListADP.MyViewHolder holder, int position) {
         Glide.with(activity)
                 .load(allProductList.get(position).getThumb_image())
                 .into(holder.binding.ivImage);
