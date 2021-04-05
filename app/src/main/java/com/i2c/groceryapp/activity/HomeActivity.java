@@ -1,7 +1,6 @@
 package com.i2c.groceryapp.activity;
 
 import androidx.appcompat.app.AlertDialog;
-import androidx.core.content.ContextCompat;
 import androidx.core.view.GravityCompat;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
@@ -16,7 +15,6 @@ import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.Button;
-import android.widget.LinearLayout;
 
 import com.bumptech.glide.Glide;
 import com.google.android.material.tabs.TabLayout;
@@ -37,7 +35,6 @@ import com.i2c.groceryapp.utils.BaseActivity;
 import com.i2c.groceryapp.utils.Constant;
 
 import java.util.ArrayList;
-import java.util.ResourceBundle;
 
 import retrofit2.Call;
 import retrofit2.Callback;

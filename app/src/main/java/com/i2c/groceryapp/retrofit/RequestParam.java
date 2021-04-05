@@ -54,6 +54,14 @@ public class RequestParam {
     /*product filter*/
     public static final String SUBCATEGORY_Id = "subcategory_id";
     public static final String BRAND_ID = "brand_id";
+
+    /*add Order*/
+    public static final String TOTAL_AMOUNT = "total_amount";
+    public static final String COUPON = "coupon";
+    public static final String DISCOUNT_AMOUNT = "discount_amount";
+    public static final String GRANT_TOTAL = "grand_total";
+    public static final String PAYMENT_TYPE = "payment_type";
+    public static final String PAYMENT_STATUS = "payment_status";
 }
 
 

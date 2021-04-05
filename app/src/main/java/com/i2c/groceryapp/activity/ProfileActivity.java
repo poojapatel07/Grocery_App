@@ -99,7 +99,7 @@ public class ProfileActivity extends BaseActivity {
             binding.tvUserName.setText(sessionManager.getLoginData().getName());
 
             Log.e(TAG, "setUpControls: ALL::: "+sessionManager.getLoginData());
-            if(!sessionManager.getLoginData().getShipping_address().equals("null")){
+            if(sessionManager.getLoginData().getShipping_address()!=null){
                 binding.etShippingAdd.setText(sessionManager.getLoginData().getShipping_address());
             }
         }

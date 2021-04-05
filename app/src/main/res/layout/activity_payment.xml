@@ -56,7 +56,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/tvTotalPrice"
+            android:id="@+id/tvTotalAmount"
             android:text="RS. 170.00"
             android:textColor="#717171"
             android:textSize="@dimen/sp16"
@@ -224,7 +224,7 @@
             app:layout_constraintBottom_toBottomOf="parent">
 
             <TextView
-                android:id="@+id/tvFinalPrice"
+                android:id="@+id/tvTotalFinalPrice"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/roboto_medium"
@@ -244,7 +244,7 @@
                 android:layout_marginBottom="@dimen/dp15"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/tvFinalPrice" />
+                app:layout_constraintTop_toBottomOf="@id/tvTotalFinalPrice" />
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="wrap_content"

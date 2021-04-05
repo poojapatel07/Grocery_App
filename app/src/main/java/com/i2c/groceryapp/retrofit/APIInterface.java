@@ -3,6 +3,7 @@ package com.i2c.groceryapp.retrofit;
 import com.i2c.groceryapp.model.AddUpdateCart;
 import com.i2c.groceryapp.model.All_SubCategoryList;
 import com.i2c.groceryapp.model.Category;
+import com.i2c.groceryapp.model.ClearCart;
 import com.i2c.groceryapp.model.Data;
 import com.i2c.groceryapp.model.FavUnFavModel;
 import com.i2c.groceryapp.model.FavouriteModel;
@@ -188,6 +189,20 @@ public interface APIInterface {
                                                        @Field(RequestParam.BRAND_COMPANY_ID) String brand_companie_id);
 
 
+    @FormUrlEncoded
+    @POST("clear_cart")
+    Call<ClearCart> clear_cart(@Field(RequestParam.API_TOKEN) String api_token);
 
+    @FormUrlEncoded
+    @POST("add_order")
+    Call<ListResponse<String>> add_order(@Field(RequestParam.API_TOKEN) String api_token,
+                                         @Field(RequestParam.TOTAL_AMOUNT) String total_amount,
+                                         @Field(RequestParam.COUPON) String coupon,
+                                         @Field(RequestParam.DISCOUNT_AMOUNT) String discount_amount,
+                                         @Field(RequestParam.GRANT_TOTAL) String grand_total,
+                                         @Field(RequestParam.PAYMENT_TYPE) String payment_type,
+                                         @Field(RequestParam.PAYMENT_STATUS) String payment_status,
+                                         @Field(RequestParam.SHIPPING_ADDRESS) String shipping_address,
+                                         @Field(RequestParam.BILLING_ADDRESS) String billing_address);
 
 }

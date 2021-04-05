@@ -7,17 +7,12 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
-import android.widget.TextView;
-
 import androidx.annotation.NonNull;
 import androidx.databinding.DataBindingUtil;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.i2c.groceryapp.R;
-import com.i2c.groceryapp.activity.OrderSummaryActivity;
 import com.i2c.groceryapp.activity.ProductDetailActivity;
 import com.i2c.groceryapp.databinding.ItemFreebiesBinding;
 import com.i2c.groceryapp.model.ReviewCartModel;
@@ -91,7 +86,7 @@ public class ReviewBasketADP extends RecyclerView.Adapter<ReviewBasketADP.MyView
                         int add_free = free /
                                 Integer.parseInt(arrayList.get(getAdapterPosition()).getProduct_details().getMin_qty_for_free());
 
-                        binding.tvFree.setText(String.valueOf(Integer.valueOf(binding.tvFree.getText().toString()) + add_free)+"\nFree");
+                        binding.tvFree.setText(String.valueOf(Integer.valueOf(binding.tvFree.getText().toString()) + add_free));
                     }
 
                     first_moq = Integer.valueOf(binding.tvMOQ.getText().toString());
@@ -146,7 +141,7 @@ public class ReviewBasketADP extends RecyclerView.Adapter<ReviewBasketADP.MyView
                             int add_free = free /
                                     Integer.parseInt(arrayList.get(getAdapterPosition()).getProduct_details().getMin_qty_for_free());
 
-                            binding.tvFree.setText(String.valueOf(Integer.valueOf(binding.tvFree.getText().toString()) - add_free)+"\nFree");
+                            binding.tvFree.setText(String.valueOf(Integer.valueOf(binding.tvFree.getText().toString()) - add_free));
                         }
 
                     } else {
@@ -290,10 +285,10 @@ public class ReviewBasketADP extends RecyclerView.Adapter<ReviewBasketADP.MyView
                     Integer.parseInt(arrayList.get(position).getProduct_details().getPro_qty_for_free());
             int free_product = free / Integer.parseInt(arrayList.get(position).getProduct_details().getMin_qty_for_free());
 
-            holder.binding.tvFree.setText(String.valueOf(free_product)+"\nFree");
+            holder.binding.tvFree.setText(String.valueOf(free_product));
 
         } else {
-            holder.binding.tvFree.setText("0"+"\nFree");
+            holder.binding.tvFree.setText("0");
         }
     }
 
