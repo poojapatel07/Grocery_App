@@ -43,8 +43,9 @@
             <ImageView
                 android:id="@+id/ivFav"
                 android:tint="@color/white"
-                android:layout_width="@dimen/dp22"
-                android:layout_height="@dimen/dp22"
+                android:padding="@dimen/dp5"
+                android:layout_width="@dimen/dp35"
+                android:layout_height="@dimen/dp35"
                 android:layout_marginRight="@dimen/dp10"
                 android:src="@drawable/ic_fav"
                 app:layout_constraintBottom_toBottomOf="parent"
@@ -52,11 +53,12 @@
                 app:layout_constraintTop_toTopOf="parent" />
 
             <ImageView
-                android:visibility="visible"
+                android:visibility="gone"
                 android:id="@+id/ivUnFav"
                 android:tint="@color/white"
-                android:layout_width="@dimen/dp22"
-                android:layout_height="@dimen/dp22"
+                android:padding="@dimen/dp5"
+                android:layout_width="@dimen/dp35"
+                android:layout_height="@dimen/dp35"
                 android:layout_marginRight="@dimen/dp10"
                 android:src="@drawable/ic_fav_green"
                 app:layout_constraintBottom_toBottomOf="parent"

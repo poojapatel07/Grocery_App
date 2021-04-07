@@ -144,6 +144,8 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
                     } else {
                         showToast(response.body().getMessage());
                     }
+                }else if(response.code()==404){
+                    showToast("User not found");
                 }
                 dismissCustomLoader();
             }
@@ -249,6 +251,9 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
                     } else {
                         showToast(response.body().getMessage());
                     }
+
+                }else if(response.code()==404){
+                    showToast("Something went wrong");
                 }
             }
 
@@ -361,6 +366,9 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
                     } else {
                         showToast(response.body().getMessage());
                     }
+
+                }else if(response.code()==404){
+                    showToast("Something went wrong!");
                 }
                 dismissCustomLoader();
             }

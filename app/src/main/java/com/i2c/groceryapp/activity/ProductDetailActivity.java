@@ -95,8 +95,9 @@ public class ProductDetailActivity extends BaseActivity implements View.OnClickL
 
         binding.tvCartQuny.setText(String.valueOf(IS_cart_Qnty));
 
-        binding.ivFav.setOnClickListener(this);
         binding.tvAddToCart.setOnClickListener(this);
+        binding.rlCartPlus.setOnClickListener(this);
+        binding.rlCartMinus.setOnClickListener(this);
 
         findViewById(R.id.ivBack).setOnClickListener(new View.OnClickListener() {
             @Override
@@ -105,19 +106,29 @@ public class ProductDetailActivity extends BaseActivity implements View.OnClickL
             }
         });
 
-//        if (IS_Favourite == 0) {
-//            binding.tvFavourite.setVisibility(View.VISIBLE);
-//            binding.tvUnFavourite.setVisibility(View.GONE);
-//        } else {
-//            binding.tvFavourite.setVisibility(View.GONE);
-//            binding.tvUnFavourite.setVisibility(View.VISIBLE);
-//        }
+        if (IS_Favourite == 0) {
+            /*unlike product --> you can like product */
+            binding.ivFav.setImageResource(R.drawable.ic_fav);
+        } else {
+            /*already liked product --> you can dislike product*/
+            binding.ivFav.setImageResource(R.drawable.ic_fav_white);
+        }
 
+        binding.ivFav.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Log.e("TAG", "onClick:IS_Favourite:::"+IS_Favourite);
+                if(IS_Favourite == 0){
+                    callAddFavouriteAPI(Product_ID);
+                }else {
+                    callRemoveFavouriteAPI(Product_ID);
+                }
+            }
+        });
 
         if (IS_CART==0) {
             binding.tvAddToCart.setVisibility(View.VISIBLE);
             binding.rlQuntity.setVisibility(View.GONE);
-
         } else {
             binding.tvAddToCart.setVisibility(View.GONE);
             binding.rlQuntity.setVisibility(View.VISIBLE);
@@ -125,51 +136,28 @@ public class ProductDetailActivity extends BaseActivity implements View.OnClickL
 
         Quantity = ProductRetailPrice * Float.parseFloat(ProductMOQ);
 
-        binding.ivFav.setOnClickListener(this);
-        binding.ivUnFav.setOnClickListener(this);
-
     }
 
     @Override
     public void onClick(View v) {
         switch (v.getId()){
-            case R.id.ivFav:
-                break;
-
-            case R.id.ivUnFav:
-                callRemoveFavouriteAPI(Product_ID);
-                break;
-
             case R.id.tvAddToCart:
-                float STR_PRICE = Float.parseFloat(ProductMOQ) * ProductRetailPrice;
-
-//                Utility.BADGE_PRICE = Utility.BADGE_PRICE + STR_PRICE;
-//                HomeActivity.showBadge(this, HomeActivity.bottomNavigationView, R.id.nav_Checkout, Utility.BADGE_PRICE);
-
-                binding.tvAddToCart.setVisibility(View.GONE);
-                binding.rlQuntity.setVisibility(View.VISIBLE);
-
-                binding.tvTotlaPrice.setText(String.valueOf(Quantity));
-                binding.tvCartQuny.setText(String.valueOf(binding.tvMOQ.getText().toString()));
-
                 callAddToReviewCartAPI();
                 break;
 
             case R.id.rlCartPlus:
-                binding.tvCartQuny.setText(String.valueOf(ProductMOQ +
-                        Integer.valueOf(binding.tvCartQuny.getText().toString())));
+                binding.tvCartQuny.setText(String.valueOf(Integer.parseInt(ProductMOQ) +
+                        Integer.parseInt(binding.tvCartQuny.getText().toString())));
 
-                FINAL_PRICE = Float.parseFloat(binding.tvTotlaPrice.getText().toString()) + Quantity;
+                FINAL_PRICE = Float.parseFloat(binding.tvTotlaPrice.getText().toString()) +
+                        Quantity;
                 binding.tvTotlaPrice.setText(String.valueOf(FINAL_PRICE));
-
-//                Utility.BADGE_PRICE = Utility.BADGE_PRICE + FINAL_PRICE;
-//                HomeActivity.showBadge(this, HomeActivity.bottomNavigationView, R.id.nav_Checkout, Utility.BADGE_PRICE);
 
                 callUPdateCart(Product_ID, binding.tvCartQuny.getText().toString());
                 break;
 
             case R.id.rlCartMinus:
-                if (Integer.valueOf(binding.tvCartQuny.getText().toString()) == 0) {
+                if (Integer.parseInt(binding.tvCartQuny.getText().toString()) == 0) {
                     binding.tvAddToCart.setVisibility(View.VISIBLE);
                     binding.rlQuntity.setVisibility(View.GONE);
 
@@ -177,16 +165,48 @@ public class ProductDetailActivity extends BaseActivity implements View.OnClickL
                     binding.tvAddToCart.setVisibility(View.GONE);
                     binding.rlQuntity.setVisibility(View.VISIBLE);
 
-                    binding.tvCartQuny.setText(String.valueOf(Integer.valueOf(binding.tvCartQuny.getText().toString()) - Integer.parseInt(ProductMOQ)));
+                    binding.tvCartQuny.setText(String.valueOf(Integer.parseInt(binding.tvCartQuny.getText().toString()) - Integer.parseInt(ProductMOQ)));
                     FINAL_PRICE = Float.parseFloat(binding.tvTotlaPrice.getText().toString()) - Quantity;
                     binding.tvTotlaPrice.setText(String.valueOf(FINAL_PRICE));
-
-//                    Utility.BADGE_PRICE = Utility.BADGE_PRICE + FINAL_PRICE;
-//                    HomeActivity.showBadge(this, HomeActivity.bottomNavigationView, R.id.nav_Checkout, Utility.BADGE_PRICE);
                 }
 
                 callUPdateCart(Product_ID, binding.tvCartQuny.getText().toString());
         }
+    }
+
+    private void callAddFavouriteAPI(String product_id) {
+        if (!isInternetOn(this)) {
+            showToast(getString(R.string.check_internet));
+            return;
+        }
+        showCustomLoader(this);
+        APIInterface apiInterface = APIClient.getClient().create(APIInterface.class);
+        Call<FavUnFavModel> callApi = apiInterface.add_favourite(
+                sessionManager.getStringValue(Constant.API_TOKEN), product_id);
+
+        callApi.enqueue(new Callback<FavUnFavModel>() {
+            @Override
+            public void onResponse(Call<FavUnFavModel> call, Response<FavUnFavModel> response) {
+                if(response.body()!=null){
+                    if(response.body().getSuccess().equals("1")){
+                        showToast(response.body().getMessage());
+                        IS_Favourite = 1;
+                        binding.ivFav.setImageResource(R.drawable.ic_fav_white);
+
+                    }else if(response.body().getSuccess().equals("0")){
+                        showToast( response.body().getMessage());
+                    }else {
+                        showToast(response.body().getMessage());
+                    }
+                }
+                dismissCustomLoader();
+            }
+
+            @Override
+            public void onFailure(Call<FavUnFavModel> call, Throwable t) {
+                dismissCustomLoader();
+            }
+        });
     }
 
     private void callRemoveFavouriteAPI(String product_id) {
@@ -205,9 +225,8 @@ public class ProductDetailActivity extends BaseActivity implements View.OnClickL
                 if(response.body()!=null){
                     if(response.body().getSuccess().equals("1")){
                         showToast(response.body().getMessage());
-
-                        binding.ivFav.setVisibility(View.VISIBLE);
-                        binding.ivUnFav.setVisibility(View.GONE);
+                        IS_Favourite = 0;
+                        binding.ivFav.setImageResource(R.drawable.ic_fav);
 
                     }else if(response.body().getSuccess().equals("0")){
                         showToast( response.body().getMessage());
@@ -247,11 +266,19 @@ public class ProductDetailActivity extends BaseActivity implements View.OnClickL
                     if (response.body().getSuccess().equals("1")) {
                         showToast(response.body().getMessage());
 
+                        binding.tvAddToCart.setVisibility(View.GONE);
+                        binding.rlQuntity.setVisibility(View.VISIBLE);
+
+                        float STR_PRICE = Float.parseFloat(ProductMOQ) * ProductRetailPrice;
+                        binding.tvTotlaPrice.setText(String.valueOf(Quantity));
+                        binding.tvCartQuny.setText(String.valueOf(binding.tvMOQ.getText().toString()));
                     } else if (response.body().getSuccess().equals("0")) {
                         showToast(response.body().getMessage());
                     } else {
                         showToast(response.body().getMessage());
                     }
+                }else if(response.code()==404){
+                    CommonUtils.showToast(ProductDetailActivity.this, "Product is not added in cart");
                 }
                 dismissCustomLoader();
             }

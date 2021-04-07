@@ -219,6 +219,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener,
                 if (response.body() != null) {
                     Log.e("TAG", "onResponse: BODY:::" + new Gson().toJson(response.body()));
                     if (response.body().getSuccess().equals("1")) {
+                        if (getActivity() != null) {
                         Glide.with(getActivity())
                                 .load(response.body().getFirst_banner().getLogo())
                                 .listener(new RequestListener<Drawable>() {
@@ -253,24 +254,10 @@ public class HomeFragment extends Fragment implements View.OnClickListener,
                                     }
                                 })
                                 .into(binding.ivLastBanner);
+                    }
 
                         todayspecialListBeans.clear();
                         todayspecialListBeans.addAll(response.body().getTodayspecial_list());
-
-                        /*only show 2 product*/
-
-                        /*for (int i = 0; i < response.body().getTodayspecial_list().size(); i++) {
-                            if (i < 2) {
-                                todayspecialListBeans.addAll(response.body().getTodayspecial_list());
-                            }
-                        }*/
-
-                        /*if(response.body().getTodayspecial_list().size()>2){
-                            binding.tvViewAll.setVisibility(View.VISIBLE);
-                            sessionManager.save_today_specialList(response.body().getTodayspecial_list());
-                        }else {
-                            binding.tvViewAll.setVisibility(View.GONE);
-                        }*/
 
                         todaySpecialListADP = new RvTodaySpecialListADP(getActivity(),
                                 todayspecialListBeans, HomeFragment.this,
@@ -283,6 +270,8 @@ public class HomeFragment extends Fragment implements View.OnClickListener,
                     } else {
 
                     }
+                }else if(response.code()==404){
+                    CommonUtils.showToast(getActivity(), "List not found");
                 }
                 CommonUtils.dismissCustomLoader();
             }
@@ -440,12 +429,13 @@ public class HomeFragment extends Fragment implements View.OnClickListener,
     }
 
     @Override
-    public void addtoReviewCartList(String product_id, String quantity) {
+    public void addtoReviewCartList(String product_id, String quantity, int position) {
         Log.d("TAG", "addtoReviewCartList returned: " + product_id);
-        callAddToReviewCartAPI(product_id, quantity, MARGIN_ID);
+        callAddToReviewCartAPI(product_id, quantity, MARGIN_ID, position);
     }
 
-    private void callAddToReviewCartAPI(String cart_product_id, String quantity, String margin_id) {
+    private void callAddToReviewCartAPI(String cart_product_id, String quantity,
+                                        String margin_id, int position) {
         if (!CommonUtils.isInternetOn(getActivity())) {
             CommonUtils.showToast(getActivity(), getString(R.string.check_internet));
             return;
@@ -464,12 +454,15 @@ public class HomeFragment extends Fragment implements View.OnClickListener,
                     Log.e("TAG", "onResponse: CALLED:::::" + new Gson().toJson(response.body()));
                     if (response.body().getSuccess().equals("1")) {
                         CommonUtils.showToast(getActivity(), response.body().getMessage());
+                        todaySpecialListADP.updateCart(position, quantity);
 
                     } else if (response.body().getSuccess().equals("0")) {
                         CommonUtils.showToast(getActivity(), response.body().getMessage());
                     } else {
                         CommonUtils.showToast(getActivity(), response.body().getMessage());
                     }
+                }else if(response.code()==404){
+                    CommonUtils.showToast(getActivity(), "Product is not added in cart");
                 }
                 CommonUtils.dismissCustomLoader();
             }
@@ -482,7 +475,8 @@ public class HomeFragment extends Fragment implements View.OnClickListener,
         });
     }
 
-    private void callUPdateCart(String update_pro_id, String product_quantity, String margin_id) {
+    private void callUPdateCart(String update_pro_id, String product_quantity,
+                                String margin_id) {
         if (!CommonUtils.isInternetOn(getActivity())) {
             CommonUtils.showToast(getActivity(), getString(R.string.check_internet));
             return;

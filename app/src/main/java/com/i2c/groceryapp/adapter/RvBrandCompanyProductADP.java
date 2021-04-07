@@ -74,6 +74,12 @@ public class RvBrandCompanyProductADP extends RecyclerView.Adapter<RvBrandCompan
     }
 
 
+    public void updateCart(int adapterPosition, String quantity) {
+        Log.e("TAG", "updateIsFavData: position::::"+adapterPosition);
+        favourite_list.get(adapterPosition).setIn_cart_qty(Integer.parseInt(quantity));
+        notifyDataSetChanged();
+    }
+
 
     public interface AddFavouritetoAllProduct{
         void addToFavouriteAllProduct(String product_id, Boolean isclick, int position);
@@ -93,7 +99,7 @@ public class RvBrandCompanyProductADP extends RecyclerView.Adapter<RvBrandCompan
     }
 
     public interface AddToReviewCartList {
-        void addtoReviewCartList(String product_id, String quantity);
+        void addtoReviewCartList(String product_id, String quantity, int position);
     }
 
     public interface UpdateReviewCart {
@@ -136,7 +142,7 @@ public class RvBrandCompanyProductADP extends RecyclerView.Adapter<RvBrandCompan
 
                         addToReviewCartList.addtoReviewCartList(
                                 favourite_list.get(getAdapterPosition()).getProduct_id(),
-                                binding.tvProductMOQ.getText().toString());
+                                binding.tvProductMOQ.getText().toString(), getAdapterPosition());
 
                         if (Integer.parseInt(favourite_list.get(getAdapterPosition()).getIs_free_product())!=0) {
                             free = Integer.parseInt(binding.tvProductMOQ.getText().toString()) *
@@ -149,7 +155,7 @@ public class RvBrandCompanyProductADP extends RecyclerView.Adapter<RvBrandCompan
 
                         addToReviewCartList.addtoReviewCartList(
                                 favourite_list.get(getAdapterPosition()).getProduct_id(),
-                                binding.tvMOQ.getText().toString());
+                                binding.tvMOQ.getText().toString(), getAdapterPosition());
 
                         if (Integer.parseInt(favourite_list.get(getAdapterPosition()).getIs_free_product())!=0) {
                             free = Integer.valueOf(binding.tvMOQ.getText().toString()) *
@@ -203,10 +209,6 @@ public class RvBrandCompanyProductADP extends RecyclerView.Adapter<RvBrandCompan
                     updateReviewCart.updateReviewCart(
                             favourite_list.get(getAdapterPosition()).getProduct_id(),
                             binding.tvCartQuny.getText().toString());
-
-//                    Utility.BADGE_PRICE = Utility.BADGE_PRICE + STR;
-//                    HomeActivity.showBadge(activity, HomeActivity.bottomNavigationView, R.id.nav_Checkout,
-//                            Utility.BADGE_PRICE);
                 }
             });
 
@@ -232,8 +234,6 @@ public class RvBrandCompanyProductADP extends RecyclerView.Adapter<RvBrandCompan
                         binding.tvCartQuny.setText(String.valueOf(a - first_moq));
                         STR = c * moq;
                         FINAL_PRICE = b - STR ;
-//                        Utility.BADGE_PRICE = Utility.BADGE_PRICE - STR;
-
                         if (favourite_list.get(getAdapterPosition()).getIs_free_product().equals("1")){
                             int free = first_moq * Integer.parseInt(favourite_list.get(getAdapterPosition()).getPro_qty_for_free());
                             int add_free = free / Integer.parseInt(favourite_list.get(getAdapterPosition()).getMin_qty_for_free());
@@ -250,9 +250,6 @@ public class RvBrandCompanyProductADP extends RecyclerView.Adapter<RvBrandCompan
 
                     updateReviewCart.updateReviewCart(favourite_list.get(getAdapterPosition()).getProduct_id(),
                             binding.tvCartQuny.getText().toString());
-
-//                    HomeActivity.showBadge(activity, HomeActivity.bottomNavigationView, R.id.nav_Checkout,
-//                            Utility.BADGE_PRICE);
                 }
             });
 

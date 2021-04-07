@@ -3,6 +3,7 @@ package com.i2c.groceryapp.adapter;
 import android.app.Activity;
 import android.content.Intent;
 import android.net.Uri;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -69,7 +70,7 @@ public class RvSearchProductListADP extends RecyclerView.Adapter<RvSearchProduct
     }
 
     public interface AddToReviewCartList {
-        void addtoReviewCartList(String product_id, String quantity);
+        void addtoReviewCartList(String product_id, String quantity, int position);
     }
 
     public interface UpdateReviewCart {
@@ -166,7 +167,7 @@ public class RvSearchProductListADP extends RecyclerView.Adapter<RvSearchProduct
                         binding.tvCartQuny.setText(String.valueOf(binding.tvProductMOQ.getText().toString()));
 
                         addToReviewCartList.addtoReviewCartList(allProductList.get(getAdapterPosition()).getProduct_id(),
-                                binding.tvProductMOQ.getText().toString());
+                                binding.tvProductMOQ.getText().toString(), getAdapterPosition());
 
                         if (Integer.parseInt(allProductList.get(getAdapterPosition()).getIs_free_product()) != 0) {
                             free = Integer.parseInt(binding.tvProductMOQ.getText().toString()) *
@@ -179,7 +180,7 @@ public class RvSearchProductListADP extends RecyclerView.Adapter<RvSearchProduct
 
                         addToReviewCartList.addtoReviewCartList(
                                 allProductList.get(getAdapterPosition()).getProduct_id(),
-                                binding.tvMOQ.getText().toString());
+                                binding.tvMOQ.getText().toString(), getAdapterPosition());
 
                         if (Integer.parseInt(allProductList.get(getAdapterPosition()).getIs_free_product()) != 0) {
                             free = Integer.parseInt(binding.tvMOQ.getText().toString()) *
@@ -321,6 +322,13 @@ public class RvSearchProductListADP extends RecyclerView.Adapter<RvSearchProduct
         } else {
             allProductList.get(adapterPosition).setIs_favorite(1);
         }
+        notifyDataSetChanged();
+    }
+
+
+    public void updateCart(int adapterPosition, String quantity) {
+        Log.e("TAG", "updateIsFavData: position::::"+adapterPosition);
+        allProductList.get(adapterPosition).setIn_cart_qty(Integer.parseInt(quantity));
         notifyDataSetChanged();
     }
 

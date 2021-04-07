@@ -55,6 +55,13 @@ public class RvFreebiesADP extends RecyclerView.Adapter<RvFreebiesADP.MyViewHold
         notifyDataSetChanged();
     }
 
+    public void updateCart(int adapterPosition, String quantity) {
+        Log.e("TAG", "updateIsFavData: position::::"+adapterPosition);
+        freebies_arraylist.get(adapterPosition).setIn_cart_qty(Integer.parseInt(quantity));
+        notifyDataSetChanged();
+    }
+
+
 
     public interface AddtoFavouriteFree {
         void addToFavouriteFree(String product_id, Boolean isclick, int position);
@@ -66,7 +73,7 @@ public class RvFreebiesADP extends RecyclerView.Adapter<RvFreebiesADP.MyViewHold
     }
 
     public interface UpdateReviewCart {
-        void updateReviewCart(String product_id, String update_quantity);
+        void updateReviewCart(String product_id, String update_quantity, int pos);
     }
 
 
@@ -163,7 +170,7 @@ public class RvFreebiesADP extends RecyclerView.Adapter<RvFreebiesADP.MyViewHold
                 binding.tvTotalPrice.setText(String.valueOf(FINAL_PRICE));
 
                 updateReviewCart.updateReviewCart(freebies_arraylist.get(getAdapterPosition()).getProduct_id(),
-                    binding.tvCartQuny.getText().toString());
+                    binding.tvCartQuny.getText().toString(),getAdapterPosition());
 
 //                    Utility.BADGE_PRICE = Utility.BADGE_PRICE + STR;
 //                    HomeActivity.showBadge(activity, HomeActivity.bottomNavigationView, R.id.nav_Checkout,
@@ -198,7 +205,7 @@ public class RvFreebiesADP extends RecyclerView.Adapter<RvFreebiesADP.MyViewHold
                 binding.tvTotalPrice.setText(String.valueOf(FINAL_PRICE));
 
                 updateReviewCart.updateReviewCart(freebies_arraylist.get(getAdapterPosition()).getProduct_id(),
-                        binding.tvCartQuny.getText().toString());
+                        binding.tvCartQuny.getText().toString(),getAdapterPosition());
 
 //                    HomeActivity.showBadge(activity, HomeActivity.bottomNavigationView, R.id.nav_Checkout,
 //                            Utility.BADGE_PRICE);

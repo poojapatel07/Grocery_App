@@ -39,6 +39,7 @@ import com.i2c.groceryapp.utils.EndlessRecyclerOnScrollListenerNewGrid;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import io.reactivex.internal.util.BlockingHelper;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -107,6 +108,16 @@ RvTradeOfferADP.AddToReviewCartList, RvTradeOfferADP.OpenMOQDialog,
                 callTreadOfferAPI(Trade_position, false);
             }
         });
+
+
+    }
+
+    @Override
+    protected void onResume() {
+//        Trade_position = 0;
+//        arrayList.clear();
+//        callTreadOfferAPI(Trade_position, true);
+        super.onResume();
     }
 
     private void callTreadOfferAPI(int trade_position, Boolean isFirst) {
@@ -126,16 +137,15 @@ RvTradeOfferADP.AddToReviewCartList, RvTradeOfferADP.OpenMOQDialog,
         callAPI.enqueue(new Callback<ListResponse<Todayspecial_list>>() {
             @Override
             public void onResponse(Call<ListResponse<Todayspecial_list>> call, Response<ListResponse<Todayspecial_list>> response) {
+                Log.e("TAG", "GET:CALLED::::"+new Gson().toJson(response.body()));
                 if(response.body()!=null){
                     if(response.body().getSuccess().equals("1")){
-
-                        if (arrayList.size() == 0) {
+                        if(trade_position==0){
                             arrayList.clear();
+                        }
+                        if (arrayList.size() == 0) {
+                            Log.e("TAG", "onResponse: IF:::"+arrayList.size());
                             arrayList.addAll(response.body().getData());
-
-//                            adp = new RvFreebiesADP(FreebiesActivity.this,
-//                                    freebies_arraylist, FreebiesActivity.this,
-//                                    FreebiesActivity.this, FreebiesActivity.this);
 
                             adp = new RvTradeOfferADP(TradeOfferActivity.this,
                                     arrayList, TradeOfferActivity.this,
@@ -145,6 +155,7 @@ RvTradeOfferADP.AddToReviewCartList, RvTradeOfferADP.OpenMOQDialog,
                             binding.rvTredeOffers.setAdapter(adp);
 
                         } else {
+                            Log.e("TAG", "onResponse: BODY:::"+arrayList.size());
                             arrayList.addAll(response.body().getData());
                         }
                         adp.notifyDataSetChanged();
@@ -161,6 +172,7 @@ RvTradeOfferADP.AddToReviewCartList, RvTradeOfferADP.OpenMOQDialog,
             @Override
             public void onFailure(Call<ListResponse<Todayspecial_list>> call, Throwable t) {
                 dismissCustomLoader();
+                Log.e("TAG", "onFailure: ERROR:::"+t.getMessage());
             }
         });
     }
@@ -376,12 +388,12 @@ RvTradeOfferADP.AddToReviewCartList, RvTradeOfferADP.OpenMOQDialog,
 
 
     @Override
-    public void addtoReviewCartList(String product_id, String quantity) {
-        callAddToReviewCartAPI(product_id, quantity, MARGIN_ID);
+    public void addtoReviewCartList(String product_id, String quantity, int position) {
+        callAddToReviewCartAPI(product_id, quantity, MARGIN_ID, position);
     }
 
     private void callAddToReviewCartAPI(String cart_product_id, String quantity,
-                                        String margin_id) {
+                                        String margin_id, int position) {
         if (!CommonUtils.isInternetOn(this)) {
             CommonUtils.showToast(this, getString(R.string.check_internet));
             return;
@@ -399,6 +411,7 @@ RvTradeOfferADP.AddToReviewCartList, RvTradeOfferADP.OpenMOQDialog,
                 if (response.body() != null) {
                     Log.e("TAG", "onResponse: CALLED:::::" + new Gson().toJson(response.body()));
                     if (response.body().getSuccess().equals("1")) {
+                        adp.updateCart(position, quantity);
                         CommonUtils.showToast(TradeOfferActivity.this, response.body().getMessage());
 
                     } else if (response.body().getSuccess().equals("0")) {
@@ -406,6 +419,8 @@ RvTradeOfferADP.AddToReviewCartList, RvTradeOfferADP.OpenMOQDialog,
                     } else {
                         CommonUtils.showToast(TradeOfferActivity.this, response.body().getMessage());
                     }
+                }else if(response.code()==404){
+                    CommonUtils.showToast(TradeOfferActivity.this, "Product is not added in cart");
                 }
                 CommonUtils.dismissCustomLoader();
             }

@@ -145,7 +145,7 @@ public class HomeActivity extends BaseActivity implements RvMenuADP.OpenFragment
         ALL_MENU.add(getString(R.string.My_Favourite));
         ALL_MENU.add(getString(R.string.Become_a_Prime_member));
         ALL_MENU.add(getString(R.string.Profile));
-        ALL_MENU.add(getString(R.string.Change_Language));
+//        ALL_MENU.add(getString(R.string.Change_Language));
         ALL_MENU.add(getString(R.string.Change_Password));
         ALL_MENU.add(getString(R.string.Contact_Us));
         ALL_MENU.add(getString(R.string.Logout));
@@ -183,19 +183,19 @@ public class HomeActivity extends BaseActivity implements RvMenuADP.OpenFragment
                 launchActivity(HomeActivity.this, ProfileActivity.class);
                 break;
 
-            case 4:
-                launchActivity(HomeActivity.this, ChangeLanguageActivity.class);
-                break;
+//            case 4:
+//                launchActivity(HomeActivity.this, ChangeLanguageActivity.class);
+//                break;
 
-            case 5:
+            case 4:
                 launchActivity(HomeActivity.this, ChangePasswordActivity.class);
                 break;
 
-            case 6:
+            case 5:
                 launchActivity(HomeActivity.this, ContactUsActivity.class);
                 break;
 
-            case 7:
+            case 6:
                 openAlertDalog();
                 break;
         }

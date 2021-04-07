@@ -633,12 +633,13 @@ public class ProductCategoryActivity extends BaseActivity implements
     }
 
     @Override
-    public void addtoReviewCartList(String product_id, String quantity) {
+    public void addtoReviewCartList(String product_id, String quantity, int position) {
         Log.d("TAG", "addtoReviewCartList returned: " + product_id);
-        callAddToReviewCartAPI(product_id, quantity, MARGIN_ID);
+        callAddToReviewCartAPI(product_id, quantity, MARGIN_ID, position);
     }
 
-    private void callAddToReviewCartAPI(String cart_product_id, String quantity, String margin_id) {
+    private void callAddToReviewCartAPI(String cart_product_id, String quantity,
+                                        String margin_id, int position) {
         if (!CommonUtils.isInternetOn(ProductCategoryActivity.this)) {
             CommonUtils.showToast(ProductCategoryActivity.this, getString(R.string.check_internet));
             return;
@@ -657,12 +658,14 @@ public class ProductCategoryActivity extends BaseActivity implements
                     Log.e("TAG", "onResponse: CALLED:::::" + new Gson().toJson(response.body()));
                     if (response.body().getSuccess().equals("1")) {
                         CommonUtils.showToast(ProductCategoryActivity.this, response.body().getMessage());
-
+                        adp.updateCart(position, quantity);
                     } else if (response.body().getSuccess().equals("0")) {
                         CommonUtils.showToast(ProductCategoryActivity.this, response.body().getMessage());
                     } else {
                         CommonUtils.showToast(ProductCategoryActivity.this, response.body().getMessage());
                     }
+                }else if(response.code()==404){
+                    CommonUtils.showToast(ProductCategoryActivity.this, "Product is not added in cart");
                 }
                 CommonUtils.dismissCustomLoader();
             }

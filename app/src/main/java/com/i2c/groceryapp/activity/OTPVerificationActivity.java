@@ -134,6 +134,9 @@ public class OTPVerificationActivity extends BaseActivity implements View.OnClic
                     }else {
                         showToast(response.body().getMessage());
                     }
+
+                }else if(response.code()==404){
+                    showToast("Invalid OTP");
                 }
                 dismissCustomLoader();
             }

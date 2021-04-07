@@ -209,11 +209,12 @@ public class MyFavouriteActivity extends BaseActivity implements
 
 
     @Override
-    public void addtoReviewCartList(String product_id, String quantity) {
-        callAddToReviewCartAPI(product_id, quantity, MARGIN_ID);
+    public void addtoReviewCartList(String product_id, String quantity, int position) {
+        callAddToReviewCartAPI(product_id, quantity, MARGIN_ID, position);
     }
 
-    private void callAddToReviewCartAPI(String cart_product_id, String quantity, String margin_id) {
+    private void callAddToReviewCartAPI(String cart_product_id, String quantity,
+                                        String margin_id, int position) {
         if (!CommonUtils.isInternetOn(this)) {
             CommonUtils.showToast(this, getString(R.string.check_internet));
             return;
@@ -232,12 +233,15 @@ public class MyFavouriteActivity extends BaseActivity implements
                     Log.e("TAG", "onResponse: CALLED:::::" + new Gson().toJson(response.body()));
                     if (response.body().getSuccess().equals("1")) {
                         CommonUtils.showToast(MyFavouriteActivity.this, response.body().getMessage());
+                        adp.updateCart(position, quantity);
 
                     } else if (response.body().getSuccess().equals("0")) {
                         CommonUtils.showToast(MyFavouriteActivity.this, response.body().getMessage());
                     } else {
                         CommonUtils.showToast(MyFavouriteActivity.this, response.body().getMessage());
                     }
+                }else if(response.code()==404){
+                    CommonUtils.showToast(MyFavouriteActivity.this, "Product is not added in cart");
                 }
                 CommonUtils.dismissCustomLoader();
             }

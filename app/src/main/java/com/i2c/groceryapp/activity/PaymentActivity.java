@@ -162,7 +162,8 @@ public class PaymentActivity extends BaseActivity {
     @SuppressLint("SetTextI18n")
     private void openDialog() {
         binding.rlBG.setVisibility(View.VISIBLE);
-        final Dialog dialog = new Dialog(this, android.R.style.Theme_Translucent_NoTitleBar_Fullscreen);
+        final Dialog dialog = new Dialog(this,
+                android.R.style.Theme_Translucent_NoTitleBar_Fullscreen);
         dialog.setContentView(R.layout.dialog_cotinue_payment);
 
         dialog.setCancelable(false);

@@ -3,6 +3,7 @@ package com.i2c.groceryapp.adapter;
 import android.app.Activity;
 import android.content.Intent;
 import android.net.Uri;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -74,7 +75,7 @@ public class RvMyFavouriteADP extends RecyclerView.Adapter<RvMyFavouriteADP.MyVi
     }
 
     public interface AddToReviewCartList {
-        void addtoReviewCartList(String product_id, String quantity);
+        void addtoReviewCartList(String product_id, String quantity, int pos);
     }
 
     public interface UpdateReviewCart {
@@ -89,8 +90,7 @@ public class RvMyFavouriteADP extends RecyclerView.Adapter<RvMyFavouriteADP.MyVi
             super(itemView.getRoot());
             binding = itemView;
 
-            binding.ivLike.setBackground(activity.getResources().
-                    getDrawable(R.drawable.ic_fav_green));
+            binding.ivLike.setImageResource(R.drawable.ic_fav_green);
             binding.ivLike.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -115,7 +115,7 @@ public class RvMyFavouriteADP extends RecyclerView.Adapter<RvMyFavouriteADP.MyVi
 
                         addToReviewCartList.addtoReviewCartList(
                                 favourite_list.get(getAdapterPosition()).getProduct_id(),
-                                binding.tvProductMOQ.getText().toString());
+                                binding.tvProductMOQ.getText().toString(),getAdapterPosition());
 
                         if (Integer.parseInt(favourite_list.get(getAdapterPosition()).getProduct_details().getIs_free_product())!=0) {
                             free = Integer.parseInt(binding.tvProductMOQ.getText().toString()) *
@@ -128,7 +128,7 @@ public class RvMyFavouriteADP extends RecyclerView.Adapter<RvMyFavouriteADP.MyVi
 
                         addToReviewCartList.addtoReviewCartList(
                                 favourite_list.get(getAdapterPosition()).getProduct_id(),
-                                binding.tvMOQ.getText().toString());
+                                binding.tvMOQ.getText().toString(), getAdapterPosition());
 
                         if (Integer.parseInt(favourite_list.get(getAdapterPosition()).getProduct_details().getIs_free_product())!=0) {
                             free = Integer.valueOf(binding.tvMOQ.getText().toString()) *
@@ -301,6 +301,13 @@ public class RvMyFavouriteADP extends RecyclerView.Adapter<RvMyFavouriteADP.MyVi
             });
         }
     }
+
+    public void updateCart(int adapterPosition, String quantity) {
+        Log.e("TAG", "updateIsFavData: position::::"+adapterPosition);
+        favourite_list.get(adapterPosition).setIn_cart_qty(quantity);
+        notifyDataSetChanged();
+    }
+
 
     @NonNull
     @Override

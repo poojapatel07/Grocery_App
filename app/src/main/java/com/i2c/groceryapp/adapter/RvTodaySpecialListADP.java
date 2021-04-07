@@ -3,6 +3,7 @@ package com.i2c.groceryapp.adapter;
 import android.app.Activity;
 import android.content.Intent;
 import android.net.Uri;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -71,7 +72,7 @@ public class RvTodaySpecialListADP extends RecyclerView.Adapter<RvTodaySpecialLi
     }
 
     public interface AddToReviewCartList {
-        void addtoReviewCartList(String product_id, String quantity);
+        void addtoReviewCartList(String product_id, String quantity, int position);
     }
 
     public interface UpdateReviewCart {
@@ -92,8 +93,6 @@ public class RvTodaySpecialListADP extends RecyclerView.Adapter<RvTodaySpecialLi
         public MyViewHolder(@NonNull ItemTodaySpecialBinding itemView) {
             super(itemView.getRoot());
             binding = itemView;
-
-
 
             /*fav or unFav*/
             binding.ivFavFreebies.setOnClickListener(new View.OnClickListener() {
@@ -168,7 +167,7 @@ public class RvTodaySpecialListADP extends RecyclerView.Adapter<RvTodaySpecialLi
                         binding.tvCartQuny.setText(String.valueOf(binding.tvProductMOQ.getText().toString()));
 
                         addToReviewCartList.addtoReviewCartList(allProductList.get(getAdapterPosition()).getProduct_id(),
-                                binding.tvProductMOQ.getText().toString());
+                                binding.tvProductMOQ.getText().toString(), getAdapterPosition());
 
                         if (Integer.parseInt(allProductList.get(getAdapterPosition()).getIs_free_product()) != 0) {
                             free = Integer.parseInt(binding.tvProductMOQ.getText().toString()) *
@@ -181,7 +180,7 @@ public class RvTodaySpecialListADP extends RecyclerView.Adapter<RvTodaySpecialLi
 
                         addToReviewCartList.addtoReviewCartList(
                                 allProductList.get(getAdapterPosition()).getProduct_id(),
-                                binding.tvMOQ.getText().toString());
+                                binding.tvMOQ.getText().toString(), getAdapterPosition());
 
                         if (Integer.parseInt(allProductList.get(getAdapterPosition()).getIs_free_product()) != 0) {
                             free = Integer.parseInt(binding.tvMOQ.getText().toString()) *
@@ -234,10 +233,6 @@ public class RvTodaySpecialListADP extends RecyclerView.Adapter<RvTodaySpecialLi
 
                     updateReviewCart.updateReviewCart(allProductList.get(getAdapterPosition()).getProduct_id(),
                             binding.tvCartQuny.getText().toString());
-
-//                    Utility.BADGE_PRICE = Utility.BADGE_PRICE + STR;
-//                    HomeActivity.showBadge(activity, HomeActivity.bottomNavigationView, R.id.nav_Checkout,
-//                            Utility.BADGE_PRICE);
                 }
             });
 
@@ -263,7 +258,6 @@ public class RvTodaySpecialListADP extends RecyclerView.Adapter<RvTodaySpecialLi
                         binding.tvCartQuny.setText(String.valueOf(a - first_moq));
                         STR = c * moq;
                         FINAL_PRICE = b - STR;
-//                        Utility.BADGE_PRICE = Utility.BADGE_PRICE - STR;
 
                         if (allProductList.get(getAdapterPosition()).getIs_free_product().equals("1")) {
                             int free = first_moq * Integer.parseInt(allProductList.get(getAdapterPosition()).getPro_qty_for_free());
@@ -281,9 +275,6 @@ public class RvTodaySpecialListADP extends RecyclerView.Adapter<RvTodaySpecialLi
 
                     updateReviewCart.updateReviewCart(allProductList.get(getAdapterPosition()).getProduct_id(),
                             binding.tvCartQuny.getText().toString());
-
-//                    HomeActivity.showBadge(activity, HomeActivity.bottomNavigationView, R.id.nav_Checkout,
-//                            Utility.BADGE_PRICE);
                 }
             });
 
@@ -325,6 +316,14 @@ public class RvTodaySpecialListADP extends RecyclerView.Adapter<RvTodaySpecialLi
         }
         notifyDataSetChanged();
     }
+
+
+    public void updateCart(int adapterPosition, String quantity) {
+        Log.e("TAG", "updateIsFavData: position::::"+adapterPosition);
+        allProductList.get(adapterPosition).setIn_cart_qty(Integer.parseInt(quantity));
+        notifyDataSetChanged();
+    }
+
 
     @NonNull
     @Override
