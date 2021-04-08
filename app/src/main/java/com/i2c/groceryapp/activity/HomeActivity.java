@@ -259,5 +259,9 @@ public class HomeActivity extends BaseActivity implements RvMenuADP.OpenFragment
             }
         });
     }
-
 }
+
+
+// credentials
+// a@gmail.com
+// 123456789

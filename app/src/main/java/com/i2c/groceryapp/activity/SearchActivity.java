@@ -297,6 +297,9 @@ public class SearchActivity extends BaseActivity implements
                 Log.e("TAG", "onResponse:CALLED::::"+new Gson().toJson(response.body()));
 
                 if(response.body()!=null){
+                    binding.rvSearchProduct.setVisibility(View.VISIBLE);
+                    binding.tvNoData.setVisibility(View.GONE);
+
                     if(response.body().getSuccess().equals("1")){
                         if (flag) {
                             allProductList.clear();
@@ -341,7 +344,8 @@ public class SearchActivity extends BaseActivity implements
 
                     }
                 }else if(response.code()==404){
-
+                    binding.rvSearchProduct.setVisibility(View.GONE);
+                    binding.tvNoData.setVisibility(View.VISIBLE);
                 }
                 dismissCustomLoader();
             }
@@ -516,6 +520,9 @@ public class SearchActivity extends BaseActivity implements
                     }else {
                         CommonUtils.showToast(SearchActivity.this, response.body().getMessage());
                     }
+                }else if(response.code()==404){
+                    CommonUtils.showToast(SearchActivity.this,
+                            "Not added in favourite");
                 }
                 CommonUtils.dismissCustomLoader();
             }
@@ -551,6 +558,9 @@ public class SearchActivity extends BaseActivity implements
                     }else {
                         CommonUtils.showToast(SearchActivity.this, response.body().getMessage());
                     }
+                }else if(response.code()==404){
+                    CommonUtils.showToast(SearchActivity.this,
+                            "Not remove from favourite");
                 }
                 CommonUtils.dismissCustomLoader();
             }
@@ -638,6 +648,9 @@ public class SearchActivity extends BaseActivity implements
                     } else {
                         CommonUtils.showToast(SearchActivity.this, response.body().getMessage());
                     }
+                }else if(response.code()==404){
+                    CommonUtils.showToast(SearchActivity.this,
+                            "Product is not updated!");
                 }
                 CommonUtils.dismissCustomLoader();
             }

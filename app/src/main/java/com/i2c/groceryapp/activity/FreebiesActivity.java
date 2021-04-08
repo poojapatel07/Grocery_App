@@ -98,6 +98,9 @@ public class FreebiesActivity extends BaseActivity implements
                 if(response.body()!=null){
                     if(response.body().getSuccess().equals("1")){
                         if (freebies_arraylist.size() == 0) {
+                            binding.rvFreebies.setVisibility(View.VISIBLE);
+                            binding.tvNoData.setVisibility(View.GONE);
+
                             freebies_arraylist.clear();
                             freebies_arraylist.addAll(response.body().getData());
 
@@ -116,6 +119,9 @@ public class FreebiesActivity extends BaseActivity implements
                     }else {
 
                     }
+                }else if(response.code()==404){
+                    binding.rvFreebies.setVisibility(View.GONE);
+                    binding.tvNoData.setVisibility(View.VISIBLE);
                 }
                 dismissCustomLoader();
             }
@@ -159,6 +165,9 @@ public class FreebiesActivity extends BaseActivity implements
                     }else {
                         CommonUtils.showToast(FreebiesActivity.this, response.body().getMessage());
                     }
+                }else if(response.code()==404){
+                    CommonUtils.showToast(FreebiesActivity.this,
+                            "Not added in favourite");
                 }
                 CommonUtils.dismissCustomLoader();
             }
@@ -195,6 +204,9 @@ public class FreebiesActivity extends BaseActivity implements
                     }else {
                         CommonUtils.showToast(FreebiesActivity.this, response.body().getMessage());
                     }
+                }else if(response.code()==404){
+                    CommonUtils.showToast(FreebiesActivity.this,
+                            "Not remove from favourite");
                 }
                 CommonUtils.dismissCustomLoader();
             }
@@ -282,6 +294,10 @@ public class FreebiesActivity extends BaseActivity implements
                     } else {
                         CommonUtils.showToast(FreebiesActivity.this, response.body().getMessage());
                     }
+
+                }else if(response.code()==404){
+                    CommonUtils.showToast(FreebiesActivity.this,
+                            "Product is not updated!");
                 }
                 CommonUtils.dismissCustomLoader();
             }

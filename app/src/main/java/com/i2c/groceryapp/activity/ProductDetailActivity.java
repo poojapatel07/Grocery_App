@@ -198,6 +198,8 @@ public class ProductDetailActivity extends BaseActivity implements View.OnClickL
                     }else {
                         showToast(response.body().getMessage());
                     }
+                }else if(response.code()==404){
+                    showToast("Not added in favourite");
                 }
                 dismissCustomLoader();
             }
@@ -233,6 +235,8 @@ public class ProductDetailActivity extends BaseActivity implements View.OnClickL
                     }else {
                         showToast(response.body().getMessage());
                     }
+                }else if(response.code()==404){
+                    showToast("Not remove from favourite");
                 }
                 dismissCustomLoader();
             }
@@ -314,6 +318,8 @@ public class ProductDetailActivity extends BaseActivity implements View.OnClickL
                     } else {
                         showToast(response.body().getMessage());
                     }
+                }else if(response.code()==404) {
+                    showToast("Product is not updated!");
                 }
                 dismissCustomLoader();
             }

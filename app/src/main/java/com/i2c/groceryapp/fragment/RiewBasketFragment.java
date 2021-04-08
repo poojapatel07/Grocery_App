@@ -16,6 +16,8 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import com.google.gson.Gson;
 import com.i2c.groceryapp.R;
+import com.i2c.groceryapp.activity.BrandCompanyProductListActivity;
+import com.i2c.groceryapp.activity.MyFavouriteActivity;
 import com.i2c.groceryapp.activity.OrderSummaryActivity;
 import com.i2c.groceryapp.adapter.ReviewBasketADP;
 import com.i2c.groceryapp.databinding.FragmentRiewBasketBinding;
@@ -140,8 +142,9 @@ public class RiewBasketFragment extends Fragment implements
                     }else {
 
                     }
-                }else {
 
+                }else if(response.code()==404) {
+                    CommonUtils.showToast(getActivity(), "Something went wrong!");
                 }
                 CommonUtils.dismissCustomLoader();
             }
@@ -265,6 +268,9 @@ public class RiewBasketFragment extends Fragment implements
                     }else {
                         CommonUtils.showToast(getActivity(), response.body().getMessage());
                     }
+                }else if(response.code()==404){
+                    CommonUtils.showToast(getActivity(),
+                            "Not added in favourite");
                 }
                 CommonUtils.dismissCustomLoader();
             }
@@ -300,6 +306,9 @@ public class RiewBasketFragment extends Fragment implements
                     }else {
                         CommonUtils.showToast(getActivity(), response.body().getMessage());
                     }
+                }else if(response.code()==404){
+                    CommonUtils.showToast(getActivity(),
+                            "Not remove from favourite");
                 }
                 CommonUtils.dismissCustomLoader();
             }
@@ -354,6 +363,9 @@ public class RiewBasketFragment extends Fragment implements
                     } else {
                         CommonUtils.showToast(getActivity(), response.body().getMessage());
                     }
+                }else if(response.code()==404){
+                    CommonUtils.showToast(getActivity(),
+                            "Product is not updated!");
                 }
                 CommonUtils.dismissCustomLoader();
             }

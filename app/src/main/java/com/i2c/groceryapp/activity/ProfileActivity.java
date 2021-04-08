@@ -213,6 +213,9 @@ public class ProfileActivity extends BaseActivity {
                             showToast(response.body().getMessage());
                             binding.etShippingAdd.setEnabled(true);
                         }
+
+                    }else if(response.code()==404){
+                        showToast("Address is not updated");
                     }
                     dismissCustomLoader();
                 }
@@ -372,6 +375,9 @@ public class ProfileActivity extends BaseActivity {
                     } else if (response.body().getSuccess().equals("2")) {
                         showToast(response.body().getMessage());
                     }
+
+                }else if(response.code()==404){
+                    showToast("Image is not uploaded");
                 }
                 dismissCustomLoader();
             }

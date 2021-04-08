@@ -156,6 +156,9 @@ public class BrandCompanyProductListActivity extends BaseActivity implements
                     } else {
 
                     }
+                }else if(response.code()==404){
+                    binding.rvBrandCompanyProduct.setVisibility(View.GONE);
+                    binding.tvNoData.setVisibility(View.VISIBLE);
                 }
                 dismissCustomLoader();
             }
@@ -368,6 +371,10 @@ public class BrandCompanyProductListActivity extends BaseActivity implements
                     }else {
                         CommonUtils.showToast(BrandCompanyProductListActivity.this, response.body().getMessage());
                     }
+
+                }else if(response.code()==404){
+                    CommonUtils.showToast(BrandCompanyProductListActivity.this,
+                            "Not added in favourite");
                 }
                 CommonUtils.dismissCustomLoader();
             }
@@ -404,6 +411,9 @@ public class BrandCompanyProductListActivity extends BaseActivity implements
                     }else {
                         CommonUtils.showToast(BrandCompanyProductListActivity.this, response.body().getMessage());
                     }
+                }else if(response.code()==404){
+                    CommonUtils.showToast(BrandCompanyProductListActivity.this,
+                            "Not remove from favourite");
                 }
                 CommonUtils.dismissCustomLoader();
             }
@@ -449,7 +459,8 @@ public class BrandCompanyProductListActivity extends BaseActivity implements
                         CommonUtils.showToast(BrandCompanyProductListActivity.this, response.body().getMessage());
                     }
                 }else if(response.code()==404){
-                    CommonUtils.showToast(BrandCompanyProductListActivity.this, "Product is not added in cart");
+                    CommonUtils.showToast(BrandCompanyProductListActivity.this,
+                            "Product is not added in cart");
                 }
                 CommonUtils.dismissCustomLoader();
             }
@@ -490,6 +501,10 @@ public class BrandCompanyProductListActivity extends BaseActivity implements
                     } else {
                         CommonUtils.showToast(BrandCompanyProductListActivity.this, response.body().getMessage());
                     }
+
+                }else if(response.code()==404){
+                    CommonUtils.showToast(BrandCompanyProductListActivity.this,
+                            "Product is not updated!");
                 }
                 CommonUtils.dismissCustomLoader();
             }

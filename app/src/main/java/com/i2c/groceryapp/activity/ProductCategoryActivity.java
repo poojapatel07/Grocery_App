@@ -181,6 +181,9 @@ public class ProductCategoryActivity extends BaseActivity implements
             public void onResponse(Call<ListResponse<Subcategories_list>> call, Response<ListResponse<Subcategories_list>> response) {
                 if(response.body()!=null){
                     if(response.body().getSuccess().equals("1")){
+                        binding.rvSubCategoryItem.setVisibility(View.VISIBLE);
+                        binding.tvNotData.setVisibility(View.GONE);
+
                         arrayList.clear();
                         arrayList = response.body().getData();
 //                        allCategoryDetailsADP = new RvAllCategoryDetailsADP(
@@ -197,6 +200,9 @@ public class ProductCategoryActivity extends BaseActivity implements
                     }else {
 
                     }
+                }else if(response.code()==404){
+                    binding.rvSubCategoryItem.setVisibility(View.GONE);
+                    binding.tvNotData.setVisibility(View.VISIBLE);
                 }
                 dismissCustomLoader();
             }
@@ -352,6 +358,9 @@ public class ProductCategoryActivity extends BaseActivity implements
                     Log.e("TAG", "onResponse:HELLO:::"+new Gson().toJson(response.body()));
 
                     if(response.body().getSuccess().equals("1")){
+                        binding.rvSubCategoryItem.setVisibility(View.VISIBLE);
+                        binding.tvNotData.setVisibility(View.GONE);
+
                         allProductList.clear();
 
                         if (allProductList.size() == 0) {
@@ -392,7 +401,8 @@ public class ProductCategoryActivity extends BaseActivity implements
 
                     }
                 }else if(response.code() == 404){
-
+                    binding.rvSubCategoryItem.setVisibility(View.GONE);
+                    binding.tvNotData.setVisibility(View.VISIBLE);
                 }
                 dismissCustomLoader();
             }
@@ -585,6 +595,9 @@ public class ProductCategoryActivity extends BaseActivity implements
                     }else {
                         CommonUtils.showToast(ProductCategoryActivity.this, response.body().getMessage());
                     }
+                }else if(response.code()==404){
+                    CommonUtils.showToast(ProductCategoryActivity.this,
+                            "Not added in favourite");
                 }
                 CommonUtils.dismissCustomLoader();
             }
@@ -620,6 +633,9 @@ public class ProductCategoryActivity extends BaseActivity implements
                     }else {
                         CommonUtils.showToast(ProductCategoryActivity.this, response.body().getMessage());
                     }
+                }else if(response.code()==404){
+                    CommonUtils.showToast(ProductCategoryActivity.this,
+                            "Not remove from favourite");
                 }
                 CommonUtils.dismissCustomLoader();
             }
@@ -706,6 +722,9 @@ public class ProductCategoryActivity extends BaseActivity implements
                     } else {
                         CommonUtils.showToast(ProductCategoryActivity.this, response.body().getMessage());
                     }
+                }else if(response.code()==404){
+                    CommonUtils.showToast(ProductCategoryActivity.this,
+                            "Product is not updated!");
                 }
                 CommonUtils.dismissCustomLoader();
             }

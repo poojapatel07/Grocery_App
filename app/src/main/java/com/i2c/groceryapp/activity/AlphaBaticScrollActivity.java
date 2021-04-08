@@ -124,6 +124,9 @@ public class AlphaBaticScrollActivity extends BaseActivity implements RvAlphabat
                     } else {
 
                     }
+                }else if(response.code()==404){
+                    binding.rvCategoryAlphabetical.setVisibility(View.GONE);
+                    binding.tvNoData.setVisibility(View.VISIBLE);
                 }
                 dismissCustomLoader();
             }

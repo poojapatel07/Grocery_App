@@ -196,6 +196,9 @@ public class MyFavouriteActivity extends BaseActivity implements
                     }else {
                         CommonUtils.showToast(MyFavouriteActivity.this, response.body().getMessage());
                     }
+                }else if(response.code()==404){
+                    CommonUtils.showToast(MyFavouriteActivity.this,
+                            "Not remove from favourite");
                 }
                 CommonUtils.dismissCustomLoader();
             }
@@ -282,6 +285,10 @@ public class MyFavouriteActivity extends BaseActivity implements
                     } else {
                         CommonUtils.showToast(MyFavouriteActivity.this, response.body().getMessage());
                     }
+
+                }else if(response.code()==404){
+                    CommonUtils.showToast(MyFavouriteActivity.this,
+                            "Product is not updated!");
                 }
                 CommonUtils.dismissCustomLoader();
             }

@@ -84,6 +84,9 @@ public class CategoryFrgmt extends Fragment {
             public void onResponse(Call<ListResponse<Category>> call, Response<ListResponse<Category>> response) {
                 if(response.body()!=null){
                     if(response.body().getSuccess().equals("1")){
+                        binding.rvAllCategory.setVisibility(View.VISIBLE);
+                        binding.tvNotData.setVisibility(View.GONE);
+
                         categorylist.clear();
                         categorylist.addAll(response.body().getData());
 
@@ -98,6 +101,9 @@ public class CategoryFrgmt extends Fragment {
                     }else {
 
                     }
+                }else if(response.code()==404){
+                    binding.rvAllCategory.setVisibility(View.GONE);
+                    binding.tvNotData.setVisibility(View.VISIBLE);
                 }
                 CommonUtils.dismissCustomLoader();
             }

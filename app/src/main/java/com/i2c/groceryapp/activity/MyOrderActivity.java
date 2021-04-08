@@ -87,6 +87,8 @@ public class MyOrderActivity extends BaseActivity {
                 Log.e("TAG", "onResponse:CALLED:::::s"+new Gson().toJson(response.body()));
                 if(response.body()!=null){
                     if(response.body().getSuccess().equals("1")){
+                        binding.rvMyOrder.setVisibility(View.VISIBLE);
+                        binding.tvNoData.setVisibility(View.GONE);
 
                         if (response.body().getData()!=null) {
                             if (myOrderlist.size() == 0) {
@@ -106,6 +108,9 @@ public class MyOrderActivity extends BaseActivity {
                     }else {
 
                     }
+                }else if(response.code()==404){
+                    binding.rvMyOrder.setVisibility(View.GONE);
+                    binding.tvNoData.setVisibility(View.VISIBLE);
                 }
                 dismissCustomLoader();
             }

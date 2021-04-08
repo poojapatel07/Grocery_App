@@ -154,6 +154,9 @@ public class Personal_InfoActivty extends BaseActivity implements DatePickerDial
                     } else {
                         showToast(response.body().getMessage());
                     }
+
+                }else if(response.code()==404){
+                    showToast("Profile is not updated");
                 }
                 dismissCustomLoader();
             }

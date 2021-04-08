@@ -140,6 +140,9 @@ RvTradeOfferADP.AddToReviewCartList, RvTradeOfferADP.OpenMOQDialog,
                 Log.e("TAG", "GET:CALLED::::"+new Gson().toJson(response.body()));
                 if(response.body()!=null){
                     if(response.body().getSuccess().equals("1")){
+                        binding.rvTredeOffers.setVisibility(View.VISIBLE);
+                        binding.tvNoData.setVisibility(View.GONE);
+
                         if(trade_position==0){
                             arrayList.clear();
                         }
@@ -165,6 +168,10 @@ RvTradeOfferADP.AddToReviewCartList, RvTradeOfferADP.OpenMOQDialog,
                     }else{
 
                     }
+
+                }else if(response.code()==404){
+                    binding.rvTredeOffers.setVisibility(View.GONE);
+                    binding.tvNoData.setVisibility(View.VISIBLE);
                 }
                 dismissCustomLoader();
             }
@@ -340,6 +347,9 @@ RvTradeOfferADP.AddToReviewCartList, RvTradeOfferADP.OpenMOQDialog,
                     }else {
                         CommonUtils.showToast(TradeOfferActivity.this, response.body().getMessage());
                     }
+                }else if(response.code()==404){
+                    CommonUtils.showToast(TradeOfferActivity.this,
+                            "Not added in favourite");
                 }
                 CommonUtils.dismissCustomLoader();
             }
@@ -375,6 +385,9 @@ RvTradeOfferADP.AddToReviewCartList, RvTradeOfferADP.OpenMOQDialog,
                     }else {
                         CommonUtils.showToast(TradeOfferActivity.this, response.body().getMessage());
                     }
+                }else if(response.code()==404){
+                    CommonUtils.showToast(TradeOfferActivity.this,
+                            "Not remove from favourite");
                 }
                 CommonUtils.dismissCustomLoader();
             }
@@ -462,6 +475,9 @@ RvTradeOfferADP.AddToReviewCartList, RvTradeOfferADP.OpenMOQDialog,
                     } else {
                         CommonUtils.showToast(TradeOfferActivity.this, response.body().getMessage());
                     }
+                }else if(response.code()==404){
+                    CommonUtils.showToast(TradeOfferActivity.this,
+                            "Product is not updated!");
                 }
                 CommonUtils.dismissCustomLoader();
             }

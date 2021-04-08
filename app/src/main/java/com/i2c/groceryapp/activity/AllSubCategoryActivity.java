@@ -80,6 +80,9 @@ public class AllSubCategoryActivity extends BaseActivity {
             public void onResponse(Call<ListResponse<Subcategories_list>> call, Response<ListResponse<Subcategories_list>> response) {
                 if(response.body()!=null){
                     if(response.body().getSuccess().equals("1")){
+                        binding.rvCategoryDetail.setVisibility(View.VISIBLE);
+                        binding.tvNotData.setVisibility(View.GONE);
+
                         arrayList.clear();
                         arrayList = response.body().getData();
                         allCategoryDetailsADP = new RvAllCategoryDetailsADP(
@@ -91,6 +94,9 @@ public class AllSubCategoryActivity extends BaseActivity {
                     }else {
 
                     }
+                }else if(response.code()==404){
+                    binding.rvCategoryDetail.setVisibility(View.GONE);
+                    binding.tvNotData.setVisibility(View.VISIBLE);
                 }
                 dismissCustomLoader();
             }

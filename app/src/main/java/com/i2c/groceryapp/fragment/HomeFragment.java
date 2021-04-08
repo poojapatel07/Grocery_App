@@ -34,8 +34,11 @@ import com.bumptech.glide.request.target.Target;
 import com.google.gson.Gson;
 import com.i2c.groceryapp.R;
 import com.i2c.groceryapp.activity.AllSubCategoryActivity;
+import com.i2c.groceryapp.activity.BrandCompanyProductListActivity;
 import com.i2c.groceryapp.activity.FreebiesActivity;
 import com.i2c.groceryapp.activity.HomeActivity;
+import com.i2c.groceryapp.activity.MyFavouriteActivity;
+import com.i2c.groceryapp.activity.OfferActivity;
 import com.i2c.groceryapp.activity.ProductDetailActivity;
 import com.i2c.groceryapp.activity.TradeOfferActivity;
 import com.i2c.groceryapp.adapter.BaseCategoryADP;
@@ -148,6 +151,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener,
                 break;
 
             case R.id.llOffer:
+                startActivity(new Intent(getActivity(), OfferActivity.class));
                 break;
         }
     }
@@ -187,6 +191,8 @@ public class HomeFragment extends Fragment implements View.OnClickListener,
                     }else {
 
                     }
+                }else if(response.code()==404){
+                    binding.rvBaseCategory.setVisibility(View.GONE);
                 }
                 CommonUtils.dismissCustomLoader();
             }
@@ -498,6 +504,8 @@ public class HomeFragment extends Fragment implements View.OnClickListener,
                     } else {
                         CommonUtils.showToast(getActivity(), response.body().getMessage());
                     }
+                }else if(response.code()==404){
+                    CommonUtils.showToast(getActivity(), "Product is not updated!");
                 }
                 CommonUtils.dismissCustomLoader();
             }
@@ -534,6 +542,9 @@ public class HomeFragment extends Fragment implements View.OnClickListener,
                     }else {
                         CommonUtils.showToast(getActivity(), response.body().getMessage());
                     }
+                }else if(response.code()==404){
+                    CommonUtils.showToast(getActivity(),
+                            "Not added in favourite");
                 }
                 CommonUtils.dismissCustomLoader();
             }
@@ -570,6 +581,9 @@ public class HomeFragment extends Fragment implements View.OnClickListener,
                     }else {
                         CommonUtils.showToast(getActivity(), response.body().getMessage());
                     }
+                }else if(response.code()==404){
+                    CommonUtils.showToast(getActivity(),
+                            "Not remove from favourite");
                 }
                 CommonUtils.dismissCustomLoader();
             }

@@ -14,10 +14,10 @@
         android:usesCleartextTraffic="true"
         tools:node="replace"
         tools:targetApi="m">
-
-        <activity android:name=".activity.SearchActivity"
+        <activity android:name=".activity.OfferActivity"></activity>
+        <activity
+            android:name=".activity.SearchActivity"
             android:windowSoftInputMode="stateHidden" />
-
         <activity android:name=".activity.TodaySpecialActivity" />
         <activity android:name=".activity.BrandCompanyProductListActivity" />
         <activity android:name=".activity.ProductCategoryActivity" />
@@ -62,13 +62,13 @@
             android:name="org.apache.http.legacy"
             android:required="false" />
     </application>
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.CAMERA" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
-
     <uses-permission android:name="android.permission.WAKE_LOCK" />
+
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 
 </manifest>
