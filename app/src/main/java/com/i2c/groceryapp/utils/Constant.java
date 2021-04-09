@@ -81,4 +81,15 @@ public class Constant {
 
     public static String ANDRO_IS_USER_ALREADY_LOGGED_IN = "andro_is_user_already_logged_in";
     public static String ANDRO_IS_USER_ALREADY_VERIFIED = "andro_is_user_already_VERIFIED";
+
+
+    /*ALL FOR TEST PAYTM*/
+//    public static final String TEST_MERCHANT_ID = "UbLMJL44290649174862";
+    public static final String TEST_MERCHANT_ID = "aZIVDa99442085737603";
+    public static final String TEST_MERCHANT_KEY = "ZPa7kXV42Z76t7m_";
+    public static final String CHANNEL_ID = "WAP";
+    public static final String WEBSITE = "WEBSTAGING";
+    public static final String INDUSTRY_TYPE_ID = "Retail";
+    public static final String CALLBACK_URL = "https://pguat.paytm.com/paytmchecksum/paytmCallback.jsp";
+
 }

@@ -4,6 +4,7 @@
     package="com.i2c.groceryapp">
 
     <application
+        android:name=".ws.controllers.ApplicationClass"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
@@ -14,9 +15,9 @@
         android:usesCleartextTraffic="true"
         tools:node="replace"
         tools:targetApi="m">
-        <activity android:name=".activity.OfferActivity"></activity>
-        <activity
-            android:name=".activity.SearchActivity"
+
+        <activity android:name=".activity.OfferActivity"/>
+        <activity android:name=".activity.SearchActivity"
             android:windowSoftInputMode="stateHidden" />
         <activity android:name=".activity.TodaySpecialActivity" />
         <activity android:name=".activity.BrandCompanyProductListActivity" />

@@ -13,22 +13,30 @@ import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
-import android.widget.LinearLayout;
 import android.widget.TextView;
-
+import com.android.volley.VolleyError;
 import com.i2c.groceryapp.R;
 import com.i2c.groceryapp.databinding.ActivityPaymentBinding;
+import com.i2c.groceryapp.model.PaytmCheckSum;
 import com.i2c.groceryapp.retrofit.APIClient;
 import com.i2c.groceryapp.retrofit.APIInterface;
 import com.i2c.groceryapp.retrofit.response.ListResponse;
 import com.i2c.groceryapp.utils.BaseActivity;
 import com.i2c.groceryapp.utils.Constant;
+import com.i2c.groceryapp.ws.VolleyService;
+import com.i2c.groceryapp.ws.interfaces.VolleyResponseListener;
+import com.paytm.pgsdk.PaytmOrder;
+import com.paytm.pgsdk.PaytmPGService;
+import com.paytm.pgsdk.PaytmPaymentTransactionCallback;
+
+import java.util.HashMap;
+import java.util.zip.Checksum;
 
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class PaymentActivity extends BaseActivity {
+public class PaymentActivity extends BaseActivity implements VolleyResponseListener, PaytmPaymentTransactionCallback {
     ActivityPaymentBinding binding;
     private float TOTAL_AMOUNT;
     private int TOTAL_ITMES;
@@ -112,11 +120,141 @@ public class PaymentActivity extends BaseActivity {
             showToast("Please Enter Billing Address in Profile!");
 
         }else  {
-            callAddOrderAPI();
+//            callAddOrderAPI();
+
+            callAPIforCheckSum();
+
         }
     }
 
-    private void callAddOrderAPI() {
+    private PaytmCheckSum paytm;
+    String CHECSUM_URL;
+
+    private void callAPIforCheckSum() {
+        paytm = new PaytmCheckSum(Constant.TEST_MERCHANT_ID, Constant.CHANNEL_ID,
+                binding.tvPayableAmount.getText().toString(), Constant.WEBSITE, Constant.CALLBACK_URL,
+                Constant.INDUSTRY_TYPE_ID);
+
+        CHECSUM_URL = "http://vbsd.co.in/yepso/paytm_cs/generateChecksum.php";
+
+        HashMap<String, String> map = new HashMap<>();
+        map.put("ORDER_ID", paytm.getOrderId());
+        map.put("MID", paytm.getmId());
+        map.put("CUST_ID", paytm.getCustId());
+        map.put("CHANNEL_ID", paytm.getChannelId());
+        map.put("TXN_AMOUNT", paytm.getTxnAmount());
+        map.put("WEBSITE", paytm.getWebsite());
+        map.put("CALLBACK_URL", paytm.getCallBackUrl());
+        map.put("INDUSTRY_TYPE_ID", paytm.getIndustryTypeId());
+
+        Log.e("TAG", "callAPIforCheckSum: MAP:::" + map.toString());
+
+        if (isInternetOn(PaymentActivity.this)) {
+            showCustomLoader(this);
+            VolleyService.PostMethod(CHECSUM_URL, com.i2c.groceryapp.model.Checksum.class, map, this);
+        } else {
+            showToast(getString(R.string.check_internet));
+        }
+    }
+
+    @Override
+    public void onResponse(Object response, String url, boolean isSuccess, VolleyError error) {
+        if (url.equals(CHECSUM_URL)) {
+            if (isSuccess) {
+                if (response instanceof com.i2c.groceryapp.model.Checksum) {
+                    Log.e("TAG", "onResponse: checksum ::"
+                            + ((com.i2c.groceryapp.model.Checksum) response).getChecksumHash());
+                    initializePaytmPayment(((com.i2c.groceryapp.model.Checksum) response).getChecksumHash(), paytm);
+                } else {
+                   dismissCustomLoader();
+                }
+            } else {
+                dismissCustomLoader();
+            }
+        }
+    }
+
+    private void initializePaytmPayment(String checksumHash, PaytmCheckSum paytm) {
+        //getting paytm service
+        PaytmPGService Service = PaytmPGService.getStagingService();
+//        PaytmPGService Service = PaytmPGService.getProductionService();
+
+        HashMap<String, String> paramMap = new HashMap<>();
+        paramMap.put("MID", paytm.getmId());
+        paramMap.put("ORDER_ID", paytm.getOrderId());
+        paramMap.put("CUST_ID", paytm.getCustId());
+        paramMap.put("CHANNEL_ID", paytm.getChannelId());
+        paramMap.put("TXN_AMOUNT", paytm.getTxnAmount());
+        paramMap.put("WEBSITE", paytm.getWebsite());
+        paramMap.put("CALLBACK_URL", paytm.getCallBackUrl());
+        paramMap.put("CHECKSUMHASH", checksumHash);
+        paramMap.put("INDUSTRY_TYPE_ID", paytm.getIndustryTypeId());
+
+        //creating a paytm order object using the hashmap
+        PaytmOrder order = new PaytmOrder(paramMap);
+
+        Log.i("paramMap", "initializePaytmPayment: " + paramMap);
+
+        //intializing the paytm service
+        Service.initialize(order, null);
+
+        //finally starting the payment transaction
+        Service.startPaymentTransaction(this, true,
+                true, this);
+    }
+
+
+    @Override
+    public void onTransactionResponse(Bundle inResponse) {
+        Log.e("TAG", "onTransactionResponse: " + inResponse.toString());
+        String status = "";
+        String orderID = "";
+        if (inResponse.containsKey("STATUS")) {
+            status = inResponse.getString("STATUS");
+        }
+        if (inResponse.containsKey("ORDERID")) {
+            orderID = inResponse.getString("ORDERID");
+        }
+        if (status.equals("TXN_SUCCESS")) {
+            showToast("Transaction Successful!");
+
+            callAddOrderAPI(binding.tvPayableAmount.getText().toString());
+        } else {
+        }
+    }
+
+    @Override
+    public void networkNotAvailable() {
+        showToast("No Internet Available!");
+    }
+
+    @Override
+    public void clientAuthenticationFailed(String inErrorMessage) {
+        showToast(inErrorMessage);
+    }
+
+    @Override
+    public void someUIErrorOccurred(String inErrorMessage) {
+        showToast(inErrorMessage);
+    }
+
+    @Override
+    public void onErrorLoadingWebPage(int iniErrorCode, String inErrorMessage, String inFailingUrl) {
+        showToast(inErrorMessage);
+    }
+
+    @Override
+    public void onBackPressedCancelTransaction() {
+        showToast("cancel Transaction!");
+    }
+
+    @Override
+    public void onTransactionCancel(String inErrorMessage, Bundle inResponse) {
+        showToast("Transaction cancelled by user!");
+    }
+
+
+    private void callAddOrderAPI(String totalAmount) {
         if(!isInternetOn(this)){
             showToast(getResources().getString(R.string.check_internet));
             return;
@@ -126,9 +264,9 @@ public class PaymentActivity extends BaseActivity {
         APIInterface apiInterface = APIClient.getClient().create(APIInterface.class);
         Call<ListResponse<String>> callAPI = apiInterface.add_order(
                 sessionManager.getStringValue(Constant.API_TOKEN),
-                String.valueOf(TOTAL_AMOUNT),
+                totalAmount,
                 "","0",
-                String.valueOf(TOTAL_AMOUNT),
+                totalAmount,
                 Payment_type,
                 "0",Shipping_add, Billing_add);
 
