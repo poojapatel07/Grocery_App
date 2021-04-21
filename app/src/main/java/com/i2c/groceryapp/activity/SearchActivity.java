@@ -344,8 +344,12 @@ public class SearchActivity extends BaseActivity implements
 
                     }
                 }else if(response.code()==404){
-                    binding.rvSearchProduct.setVisibility(View.GONE);
-                    binding.tvNoData.setVisibility(View.VISIBLE);
+                    if(allProductList.size()!=0){
+
+                    }else{
+                        binding.rvSearchProduct.setVisibility(View.GONE);
+                        binding.tvNoData.setVisibility(View.VISIBLE);
+                    }
                 }
                 dismissCustomLoader();
             }

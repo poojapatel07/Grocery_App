@@ -1,6 +1,4 @@
 package com.i2c.groceryapp.activity;
-
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
 
 import android.annotation.SuppressLint;
