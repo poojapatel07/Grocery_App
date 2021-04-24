@@ -62,6 +62,7 @@ public class RequestParam {
     public static final String GRANT_TOTAL = "grand_total";
     public static final String PAYMENT_TYPE = "payment_type";
     public static final String PAYMENT_STATUS = "payment_status";
+    public static final String ORDER_ID = "order_id";
 }
 
 

@@ -31,6 +31,8 @@ public class OrderSummaryActivity extends BaseActivity {
 
     @SuppressLint("SetTextI18n")
     private void setUpControls() {
+        
+        
         Grand_amount=getIntent().getFloatExtra(Constant.GRAND_TOTAL_AMOUNT,0);
         TOTAL_ITMES=getIntent().getIntExtra(Constant.TOTAL_ITEM,0);
 

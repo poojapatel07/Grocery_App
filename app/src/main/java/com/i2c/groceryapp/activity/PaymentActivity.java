@@ -13,12 +13,15 @@ import android.view.View;
 import android.view.WindowManager;
 import android.widget.TextView;
 import com.android.volley.VolleyError;
+import com.google.gson.Gson;
 import com.i2c.groceryapp.R;
 import com.i2c.groceryapp.databinding.ActivityPaymentBinding;
+import com.i2c.groceryapp.model.Checksum;
 import com.i2c.groceryapp.model.PaytmCheckSum;
 import com.i2c.groceryapp.retrofit.APIClient;
 import com.i2c.groceryapp.retrofit.APIInterface;
 import com.i2c.groceryapp.retrofit.response.ListResponse;
+import com.i2c.groceryapp.retrofit.response.RestResponse;
 import com.i2c.groceryapp.utils.BaseActivity;
 import com.i2c.groceryapp.utils.Constant;
 import com.i2c.groceryapp.ws.VolleyService;
@@ -28,7 +31,6 @@ import com.paytm.pgsdk.PaytmPGService;
 import com.paytm.pgsdk.PaytmPaymentTransactionCallback;
 
 import java.util.HashMap;
-import java.util.zip.Checksum;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -122,25 +124,58 @@ public class PaymentActivity extends BaseActivity implements VolleyResponseListe
 
             callAPIforCheckSum();
 
+//            getChaeckSum();
         }
     }
 
     private PaytmCheckSum paytm;
     String CHECSUM_URL;
 
+    private void getChaeckSum(){
+        if(!isInternetOn(this)){
+            showToast(getResources().getString(R.string.check_internet));
+            return;
+        }
+
+        APIInterface apiInterface = APIClient.getClientPaytm().create(APIInterface.class);
+        Call<RestResponse<Checksum>> callApi = apiInterface.getCheckSumUrl("a56462f8c45947d0b450ee8db27b51b2");
+//                ,"aZIVDa99442085737603",
+//                "f602a35f92ae49f881b44cfddca5e123","WAP","1.0",
+//                "WEBSTAGING","https://pguat.paytm.com/paytmchecksum/paytmCallback.jsp",
+//                "Retail");
+
+        callApi.enqueue(new Callback<RestResponse<Checksum>>() {
+            @Override
+            public void onResponse(Call<RestResponse<Checksum>> call, Response<RestResponse<Checksum>> response) {
+                Log.e("TAG", "onResponse:called:::"+new Gson().toJson(response.body()));
+                if(response.body()!=null){
+                    if(response.body().getSuccess().equals("1")){
+                        Log.e("TAG", "onResponse: succ::::"+response.body().getData().getChecksumHash());
+                    }
+                }
+            }
+
+            @Override
+            public void onFailure(Call<RestResponse<Checksum>> call, Throwable t) {
+                Log.e("TAG", "onFailure: ERROR:::"+t.getMessage());
+            }
+        });
+
+    }
+
     private void callAPIforCheckSum() {
         paytm = new PaytmCheckSum(Constant.TEST_MERCHANT_ID, Constant.CHANNEL_ID,
-                binding.tvPayableAmount.getText().toString(), Constant.WEBSITE, Constant.CALLBACK_URL,
-                Constant.INDUSTRY_TYPE_ID);
+                binding.tvPayableAmount.getText().toString(), Constant.WEBSITE,
+                Constant.CALLBACK_URL, Constant.INDUSTRY_TYPE_ID);
 
-        CHECSUM_URL = "http://vbsd.co.in/yepso/paytm_cs/generateChecksum.php";
+        CHECSUM_URL = "https://idea2codeinfotech.com/fresh-fine-paytm-cs/generateChecksum.php";
 
         HashMap<String, String> map = new HashMap<>();
         map.put("ORDER_ID", paytm.getOrderId());
         map.put("MID", paytm.getmId());
         map.put("CUST_ID", paytm.getCustId());
         map.put("CHANNEL_ID", paytm.getChannelId());
-        map.put("TXN_AMOUNT", paytm.getTxnAmount());
+            map.put("TXN_AMOUNT", paytm.getTxnAmount());
         map.put("WEBSITE", paytm.getWebsite());
         map.put("CALLBACK_URL", paytm.getCallBackUrl());
         map.put("INDUSTRY_TYPE_ID", paytm.getIndustryTypeId());
@@ -149,7 +184,8 @@ public class PaymentActivity extends BaseActivity implements VolleyResponseListe
 
         if (isInternetOn(PaymentActivity.this)) {
             showCustomLoader(this);
-            VolleyService.PostMethod(CHECSUM_URL, com.i2c.groceryapp.model.Checksum.class, map, this);
+            VolleyService.PostMethod(CHECSUM_URL, com.i2c.groceryapp.model.Checksum.class,
+                    map, this);
         } else {
             showToast(getString(R.string.check_internet));
         }
@@ -162,7 +198,8 @@ public class PaymentActivity extends BaseActivity implements VolleyResponseListe
                 if (response instanceof com.i2c.groceryapp.model.Checksum) {
                     Log.e("TAG", "onResponse: checksum ::"
                             + ((com.i2c.groceryapp.model.Checksum) response).getChecksumHash());
-                    initializePaytmPayment(((com.i2c.groceryapp.model.Checksum) response).getChecksumHash(), paytm);
+                    initializePaytmPayment(((com.i2c.groceryapp.model.Checksum) response)
+                            .getChecksumHash(), paytm);
                 } else {
                    dismissCustomLoader();
                 }
@@ -188,7 +225,6 @@ public class PaymentActivity extends BaseActivity implements VolleyResponseListe
         paramMap.put("CHECKSUMHASH", checksumHash);
         paramMap.put("INDUSTRY_TYPE_ID", paytm.getIndustryTypeId());
 
-        //creating a paytm order object using the hashmap
         PaytmOrder order = new PaytmOrder(paramMap);
 
         Log.i("paramMap", "initializePaytmPayment: " + paramMap);
@@ -229,16 +265,19 @@ public class PaymentActivity extends BaseActivity implements VolleyResponseListe
     @Override
     public void clientAuthenticationFailed(String inErrorMessage) {
         showToast(inErrorMessage);
+        Log.e("TAG", "clientAuthenticationFailed: ERROR::::"+inErrorMessage);
     }
 
     @Override
     public void someUIErrorOccurred(String inErrorMessage) {
         showToast(inErrorMessage);
+        Log.e("TAG", "someUIErrorOccurred:::: "+inErrorMessage);
     }
 
     @Override
     public void onErrorLoadingWebPage(int iniErrorCode, String inErrorMessage, String inFailingUrl) {
         showToast(inErrorMessage);
+        Log.e("TAG", "onErrorLoadingWebPage::::: "+inErrorMessage);
     }
 
     @Override

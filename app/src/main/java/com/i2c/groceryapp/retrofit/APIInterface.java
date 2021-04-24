@@ -3,6 +3,7 @@ package com.i2c.groceryapp.retrofit;
 import com.i2c.groceryapp.model.AddUpdateCart;
 import com.i2c.groceryapp.model.All_SubCategoryList;
 import com.i2c.groceryapp.model.Category;
+import com.i2c.groceryapp.model.Checksum;
 import com.i2c.groceryapp.model.ClearCart;
 import com.i2c.groceryapp.model.Data;
 import com.i2c.groceryapp.model.FavUnFavModel;
@@ -204,5 +205,25 @@ public interface APIInterface {
                                          @Field(RequestParam.PAYMENT_STATUS) String payment_status,
                                          @Field(RequestParam.SHIPPING_ADDRESS) String shipping_address,
                                          @Field(RequestParam.BILLING_ADDRESS) String billing_address);
+
+
+
+    @FormUrlEncoded
+    @POST("index.php")
+    Call<RestResponse<Checksum>> getCheckSumUrl(@Field("order_id") String order_id);
+//                                                @Field("MID") String m_id,
+//                                                @Field("CUST_ID") String CUST_ID,
+//                                                @Field("CHANNEL_ID") String CHANNEL_ID,
+//                                                @Field("TXN_AMOUNT") String TXN_AMOUNT,
+//                                                @Field("WEBSITE") String WEBSITE,
+//                                                @Field("CALLBACK_URL") String CALLBACK_URL,
+//                                                @Field("INDUSTRY_TYPE_ID") String INDUSTRY_TYPE_ID);
+
+
+
+    @FormUrlEncoded
+    @POST("cancel_order")
+    Call<ListResponse<String>> cancel_order(@Field(RequestParam.API_TOKEN) String api_token,
+                                            @Field(RequestParam.ORDER_ID) String order_id);
 
 }

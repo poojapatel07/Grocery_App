@@ -1,5 +1,6 @@
 package com.i2c.groceryapp.ws;
 
+import android.util.Base64;
 import android.util.Log;
 
 import com.android.volley.AuthFailureError;
@@ -55,7 +56,17 @@ public class VolleyService {
                 }) {
 
             @Override
-            protected Map<String, String> getParams() throws AuthFailureError {
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                Map<String, String> headers = new HashMap<>();
+
+                String UserName = "admin";
+                String Password = ":admin";
+
+                String credentials = UserName + Password;
+
+                String auth = "Basic "+ Base64.encodeToString(credentials.getBytes(), Base64.NO_WRAP);
+                headers.put("Authorization", auth);
+                headers.put("Content-Type", "application/x-www-form-urlencoded");
                 return headers;
             }
 

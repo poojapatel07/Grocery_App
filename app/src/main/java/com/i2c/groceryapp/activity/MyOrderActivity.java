@@ -30,7 +30,7 @@ public class MyOrderActivity extends BaseActivity {
     ActivityMyOrderBinding binding;
     private RvMyOrderADP adp;
     private int PAGE_NO = 0;
-    private ArrayList<OrderList>myOrderlist = new ArrayList<>();
+    public static ArrayList<OrderList> myOrderlist = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,19 +54,24 @@ public class MyOrderActivity extends BaseActivity {
         LinearLayoutManager manager = new LinearLayoutManager(this);
         binding.rvMyOrder.setLayoutManager(manager);
 
-        callAllMyOrderAPI(PAGE_NO);
+        callAllMyOrderAPI(PAGE_NO, true);
 
         binding.rvMyOrder.setOnScrollListener(new EndlessRecyclerOnScrollListenerNewGrid(manager) {
             @Override
             public void onLoadMore(int paramInt) {
                 PAGE_NO += 1;
                 Log.e("TAG", "onLoadMore: POS:::: " + PAGE_NO);
-                callAllMyOrderAPI(PAGE_NO);
+                callAllMyOrderAPI(PAGE_NO, false);
             }
         });
     }
 
-    private void callAllMyOrderAPI(int page_no) {
+    @Override
+    protected void onResume() {
+        super.onResume();
+    }
+
+    private void callAllMyOrderAPI(int page_no, boolean isFirst) {
         Log.e("TAG", "callAllMyOrderAPI: PASS:::"
                 +page_no+"  "+sessionManager.getStringValue(Constant.API_TOKEN));
 
@@ -74,7 +79,9 @@ public class MyOrderActivity extends BaseActivity {
             showToast(getResources().getString(R.string.check_internet));
             return;
         }
-        showCustomLoader(this);
+        if(isFirst){
+            showCustomLoader(this);
+        }
 
         APIInterface apiInterface = APIClient.getClient().create(APIInterface.class);
 
@@ -100,7 +107,9 @@ public class MyOrderActivity extends BaseActivity {
                             } else {
                                 myOrderlist.addAll(response.body().getData());
                             }
-                            adp.notifyDataSetChanged();
+                            if(adp!=null) {
+                                adp.notifyDataSetChanged();
+                            }
                         }
 
                     }else if(response.body().getSuccess().equals("0")){
@@ -109,8 +118,10 @@ public class MyOrderActivity extends BaseActivity {
 
                     }
                 }else if(response.code()==404){
-                    binding.rvMyOrder.setVisibility(View.GONE);
-                    binding.tvNoData.setVisibility(View.VISIBLE);
+                    if(myOrderlist.size()==0) {
+                        binding.rvMyOrder.setVisibility(View.GONE);
+                        binding.tvNoData.setVisibility(View.VISIBLE);
+                    }
                 }
                 dismissCustomLoader();
             }

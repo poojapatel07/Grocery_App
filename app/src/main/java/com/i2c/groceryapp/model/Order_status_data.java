@@ -5,13 +5,13 @@ import java.util.ArrayList;
 public class Order_status_data {
     private String status;
 
-    private CreatedAtBeanXX created_at;
+    private String created_at;
 
-    public CreatedAtBeanXX getCreated_at() {
+    public String getCreated_at() {
         return created_at;
     }
 
-    public void setCreated_at(CreatedAtBeanXX created_at) {
+    public void setCreated_at(String created_at) {
         this.created_at = created_at;
     }
 

@@ -11,7 +11,6 @@
         android:layout_marginTop="7dp"
         android:layout_marginBottom="7dp"
         android:background="@color/white"
-        app:cardElevation="@dimen/dp8"
         app:cardCornerRadius="@dimen/dp12"
         app:layout_constraintTop_toTopOf="parent">
 
@@ -71,7 +70,7 @@
                         android:layout_marginTop="@dimen/dp10"
                         android:fontFamily="@font/roboto_medium"/>
 
-                    <LinearLayout
+                   <!-- <LinearLayout
                         android:gravity="center"
                         android:id="@+id/llMainMrp"
                         android:layout_width="match_parent"
@@ -194,6 +193,48 @@
                                 android:textSize="@dimen/dp16"
                                 android:fontFamily="@font/roboto_medium" />
                         </LinearLayout>
+                    </LinearLayout>-->
+
+                    <LinearLayout
+                        android:id="@+id/llMainMrp"
+                        app:layout_constraintTop_toBottomOf="@id/tvCateName"
+                        android:layout_marginTop="@dimen/dp5"
+                        android:orientation="horizontal"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:layout_toRightOf="@id/v1"
+                            android:text="Amount : "
+                            android:textColor="#717171"
+                            android:textSize="@dimen/sp14"
+                            android:gravity="center"
+                            app:custom_fonts="@string/Roboto_Bold"/>
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:text="Rs. "
+                            android:textColor="@color/green"
+                            android:textSize="@dimen/sp14"
+                            android:gravity="center"
+                            android:layout_marginLeft="@dimen/dp3"
+                            app:custom_fonts="@string/Roboto_Bold"/>
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:id="@+id/tvAmount"
+                            android:text="123"
+                            android:gravity="center"
+                            android:textColor="@color/green"
+                            android:textSize="@dimen/sp14"
+                            app:custom_fonts="@string/Roboto_Bold"/>
 
                     </LinearLayout>
 
@@ -282,6 +323,8 @@
                                     android:textColor="#717171"
                                     android:textSize="@dimen/sp13"/>
                             </LinearLayout>
+
+
                         </RelativeLayout>
 
                         <LinearLayout
@@ -421,34 +464,6 @@
                             app:custom_fonts="@string/Roboto_Medium"
                             app:layout_constraintLeft_toRightOf="@id/tv_buy_one"
                             app:layout_constraintTop_toTopOf="parent" />
-
-                        <TextView
-                            android:fontFamily="@font/roboto_regular"
-                            android:id="@+id/tv_get_one"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_below="@id/tv_buy_one"
-                            android:text="Get 1 Free"
-                            android:textColor="@color/green"
-                            android:textSize="@dimen/sp12"
-                            app:custom_fonts="@string/Roboto_Regular"
-                            app:layout_constraintLeft_toLeftOf="parent"
-                            app:layout_constraintTop_toBottomOf="@id/tv_buy_one" />
-
-                        <TextView
-                            android:fontFamily="@font/roboto_regular"
-                            android:id="@+id/tvfreeproduct_get"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_below="@id/tv_buy_one"
-                            android:layout_marginLeft="@dimen/dp5"
-                            android:layout_toRightOf="@id/tv_get_one"
-                            android:text="Parle G 5 MRP"
-                            android:textColor="@color/black"
-                            android:textSize="@dimen/sp12"
-                            app:custom_fonts="@string/Roboto_Medium"
-                            app:layout_constraintLeft_toRightOf="@id/tv_get_one"
-                            app:layout_constraintTop_toBottomOf="@id/tv_buy_one" />
                     </androidx.constraintlayout.widget.ConstraintLayout>
                 </androidx.constraintlayout.widget.ConstraintLayout>
 

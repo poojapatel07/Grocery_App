@@ -11,7 +11,7 @@ public class OrderList {
 
     private String discount;
 
-    private Created_at created_at;
+    private String created_at;
 
     private String billing_address;
 
@@ -65,13 +65,7 @@ public class OrderList {
         this.discount = discount;
     }
 
-    public Created_at getCreated_at() {
-        return created_at;
-    }
 
-    public void setCreated_at(Created_at created_at) {
-        this.created_at = created_at;
-    }
 
     public String getBilling_address() {
         return billing_address;

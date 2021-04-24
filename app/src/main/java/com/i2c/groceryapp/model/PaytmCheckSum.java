@@ -10,8 +10,8 @@ public class PaytmCheckSum {
     @SerializedName("MID")
     String mId;
 
-    @SerializedName("ORDER_ID")
-    String orderId;
+    @SerializedName("order_id")
+    String order_id;
 
     @SerializedName("CUST_ID")
     String custId;
@@ -34,7 +34,7 @@ public class PaytmCheckSum {
     public PaytmCheckSum(String mId, String orderId, String custId, String channelId,
                          String txnAmount, String website, String callBackUrl, String industryTypeId) {
         this.mId = mId;
-        this.orderId = orderId;
+        this.order_id = orderId;
         this.custId = custId;
         this.channelId = channelId;
         this.txnAmount = txnAmount;
@@ -45,7 +45,7 @@ public class PaytmCheckSum {
 
     public PaytmCheckSum(String mId, String channelId, String txnAmount, String website, String callBackUrl, String industryTypeId) {
         this.mId = mId;
-        this.orderId = generateString();
+        this.order_id = generateString();
         this.custId = generateString();
         this.channelId = channelId;
         this.txnAmount = txnAmount;
@@ -53,7 +53,7 @@ public class PaytmCheckSum {
         this.callBackUrl = callBackUrl;
         this.industryTypeId = industryTypeId;
 
-        Log.e("orderId", orderId);
+        Log.e("orderId", order_id);
         Log.e("customerId", custId);
     }
 
@@ -67,11 +67,11 @@ public class PaytmCheckSum {
     }
 
     public String getOrderId() {
-        return orderId;
+        return order_id;
     }
 
     public void setOrderId(String orderId) {
-        this.orderId = orderId;
+        this.order_id = orderId;
     }
 
     public String getCustId() {

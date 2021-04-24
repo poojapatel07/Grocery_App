@@ -17,7 +17,7 @@ public class Order_product_data {
 
     private Product_image product_image;
 
-    private ArrayList<String> created_at;
+    private String created_at;
 
     private String mrp_price;
 
@@ -91,11 +91,11 @@ public class Order_product_data {
         this.product_image = product_image;
     }
 
-    public ArrayList<String> getCreated_at() {
+    public String getCreated_at() {
         return created_at;
     }
 
-    public void setCreated_at(ArrayList<String> created_at) {
+    public void setCreated_at(String created_at) {
         this.created_at = created_at;
     }
 
