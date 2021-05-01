@@ -168,33 +168,62 @@
                 app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
-                android:id="@+id/tvRetailPrice"
+                android:id="@+id/tvRs1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="@dimen/dp10"
                 android:fontFamily="@font/roboto_medium"
-                android:text="Rs. 124"
+                android:text="Rs. "
                 android:textColor="@color/green"
                 android:textSize="@dimen/sp18"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintLeft_toRightOf="@id/v1"
                 app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/tvRetailPrice"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/roboto_medium"
+                android:text="124"
+                android:textColor="@color/green"
+                android:textSize="@dimen/sp18"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintLeft_toRightOf="@id/tvRs1"
+                app:layout_constraintTop_toTopOf="parent" />
         </androidx.constraintlayout.widget.ConstraintLayout>
 
-        <TextView
-            android:id="@+id/tvTotlaPrice"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+        <LinearLayout
             android:layout_marginTop="@dimen/dp2"
-            android:fontFamily="@font/roboto_medium"
-            android:text="Rs. 124"
-            android:textColor="@color/green"
-            android:textSize="@dimen/sp18"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/cons_mrp" />
+            app:layout_constraintTop_toBottomOf="@id/cons_mrp"
+            android:id="@+id/lltotalPrice"
+            android:orientation="horizontal"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
 
+            <TextView
+                android:id="@+id/tvRs2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/roboto_medium"
+                android:text="Rs. "
+                android:textColor="@color/green"
+                android:textSize="@dimen/sp18"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintLeft_toRightOf="@id/v1"
+                app:layout_constraintTop_toTopOf="parent" />
 
+            <TextView
+                android:id="@+id/tvTotlaPrice"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/roboto_medium"
+                android:text="124"
+                android:textColor="@color/green"
+                android:textSize="@dimen/sp18" />
+        </LinearLayout>
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/cons_margin"
@@ -203,7 +232,7 @@
             android:layout_marginTop="@dimen/dp5"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/tvTotlaPrice">
+            app:layout_constraintTop_toBottomOf="@id/lltotalPrice">
 
             <TextView
                 android:id="@+id/rl_2_tv1"

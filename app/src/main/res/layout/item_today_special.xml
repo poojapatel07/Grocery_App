@@ -497,6 +497,7 @@
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:paddingRight="@dimen/dp10"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/v_main">
 
@@ -555,6 +556,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="@dimen/dp10"
+                        android:paddingRight="@dimen/dp10"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintLeft_toRightOf="@id/ivFreeProduct"
                         app:layout_constraintTop_toTopOf="parent">
@@ -577,10 +579,13 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginLeft="@dimen/dp5"
+                            android:paddingRight="@dimen/dp10"
+                            android:layout_marginRight="@dimen/dp10"
                             android:layout_toRightOf="@id/tv_buy_one"
-                            android:text="Tata Agni Tea 55 MRP 250 Gm"
+                            android:text="Tata Agni Tea 55 MRP 250 Gm ,lvlckjkjgkhj"
                             android:textColor="@color/black"
                             android:textSize="@dimen/sp12"
+                            android:maxLines="1"
                             app:custom_fonts="@string/Roboto_Medium"
                             app:layout_constraintLeft_toRightOf="@id/tv_buy_one"
                             app:layout_constraintTop_toTopOf="parent" />

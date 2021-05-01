@@ -3,6 +3,7 @@ package com.i2c.groceryapp.activity;
 import androidx.databinding.DataBindingUtil;
 
 import android.os.Bundle;
+import android.text.method.PasswordTransformationMethod;
 import android.util.Log;
 import android.view.View;
 import com.google.gson.Gson;
@@ -21,6 +22,17 @@ import retrofit2.Response;
 
 public class RegisterActivity extends BaseActivity {
     ActivityRegisterBinding binding;
+    private boolean isShowPassword = false;
+
+    @Override
+    protected void onResume() {
+        binding.edtName.setText("");
+        binding.edtEmail.setText("");
+        binding.edtPassword.setText("");
+        binding.edtMobile.setText("");
+        binding.edtClientId.setText("");
+        super.onResume();
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,6 +50,21 @@ public class RegisterActivity extends BaseActivity {
             @Override
             public void onClick(View v) {
                 checkValidation();
+            }
+        });
+
+        binding.ivPassowrd.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (isShowPassword) {
+                    binding.edtPassword.setTransformationMethod(new PasswordTransformationMethod());
+                    binding.ivPassowrd.setImageDrawable(getResources().getDrawable(R.drawable.ic_hide_eye));
+                    isShowPassword = false;
+                } else {
+                    binding.edtPassword.setTransformationMethod(null);
+                    binding.ivPassowrd.setImageDrawable(getResources().getDrawable(R.drawable.ic_eye));
+                    isShowPassword = true;
+                }
             }
         });
     }
@@ -106,7 +133,7 @@ public class RegisterActivity extends BaseActivity {
                         sessionManager.setBooleanValue(Constant.OTP_FLAG, false);
 
                         showToast(response.body().getMessage());
-                        launchActivityWithClearStack(RegisterActivity.this, OTPVerificationActivity.class);
+                        launchActivity(RegisterActivity.this, OTPVerificationActivity.class);
 
                     }else if(response.body().getSuccess().equals("0")) {
                         showToast(response.body().getMessage());

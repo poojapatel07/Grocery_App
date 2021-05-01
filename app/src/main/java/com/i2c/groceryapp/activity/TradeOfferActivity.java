@@ -170,8 +170,11 @@ RvTradeOfferADP.AddToReviewCartList, RvTradeOfferADP.OpenMOQDialog,
                     }
 
                 }else if(response.code()==404){
-                    binding.rvTredeOffers.setVisibility(View.GONE);
-                    binding.tvNoData.setVisibility(View.VISIBLE);
+                    if(arrayList.size()==0) {
+                        binding.rvTredeOffers.setVisibility(View.GONE);
+                        binding.tvNoData.setVisibility(View.VISIBLE);
+                    }
+
                 }
                 dismissCustomLoader();
             }

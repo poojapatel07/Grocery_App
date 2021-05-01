@@ -93,6 +93,8 @@ public class LoginByOTPActivity extends BaseActivity {
                     }else {
                         showToast(response.body().getMessage());
                     }
+                }else if(response.code()==404){
+                    showToast("Account not activated");
                 }
                 dismissCustomLoader();
             }

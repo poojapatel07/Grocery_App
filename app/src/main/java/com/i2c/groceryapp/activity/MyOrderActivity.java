@@ -68,6 +68,7 @@ public class MyOrderActivity extends BaseActivity {
 
     @Override
     protected void onResume() {
+        
         super.onResume();
     }
 

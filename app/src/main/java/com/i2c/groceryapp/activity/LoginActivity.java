@@ -218,11 +218,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
             forgotPasswordBinding.edtMobile.requestFocus();
 
         } else {
-//            callOTPVerificationAPI(forgotPasswordBinding.edtMobile.getText().toString());
-
-            dialog.dismiss();
-            openDialogForNewPassword(forgotPasswordBinding.edtMobile.getText().toString(),
-                    "1111");
+            callOTPVerificationAPI(forgotPasswordBinding.edtMobile.getText().toString());
         }
     }
 
@@ -253,8 +249,9 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
                     }
 
                 }else if(response.code()==404){
-                    showToast("Something went wrong");
+                    showToast("Account not activated.");
                 }
+                dismissCustomLoader();
             }
 
             @Override
@@ -326,15 +323,13 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
         updatePasswordBinding.btnOkay.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//                if (updatePasswordBinding.edtOp.getText().toString().equals(otp)) {
-//                    callGetNewPasswordAPI(mobile,
-//                            updatePasswordBinding.edtOp.getText().toString(),
-//                            updatePasswordBinding.edtNewPassword.getText().toString());
-//                } else {
-//                    showToast("Enter Correct OTP!");
-//                }
-
-                dialog_newPass.dismiss();
+                if (updatePasswordBinding.edtOp.getText().toString().equals(otp)) {
+                    callGetNewPasswordAPI(mobile,
+                            updatePasswordBinding.edtOp.getText().toString(),
+                            updatePasswordBinding.edtNewPassword.getText().toString());
+                } else {
+                    showToast("Enter Correct OTP!");
+                }
             }
         });
     }
@@ -349,6 +344,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
         Call<RestResponse<Data>> calAPi = apiInterface.change_new_password(
                 mobile, otp, newPass);
 
+        showCustomLoader(this);
         calAPi.enqueue(new Callback<RestResponse<Data>>() {
             @Override
             public void onResponse(Call<RestResponse<Data>> call, Response<RestResponse<Data>> response) {
@@ -358,6 +354,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
                         sessionManager.saveLoginData(response.body().getData());
                         sessionManager.setStringValue(Constant.API_TOKEN, response.body().getData().getApi_token());
                         sessionManager.setStringValue(Constant.USER_TYPE, response.body().getData().getUser_type());
+                        sessionManager.setBooleanValue(Constant.IS_ALREADY_LOGIN, true);
                         showToast(response.body().getMessage());
                         launchActivityWithClearStack(LoginActivity.this, HomeActivity.class);
 

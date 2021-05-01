@@ -120,8 +120,10 @@ public class FreebiesActivity extends BaseActivity implements
 
                     }
                 }else if(response.code()==404){
-                    binding.rvFreebies.setVisibility(View.GONE);
-                    binding.tvNoData.setVisibility(View.VISIBLE);
+                    if(freebies_arraylist.size()==0) {
+                        binding.rvFreebies.setVisibility(View.GONE);
+                        binding.tvNoData.setVisibility(View.VISIBLE);
+                    }
                 }
                 dismissCustomLoader();
             }

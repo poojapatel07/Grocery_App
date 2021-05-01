@@ -120,9 +120,9 @@ public class PaymentActivity extends BaseActivity implements VolleyResponseListe
             showToast("Please Enter Billing Address in Profile!");
 
         }else  {
-//            callAddOrderAPI();
+            callAddOrderAPI(binding.tvPayableAmount.getText().toString());
 
-            callAPIforCheckSum();
+//            callAPIforCheckSum();
 
 //            getChaeckSum();
         }
@@ -291,6 +291,7 @@ public class PaymentActivity extends BaseActivity implements VolleyResponseListe
     }
 
 
+//    private void callAddOrderAPI(String totalAmount) {
     private void callAddOrderAPI(String totalAmount) {
         if(!isInternetOn(this)){
             showToast(getResources().getString(R.string.check_internet));
@@ -301,11 +302,15 @@ public class PaymentActivity extends BaseActivity implements VolleyResponseListe
         APIInterface apiInterface = APIClient.getClient().create(APIInterface.class);
         Call<ListResponse<String>> callAPI = apiInterface.add_order(
                 sessionManager.getStringValue(Constant.API_TOKEN),
-                totalAmount,
+                String.valueOf(TOTAL_AMOUNT),
                 "","0",
-                totalAmount,
+                String.valueOf(TOTAL_AMOUNT),
                 Payment_type,
                 "0",Shipping_add, Billing_add);
+
+        Log.e("TAG", "callAddOrderAPI:fgfgfg "+sessionManager.getStringValue(Constant.API_TOKEN)+"  "
+        +totalAmount+"   "+Payment_type+"  "+Shipping_add+"  "+Billing_add);
+
 
         callAPI.enqueue(new Callback<ListResponse<String>>() {
             @Override

@@ -114,12 +114,13 @@
                         tools:targetApi="m" />
 
                     <ImageView
+                        android:id="@+id/ivPassowrd"
                         android:layout_width="@dimen/dp20"
                         android:layout_height="@dimen/dp20"
                         android:layout_alignParentRight="true"
                         android:layout_centerVertical="true"
                         android:paddingRight="@dimen/dp2"
-                        android:src="@drawable/ic_eye" />
+                        android:src="@drawable/ic_hide_eye" />
                 </RelativeLayout>
 
                 <TextView

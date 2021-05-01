@@ -8,12 +8,7 @@
         android:layout_height="match_parent"
         android:background="@drawable/splash_bg">
 
-        <RelativeLayout
-            android:id="@+id/rlLoginBG"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="#90292929"
-            android:visibility="gone" />
+
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
@@ -144,5 +139,12 @@
                 android:text="@string/login_using_otp"
                 app:layout_constraintTop_toBottomOf="@id/tvOR" />
         </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <RelativeLayout
+            android:id="@+id/rlLoginBG"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="#90292929"
+            android:visibility="gone" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
