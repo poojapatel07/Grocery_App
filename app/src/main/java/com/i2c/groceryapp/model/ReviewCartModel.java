@@ -6,7 +6,7 @@ public class ReviewCartModel {
 
     private String cart_id;
 
-    private String is_favorite;
+    private int is_favorite;
 
     private String product_id;
 
@@ -30,11 +30,11 @@ public class ReviewCartModel {
         this.cart_id = cart_id;
     }
 
-    public String getIs_favorite() {
+    public int getIs_favorite() {
         return is_favorite;
     }
 
-    public void setIs_favorite(String is_favorite) {
+    public void setIs_favorite(int is_favorite) {
         this.is_favorite = is_favorite;
     }
 

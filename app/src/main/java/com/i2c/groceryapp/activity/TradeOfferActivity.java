@@ -1,3 +1,4 @@
+
 package com.i2c.groceryapp.activity;
 import androidx.databinding.DataBindingUtil;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -72,6 +73,7 @@ RvTradeOfferADP.AddToReviewCartList, RvTradeOfferADP.OpenMOQDialog,
     private HashMap<Integer, Boolean> map = new HashMap<>();
     private TextView TXT_MOQ;
     RvTradeOfferMOQListADP adp_moq;
+    LinearLayoutManager manager;
 
 
     @Override
@@ -93,7 +95,7 @@ RvTradeOfferADP.AddToReviewCartList, RvTradeOfferADP.OpenMOQDialog,
         });
 
         binding.rvTredeOffers.setHasFixedSize(false);
-        LinearLayoutManager manager = new LinearLayoutManager(this);
+        manager = new LinearLayoutManager(this);
         binding.rvTredeOffers.setLayoutManager(manager);
 
 
@@ -108,15 +110,29 @@ RvTradeOfferADP.AddToReviewCartList, RvTradeOfferADP.OpenMOQDialog,
                 callTreadOfferAPI(Trade_position, false);
             }
         });
-
-
     }
+
 
     @Override
     protected void onResume() {
-//        Trade_position = 0;
-//        arrayList.clear();
-//        callTreadOfferAPI(Trade_position, true);
+        if(arrayList.size()!=0){
+            arrayList.clear();
+        }
+
+        if(adp!=null){
+            adp = null;
+        }
+
+        POSTION = 0;
+        callTreadOfferAPI(Trade_position, true);
+
+        binding.rvTredeOffers.setOnScrollListener(new EndlessRecyclerOnScrollListenerNewGrid(manager) {
+            @Override
+            public void onLoadMore(int paramInt) {
+                POSTION += 1;
+                callTreadOfferAPI(POSTION, false);
+            }
+        });
         super.onResume();
     }
 

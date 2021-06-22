@@ -56,6 +56,8 @@ public class RvAllCategoryDetailsADP extends RecyclerView.Adapter<RvAllCategoryD
                         sessionManager.setStringValue(Constant.BRAND_ID,
                                 arrayList.get(getAdapterPosition()).getBrand_id());
 
+                        sessionManager.setStringValue(Constant.SUB_CATEGORY_NAME, arrayList.get(getAdapterPosition()).getName());
+
                         sessionManager.setStringValue(Constant.BRAND_COMPANY_ID_PRODUCT,
                                 arrayList.get(getAdapterPosition()).getBrand_companie_id());
 

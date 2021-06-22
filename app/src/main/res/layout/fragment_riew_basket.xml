@@ -50,7 +50,7 @@
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/const_bottom"
-            android:visibility="gone"
+            android:visibility="visible"
             android:layout_width="match_parent"
             android:layout_height="@dimen/dp80"
             android:background="#EBEFF2"

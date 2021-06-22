@@ -170,6 +170,7 @@ public class ReviewBasketADP extends RecyclerView.Adapter<ReviewBasketADP.MyView
             binding.cardMain.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
+                    Log.e("TAG", "onClick: is_fav:: "+arrayList.get(getAdapterPosition()).getIs_favorite());
                     Intent intent = new Intent(activity, ProductDetailActivity.class);
                     intent.putExtra(Constant.PRODUCT_ID, arrayList.get(getAdapterPosition()).getProduct_id());
                     intent.putExtra(Constant.PRODUCT_NAME, arrayList.get(getAdapterPosition()).getProduct_details().getName());
@@ -182,7 +183,7 @@ public class ReviewBasketADP extends RecyclerView.Adapter<ReviewBasketADP.MyView
                     intent.putExtra(Constant.PRODUCT_TOTAL_PRICE, Float.parseFloat(binding.tvTotalPrice.getText().toString()));
                     intent.putExtra(Constant.PRODUCT_ISFAVOURITE, arrayList.get(getAdapterPosition()).getIs_favorite());
                     intent.putExtra(Constant.PRODUCT_IN_CART_QNTY, Integer.valueOf(binding.tvCartQuny.getText().toString()));
-                    intent.putExtra(Constant.IS_CART, "1");
+                    intent.putExtra(Constant.IS_CART, 1);
                     intent.putExtra(Constant.PRODUCT_FLAG, flag);
                     activity.startActivity(intent);
                 }
@@ -202,10 +203,10 @@ public class ReviewBasketADP extends RecyclerView.Adapter<ReviewBasketADP.MyView
     }
 
     public void updateIsFavData(int adapterPosition) {
-        if (arrayList.get(adapterPosition).getIs_favorite().equals("1")) {
-            arrayList.get(adapterPosition).setIs_favorite("0");
+        if (arrayList.get(adapterPosition).getIs_favorite() == 1) {
+            arrayList.get(adapterPosition).setIs_favorite(0);
         }else {
-            arrayList.get(adapterPosition).setIs_favorite("1");
+            arrayList.get(adapterPosition).setIs_favorite(1);
         }
         notifyDataSetChanged();
     }
@@ -262,7 +263,7 @@ public class ReviewBasketADP extends RecyclerView.Adapter<ReviewBasketADP.MyView
         holder.binding.tvBuyOne.setText(buy_one);
         holder.binding.tvGetOne.setText(get_one);
 
-        if (arrayList.get(position).getIs_favorite().equals("1")) {
+        if (arrayList.get(position).getIs_favorite() == 1) {
             holder.binding.ivLike.setImageResource(R.drawable.ic_fav_green);
         } else {
             holder.binding.ivLike.setImageResource(R.drawable.ic_fav);

@@ -31,6 +31,7 @@ import com.i2c.groceryapp.retrofit.response.ListResponse;
 import com.i2c.groceryapp.retrofit.response.RestResponse;
 import com.i2c.groceryapp.utils.CommonUtils;
 import com.i2c.groceryapp.utils.Constant;
+import com.i2c.groceryapp.utils.EndlessRecyclerOnScrollListenerNewGrid;
 import com.i2c.groceryapp.utils.SessionManager;
 
 import java.util.ArrayList;
@@ -51,6 +52,7 @@ public class RiewBasketFragment extends Fragment implements
     int CART_QUANTY;
     float FINAL_PRICE;
     float Multiple_Price;
+    LinearLayoutManager linearLayoutManager;
 
     public RiewBasketFragment() {}
 
@@ -70,10 +72,10 @@ public class RiewBasketFragment extends Fragment implements
     private void setUpContorls(View view) {
         sessionManager = new SessionManager(getActivity());
 
-        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity());
+         linearLayoutManager = new LinearLayoutManager(getActivity());
         binding.rvAllReviewBasket.setLayoutManager(linearLayoutManager);
 
-        callAllCartReviewAPI(true);
+//        callAllCartReviewAPI(true);
 
         binding.tvClear.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -136,6 +138,10 @@ public class RiewBasketFragment extends Fragment implements
                         adp.notifyDataSetChanged();
                         CommonUtils.showToast(getActivity(),response.body().getMessage());
                         callAllCartReviewAPI(true);
+
+                        SUM_CART_ITEMS = 0;
+                        FINAL_PRICE = 0;
+
 
                     }else if(response.body().getSuccess().equals("0")){
 
@@ -376,6 +382,19 @@ public class RiewBasketFragment extends Fragment implements
                 CommonUtils.showToast(getActivity(), t.getMessage());
             }
         });
+    }
+
+
+    @Override
+    public void onResume() {
+        if(arrayList.size()!=0){
+            arrayList.clear();
+        }
+        if(adp!=null){
+            adp = null;
+        }
+        callAllCartReviewAPI(true);
+        super.onResume();
     }
 
 }

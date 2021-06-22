@@ -131,6 +131,8 @@ public class ProductCategoryActivity extends BaseActivity implements
         LinearLayoutManager manager1 = new LinearLayoutManager(this);
         binding.rvSubCategoryItem.setLayoutManager(manager1);
 
+        binding.tvProductName.setText(sessionManager.getStringValue(Constant.SUB_CATEGORY_NAME));
+
 
         binding.tvProductName.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -836,6 +838,9 @@ public class ProductCategoryActivity extends BaseActivity implements
         if(brand_id.equals("0") || brand_compny_id.equals("0")){
             showToast("Data not found!");
         }else {
+
+            binding.tvProductName.setText(product_name);
+
             sessionManager.setStringValue(Constant.SUB_CATEGORY_ID, sub_cate);
             sessionManager.setStringValue(Constant.BRAND_ID, brand_id);
             sessionManager.setStringValue(Constant.BRAND_COMPANY_ID_PRODUCT, brand_compny_id);

@@ -77,6 +77,8 @@ public class Constant {
     public static final String SUB_CATEGORY_ID = "sub_category_id";
     public static final String BRAND_ID = "brand_id";
     public static final String BRAND_COMPANY_ID_PRODUCT = "brand_company_id_product";
+    public static final String freebies_position = "freebies_position";
+    public static final String SUB_CATEGORY_NAME = "sub_category_name";
 
 
     public static String ANDRO_IS_USER_ALREADY_LOGGED_IN = "andro_is_user_already_logged_in";

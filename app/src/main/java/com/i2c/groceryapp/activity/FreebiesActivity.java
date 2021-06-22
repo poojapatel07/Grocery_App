@@ -34,12 +34,13 @@ import retrofit2.Response;
 public class FreebiesActivity extends BaseActivity implements
         RvFreebiesADP.AddtoFavouriteFree, RvFreebiesADP.AddToReviewCartList,
         RvFreebiesADP.UpdateReviewCart {
+
     ActivityFreebiesBinding binding;
     private RvFreebiesADP adp;
     private int POSITION = 0;
     private ArrayList<Todayspecial_list> freebies_arraylist = new ArrayList<>();
     private String MARGIN_ID = "";
-
+    LinearLayoutManager manager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,7 +56,7 @@ public class FreebiesActivity extends BaseActivity implements
 
     private void setUpControls() {
         binding.rvFreebies.setHasFixedSize(false);
-        LinearLayoutManager manager = new LinearLayoutManager(this);
+        manager = new LinearLayoutManager(this);
         binding.rvFreebies.setLayoutManager(manager);
 
         binding.ivBack.setOnClickListener(new View.OnClickListener() {
@@ -65,15 +66,17 @@ public class FreebiesActivity extends BaseActivity implements
             }
         });
 
-        callGetCategoryAPI(POSITION, true);
+//        callGetCategoryAPI(POSITION, true);
 
-        binding.rvFreebies.setOnScrollListener(new EndlessRecyclerOnScrollListenerNewGrid(manager) {
-            @Override
-            public void onLoadMore(int paramInt) {
-                POSITION += 1;
-                callGetCategoryAPI(POSITION, false);
-            }
-        });
+//        binding.rvFreebies.setOnScrollListener(new EndlessRecyclerOnScrollListenerNewGrid(manager) {
+//            @Override
+//            public void onLoadMore(int paramInt) {
+//                Log.e("TAG", "onLoadMore: 1:::"+POSITION);
+//                POSITION += 1;
+//                Log.e("TAG", "onLoadMore: 2:::"+POSITION);
+//                callGetCategoryAPI(POSITION, false);
+//            }
+//        });
     }
 
 
@@ -90,13 +93,16 @@ public class FreebiesActivity extends BaseActivity implements
 
         APIInterface apiInterface = APIClient.getClient().create(APIInterface.class);
         Call<ListResponse<Todayspecial_list>> callAPI = apiInterface
-                .freebies_product_list(sessionManager.getStringValue(Constant.API_TOKEN), String.valueOf(position));
+                .freebies_product_list(sessionManager.getStringValue(Constant.API_TOKEN),
+                        String.valueOf(position));
 
         callAPI.enqueue(new Callback<ListResponse<Todayspecial_list>>() {
             @Override
             public void onResponse(Call<ListResponse<Todayspecial_list>> call, Response<ListResponse<Todayspecial_list>> response) {
                 if(response.body()!=null){
                     if(response.body().getSuccess().equals("1")){
+                        Log.e("TAG", "onResponse: SIZE:::::"+freebies_arraylist.size());
+
                         if (freebies_arraylist.size() == 0) {
                             binding.rvFreebies.setVisibility(View.VISIBLE);
                             binding.tvNoData.setVisibility(View.GONE);
@@ -112,17 +118,23 @@ public class FreebiesActivity extends BaseActivity implements
                         } else {
                             freebies_arraylist.addAll(response.body().getData());
                         }
-                        adp.notifyDataSetChanged();
+                        if(adp!=null){
+                            adp.notifyDataSetChanged();
+                        }
 
                     }else if(response.body().getSuccess().equals("0")){
 
                     }else {
 
                     }
+                    Log.e("TAG", "onResponse:freebies_arraylist:::::::"+freebies_arraylist.size());
+
                 }else if(response.code()==404){
                     if(freebies_arraylist.size()==0) {
                         binding.rvFreebies.setVisibility(View.GONE);
                         binding.tvNoData.setVisibility(View.VISIBLE);
+                    }else {
+
                     }
                 }
                 dismissCustomLoader();
@@ -179,11 +191,12 @@ public class FreebiesActivity extends BaseActivity implements
                 CommonUtils.dismissCustomLoader();
             }
         });
-
     }
 
 
     private void callRemoveFavouriteAPI(String product_id, int position) {
+        Log.e("TAG", "callRemoveFavouriteAPI: POS::::"+position);
+
         if (!CommonUtils.isInternetOn(this)) {
             CommonUtils.showToast(this, getString(R.string.check_internet));
             return;
@@ -312,4 +325,30 @@ public class FreebiesActivity extends BaseActivity implements
         });
     }
 
+    @Override
+    protected void onResume() {
+        Log.e("TAG", "onResume: total_lenght::::"+freebies_arraylist.size());
+        if(freebies_arraylist.size()!=0){
+            freebies_arraylist.clear();
+            Log.e("TAG", "onResume: remaing::::"+freebies_arraylist.size());
+        }
+
+        if(adp!=null){
+            adp = null;
+        }
+
+        POSITION = 0;
+        callGetCategoryAPI(POSITION, true);
+
+        binding.rvFreebies.setOnScrollListener(new EndlessRecyclerOnScrollListenerNewGrid(manager) {
+            @Override
+            public void onLoadMore(int paramInt) {
+                Log.e("TAG", "onLoadMore: 1:::"+POSITION);
+                POSITION += 1;
+                Log.e("TAG", "onLoadMore: 2:::"+POSITION);
+                callGetCategoryAPI(POSITION, false);
+            }
+        });
+        super.onResume();
+    }
 }

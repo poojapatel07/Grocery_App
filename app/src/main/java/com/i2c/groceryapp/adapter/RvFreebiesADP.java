@@ -17,6 +17,7 @@ import com.i2c.groceryapp.activity.ProductDetailActivity;
 import com.i2c.groceryapp.databinding.ItemFreebiesBinding;
 import com.i2c.groceryapp.model.Todayspecial_list;
 import com.i2c.groceryapp.utils.Constant;
+import com.i2c.groceryapp.utils.SessionManager;
 
 import java.util.ArrayList;
 
@@ -35,6 +36,7 @@ public class RvFreebiesADP extends RecyclerView.Adapter<RvFreebiesADP.MyViewHold
     float STR;
     int free_product;
     int free;
+    SessionManager sessionManager;
 
     public RvFreebiesADP(Activity activity, ArrayList<Todayspecial_list> freebies_arraylist,
                          AddtoFavouriteFree addtoFavourite,  AddToReviewCartList addToReviewCartList,
@@ -44,6 +46,10 @@ public class RvFreebiesADP extends RecyclerView.Adapter<RvFreebiesADP.MyViewHold
         this.addtoFavourite = addtoFavourite;
         this.addToReviewCartList = addToReviewCartList;
         this.updateReviewCart = updateReviewCart;
+
+        if(activity!=null){
+            sessionManager = new SessionManager(activity);
+        }
     }
 
     public void updateIsFavData(int adapterPosition) {
@@ -60,8 +66,6 @@ public class RvFreebiesADP extends RecyclerView.Adapter<RvFreebiesADP.MyViewHold
         freebies_arraylist.get(adapterPosition).setIn_cart_qty(Integer.parseInt(quantity));
         notifyDataSetChanged();
     }
-
-
 
     public interface AddtoFavouriteFree {
         void addToFavouriteFree(String product_id, Boolean isclick, int position);
@@ -84,9 +88,11 @@ public class RvFreebiesADP extends RecyclerView.Adapter<RvFreebiesADP.MyViewHold
             super(itemView.getRoot());
             binding = itemView;
 
-            binding.topMain.setOnClickListener(new View.OnClickListener() {
+            binding.consRight.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
+                    sessionManager.setIntegerValue(Constant.freebies_position, getAdapterPosition());
+
                     Intent intent = new Intent(activity, ProductDetailActivity.class);
                     intent.putExtra(Constant.PRODUCT_ID, freebies_arraylist.get(getAdapterPosition()).getProduct_id());
                     intent.putExtra(Constant.PRODUCT_NAME, freebies_arraylist.get(getAdapterPosition()).getName());
@@ -261,7 +267,6 @@ public class RvFreebiesADP extends RecyclerView.Adapter<RvFreebiesADP.MyViewHold
 
         holder.binding.tvBuyOne.setText(buy_one);
         holder.binding.tvGetOne.setText(get_one);
-
 
         Log.e("TAG", "onBindViewHolder: IS_FAV:::::"+freebies_arraylist.get(position).getIs_favorite());
         if (freebies_arraylist.get(position).getIs_favorite() == 1) {
