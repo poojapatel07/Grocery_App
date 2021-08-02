@@ -54,7 +54,7 @@ public class MyOrderActivity extends BaseActivity {
         LinearLayoutManager manager = new LinearLayoutManager(this);
         binding.rvMyOrder.setLayoutManager(manager);
 
-        callAllMyOrderAPI(PAGE_NO, true);
+//        callAllMyOrderAPI(PAGE_NO, true);
 
         binding.rvMyOrder.setOnScrollListener(new EndlessRecyclerOnScrollListenerNewGrid(manager) {
             @Override
@@ -68,7 +68,12 @@ public class MyOrderActivity extends BaseActivity {
 
     @Override
     protected void onResume() {
-        
+        if(myOrderlist.size()!=0){
+            myOrderlist.clear();
+            adp = null;
+        }
+        PAGE_NO = 0;
+        callAllMyOrderAPI(PAGE_NO, true);
         super.onResume();
     }
 

@@ -9,6 +9,7 @@ import android.app.Dialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.drawable.ColorDrawable;
+import android.icu.text.Transliterator;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
 import android.util.Log;
@@ -36,6 +37,7 @@ import com.i2c.groceryapp.retrofit.response.ListResponse;
 import com.i2c.groceryapp.utils.BaseActivity;
 import com.i2c.groceryapp.utils.CommonUtils;
 import com.i2c.groceryapp.utils.Constant;
+import com.i2c.groceryapp.utils.EndlessRecyclerOnScrollListenerNewGrid;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -71,7 +73,7 @@ public class BrandCompanyProductListActivity extends BaseActivity implements
     private TextView TXT_MOQ;
     RvBrandCompnayProductMOQListADP adp_moq;
     private String Other_margin_Qnty = "0";
-
+    private LinearLayoutManager manager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -87,7 +89,7 @@ public class BrandCompanyProductListActivity extends BaseActivity implements
     private void setUpControls() {
         binding.rvBrandCompanyProduct.setHasFixedSize(false);
 
-        LinearLayoutManager manager = new LinearLayoutManager(this);
+         manager = new LinearLayoutManager(this);
         binding.rvBrandCompanyProduct.setLayoutManager(manager);
 
         binding.ivBack.setOnClickListener(new View.OnClickListener() {
@@ -171,10 +173,11 @@ public class BrandCompanyProductListActivity extends BaseActivity implements
     }
 
     @Override
-    public void passvalueProductDetail(int pos, String product_image, String product_id, 
+    public void passvalueProductDetail(int pos, int isFav, String product_image, String product_id,
                                        String product_name, String product_mrp, 
                                        float product_retail, String margin, float TotalPrice,
                                        int cartQuanty, int In_Cart_qunty, String min_order_qunaty) {
+
         Intent intent = new Intent(this, ProductDetailActivity.class);
         intent.putExtra(Constant.PRODUCT_IMAGE, product_image);
         intent.putExtra(Constant.PRODUCT_ID, product_id);
@@ -184,7 +187,7 @@ public class BrandCompanyProductListActivity extends BaseActivity implements
         intent.putExtra(Constant.IS_CART, In_Cart_qunty);
         intent.putExtra(Constant.PRODUCT_MOQ, min_order_qunaty);
         intent.putExtra(Constant.PRODUCT_OTHER_MARGIN, Other_margin_Qnty);
-        intent.putExtra(Constant.PRODUCT_ISFAVOURITE, 1);
+        intent.putExtra(Constant.PRODUCT_ISFAVOURITE, isFav);
 
         Log.e("TAG", "passvalueProductDetail: Other_margin_Qnty:::::::::" + Other_margin_Qnty);
         if (Other_margin_Qnty.equals("0")) {
@@ -570,6 +573,16 @@ public class BrandCompanyProductListActivity extends BaseActivity implements
                 BrandCompanyProductListActivity.this);
         rvMOQList.setAdapter(adp_moq);
 
+    }
+
+
+    @Override
+    protected void onResume() {
+        if(brandCompanyList.size()!=0){
+            brandCompanyList.clear();
+        }
+        callAllBrandCompanyProductAPI(true);
+        super.onResume();
     }
     
 }

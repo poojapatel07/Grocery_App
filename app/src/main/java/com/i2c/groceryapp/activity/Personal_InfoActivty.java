@@ -149,6 +149,9 @@ public class Personal_InfoActivty extends BaseActivity implements DatePickerDial
                         showToast(response.body().getMessage());
                         onBackPressed();
 
+                        sessionManager.setStringValue(Constant.PROFILE_SHIPPING_ADD, binding.etShippingAdd.getText().toString());
+                        sessionManager.setStringValue(Constant.PROFILE_BILLING_ADD, binding.etBillingAdd.getText().toString());
+
                     } else if (response.body().getSuccess().equals("0")) {
                         showToast(response.body().getMessage());
                     } else {

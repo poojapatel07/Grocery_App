@@ -493,7 +493,8 @@ public class MyFavouriteActivity extends BaseActivity implements
     public void passvalueProductDetail(int product_pos, String product_image, String product_id,
                                        String product_name, String product_mrp, float product_retail,
                                        String margin, float TotalPrice,
-                                       int cartQuanty, String In_Cart_qunty, String min_order_qunaty) {
+                                       int cartQuanty, String In_Cart_qunty,
+                                       String min_order_qunaty) {
 
         Intent intent = new Intent(this, ProductDetailActivity.class);
         intent.putExtra(Constant.PRODUCT_IMAGE, product_image);
@@ -501,7 +502,7 @@ public class MyFavouriteActivity extends BaseActivity implements
         intent.putExtra(Constant.PRODUCT_NAME, product_name);
         intent.putExtra(Constant.PRODUCT_MRP, product_mrp);
         intent.putExtra(Constant.PRODUCT_IN_CART_QNTY, cartQuanty);
-        intent.putExtra(Constant.IS_CART, In_Cart_qunty);
+        intent.putExtra(Constant.IS_CART, Integer.parseInt(In_Cart_qunty));
         intent.putExtra(Constant.PRODUCT_MOQ, min_order_qunaty);
         intent.putExtra(Constant.PRODUCT_OTHER_MARGIN, Other_margin_Qnty);
         intent.putExtra(Constant.PRODUCT_ISFAVOURITE, 1);

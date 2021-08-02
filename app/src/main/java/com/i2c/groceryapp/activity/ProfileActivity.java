@@ -9,8 +9,10 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
@@ -43,6 +45,8 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.List;
 
 import id.zelory.compressor.Compressor;
@@ -75,10 +79,27 @@ public class ProfileActivity extends BaseActivity {
     }
 
     private void setUpControls() {
-        if (sessionManager.isKeyExist(Constant.LOGIN_USER_DATA)) {
-            if (!sessionManager.getLoginData().getLogo().equalsIgnoreCase("")) {
+            if (sessionManager.isKeyExist(Constant.PROFILE_IMAGE)) {
                 Glide.with(this)
-                        .load(sessionManager.getLoginData().getLogo())
+                        .load(sessionManager.getStringValue(Constant.PROFILE_IMAGE))
+                        .listener(new RequestListener<Drawable>() {
+                            @Override
+                            public boolean onLoadFailed(@Nullable GlideException e, Object model, Target<Drawable> target, boolean isFirstResource) {
+                                binding.pbImage.setVisibility(View.GONE);
+                                return false;
+                            }
+
+                            @Override
+                            public boolean onResourceReady(Drawable resource, Object model, Target<Drawable> target,
+                                                           DataSource dataSource, boolean isFirstResource) {
+                                binding.pbImage.setVisibility(View.GONE);
+                                return false;
+                            }
+                        })
+                        .into(binding.ivProfileImage);
+            }else{
+                Glide.with(this)
+                        .load(R.mipmap.ic_launcher)
                         .listener(new RequestListener<Drawable>() {
                             @Override
                             public boolean onLoadFailed(@Nullable GlideException e, Object model, Target<Drawable> target, boolean isFirstResource) {
@@ -101,9 +122,7 @@ public class ProfileActivity extends BaseActivity {
             Log.e(TAG, "setUpControls: ALL::: "+sessionManager.getLoginData());
             if(sessionManager.getLoginData().getShipping_address()!=null){
                 binding.etShippingAdd.setText(sessionManager.getLoginData().getShipping_address());
-            }
         }
-
 
         if (sessionManager.getLoginData().getUser_type().equals("0")) {
             /* user type = 0 customer*/
@@ -362,7 +381,9 @@ public class ProfileActivity extends BaseActivity {
 
                     if (response.body().getSuccess().equals("1")) {
                         sessionManager.saveLoginData(response.body().getData());
+                        sessionManager.setStringValue(Constant.PROFILE_IMAGE, response.body().getData().getLogo());
                         showToast(response.body().getMessage());
+
 
                     } else if (response.body().getSuccess().equals("0")) {
                         showToast(response.body().getMessage());

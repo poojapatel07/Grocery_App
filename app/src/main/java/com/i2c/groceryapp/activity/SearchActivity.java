@@ -12,6 +12,8 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.KeyEvent;
@@ -129,10 +131,6 @@ public class SearchActivity extends BaseActivity implements
             }
         });
 
-        MAIN_POS = 0;
-        callAllSearchProductAPI(true,PAGE_POS, "", SORT_BY);
-
-
        binding.rvSearchProduct.addOnScrollListener(new RecyclerView.OnScrollListener() {
             @Override
             public void onScrollStateChanged(@NonNull RecyclerView recyclerView, int newState) {
@@ -185,12 +183,44 @@ public class SearchActivity extends BaseActivity implements
 
                     Search_flag = true;
                     NEW_SEARCH++;
+
+                    if(allProductList.size()!=0){
+                        allProductList.clear();
+                    }
                     callAllSearchProductAPI(true,SEARCH_PAGE_POS,
                             binding.etSearchProduct.getText().toString(), SORT_BY);
                     return true;
                 }
                 return false;
             }
+        });
+
+        binding.etSearchProduct.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void onTextChanged(CharSequence cs, int arg1, int arg2, int arg3) {
+                if(cs.toString().length() == 0){
+                    MAIN_POS = 0;
+
+                    if(allProductList.size()!=0){
+                        allProductList.clear();
+                        Log.e("TAG", "onResume: remaing::::"+allProductList.size());
+                    }
+
+                    if(adp!=null){
+                        adp = null;
+                    }
+
+                    PAGE_POS = 0;
+                    callAllSearchProductAPI(true, PAGE_POS, "", SORT_BY);
+                }
+            }
+
+            @Override
+            public void beforeTextChanged(CharSequence arg0, int arg1, int arg2, int arg3) { }
+
+            @Override
+            public void afterTextChanged(Editable arg0) { }
+
         });
 
     }
@@ -757,5 +787,23 @@ public class SearchActivity extends BaseActivity implements
                 allProductList.get(POSTION).getOther_margin_list(), map,
                 SearchActivity.this);
         rvMOQList.setAdapter(adp_moq);
+    }
+
+    @Override
+    protected void onResume() {
+        MAIN_POS = 0;
+
+        if(allProductList.size()!=0){
+            allProductList.clear();
+            Log.e("TAG", "onResume: remaing::::"+allProductList.size());
+        }
+
+        if(adp!=null){
+            adp = null;
+        }
+
+        PAGE_POS = 0;
+        callAllSearchProductAPI(true, PAGE_POS, "", SORT_BY);
+        super.onResume();
     }
 }

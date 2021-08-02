@@ -10,6 +10,7 @@ import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.databinding.DataBindingUtil;
@@ -86,7 +87,7 @@ public class RvBrandCompanyProductADP extends RecyclerView.Adapter<RvBrandCompan
     }
 
     public interface PassValue_ProductDeatlis{
-        void passvalueProductDetail(int pos,String product_image, String product_id,
+        void passvalueProductDetail(int pos, int is_fav, String product_image, String product_id,
                                     String product_name, String product_mrp, float product_retail,
                                     String margin, float TotalPrice,
                                     int cartQuanty, int In_Cart_qunty, String min_order_qunaty);
@@ -130,47 +131,55 @@ public class RvBrandCompanyProductADP extends RecyclerView.Adapter<RvBrandCompan
             binding.rlAddCart.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    binding.rlQuntity.setVisibility(View.VISIBLE);
-                    binding.rlAddCart.setVisibility(View.GONE);
+                    if (!favourite_list.get(getAdapterPosition()).getMin_order_qty().equals("0") ||
+                            !binding.tvMOQ.getText().toString().equals("0") ||
+                            !binding.tvTotalPrice.getText().toString().equals("0")
+                    ) {
+                        binding.rlQuntity.setVisibility(View.VISIBLE);
+                        binding.rlAddCart.setVisibility(View.GONE);
 
-                    add_moq=0;
-                    FINAL_PRICE=0;
+                        add_moq = 0;
+                        FINAL_PRICE = 0;
 
-                    if (favourite_list.get(getAdapterPosition()).getOther_margin_list().size()!=0) {
-                        first_moq = Integer.valueOf(binding.tvProductMOQ.getText().toString());
-                        binding.tvCartQuny.setText(String.valueOf(binding.tvProductMOQ.getText().toString()));
+                        if (favourite_list.get(getAdapterPosition()).getOther_margin_list().size() != 0) {
+                            first_moq = Integer.valueOf(binding.tvProductMOQ.getText().toString());
+                            binding.tvCartQuny.setText(String.valueOf(binding.tvProductMOQ.getText().toString()));
 
-                        addToReviewCartList.addtoReviewCartList(
-                                favourite_list.get(getAdapterPosition()).getProduct_id(),
-                                binding.tvProductMOQ.getText().toString(), getAdapterPosition());
+                            addToReviewCartList.addtoReviewCartList(
+                                    favourite_list.get(getAdapterPosition()).getProduct_id(),
+                                    binding.tvProductMOQ.getText().toString(), getAdapterPosition());
 
-                        if (Integer.parseInt(favourite_list.get(getAdapterPosition()).getIs_free_product())!=0) {
-                            free = Integer.parseInt(binding.tvProductMOQ.getText().toString()) *
-                                    Integer.parseInt(favourite_list.get(getAdapterPosition()).getPro_qty_for_free());
+                            if (Integer.parseInt(favourite_list.get(getAdapterPosition()).getIs_free_product()) != 0) {
+                                free = Integer.parseInt(binding.tvProductMOQ.getText().toString()) *
+                                        Integer.parseInt(favourite_list.get(getAdapterPosition()).getPro_qty_for_free());
+                            }
+
+                        } else {
+                            first_moq = Integer.valueOf(binding.tvMOQ.getText().toString());
+                            binding.tvCartQuny.setText(String.valueOf(binding.tvMOQ.getText().toString()));
+
+                            addToReviewCartList.addtoReviewCartList(
+                                    favourite_list.get(getAdapterPosition()).getProduct_id(),
+                                    binding.tvMOQ.getText().toString(), getAdapterPosition());
+
+                            if (Integer.parseInt(favourite_list.get(getAdapterPosition()).getIs_free_product()) != 0) {
+                                free = Integer.valueOf(binding.tvMOQ.getText().toString()) *
+                                        Integer.parseInt(favourite_list.get(getAdapterPosition()).getPro_qty_for_free());
+                            }
                         }
 
-                    }else {
-                        first_moq = Integer.valueOf(binding.tvMOQ.getText().toString());
-                        binding.tvCartQuny.setText(String.valueOf(binding.tvMOQ.getText().toString()));
-
-                        addToReviewCartList.addtoReviewCartList(
-                                favourite_list.get(getAdapterPosition()).getProduct_id(),
-                                binding.tvMOQ.getText().toString(), getAdapterPosition());
-
-                        if (Integer.parseInt(favourite_list.get(getAdapterPosition()).getIs_free_product())!=0) {
-                            free = Integer.valueOf(binding.tvMOQ.getText().toString()) *
-                                    Integer.parseInt(favourite_list.get(getAdapterPosition()).getPro_qty_for_free());
+                        if (Integer.parseInt(favourite_list.get(getAdapterPosition()).getIs_free_product()) != 0) {
+                            free_product = free / Integer.parseInt(favourite_list.get(getAdapterPosition()).getMin_qty_for_free());
                         }
-                    }
 
-                    if (Integer.parseInt(favourite_list.get(getAdapterPosition()).getIs_free_product())!=0) {
-                        free_product = free / Integer.parseInt(favourite_list.get(getAdapterPosition()).getMin_qty_for_free());
-                    }
+                        binding.tvFree.setText(String.valueOf(free_product));
+                        Price = favourite_list.get(getAdapterPosition()).getRetail_price();
+                        STR_PRICE = Price * first_moq;
+                        binding.tvTotalPrice.setText(String.valueOf(STR_PRICE));
 
-                    binding.tvFree.setText(String.valueOf(free_product));
-                    Price = favourite_list.get(getAdapterPosition()).getRetail_price();
-                    STR_PRICE = Price*first_moq;
-                    binding.tvTotalPrice.setText(String.valueOf(STR_PRICE));
+                }else {
+                        Toast.makeText(activity, "Not added in cart", Toast.LENGTH_SHORT).show();
+                }
                 }
             });
 
@@ -289,6 +298,7 @@ public class RvBrandCompanyProductADP extends RecyclerView.Adapter<RvBrandCompan
 
                         passValue_productDeatlis.passvalueProductDetail(
                                 getAdapterPosition(),
+                                favourite_list.get(getAdapterPosition()).getIs_favorite(),
                                 favourite_list.get(getAdapterPosition()).getImage(),
                                 favourite_list.get(getAdapterPosition()).getProduct_id(),
                                 favourite_list.get(getAdapterPosition()).getName(),
@@ -304,6 +314,7 @@ public class RvBrandCompanyProductADP extends RecyclerView.Adapter<RvBrandCompan
 
                         passValue_productDeatlis.passvalueProductDetail(
                                 getAdapterPosition(),
+                                favourite_list.get(getAdapterPosition()).getIs_favorite(),
                                 favourite_list.get(getAdapterPosition()).getImage(),
                                 favourite_list.get(getAdapterPosition()).getProduct_id(),
                                 favourite_list.get(getAdapterPosition()).getName(),

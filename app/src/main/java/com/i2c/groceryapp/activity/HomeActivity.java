@@ -78,7 +78,8 @@ public class HomeActivity extends BaseActivity implements RvMenuADP.OpenFragment
         binding.tabs.getTabAt(2).setIcon(R.drawable.ic_offer);
         binding.tabs.getTabAt(3).setIcon(R.drawable.ic_cart);
 
-        binding.viewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(binding.tabs));
+        binding.viewPager.addOnPageChangeListener(new
+                TabLayout.TabLayoutOnPageChangeListener(binding.tabs));
 
         binding.tabs.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
@@ -129,11 +130,11 @@ public class HomeActivity extends BaseActivity implements RvMenuADP.OpenFragment
 
     private void serDrawerLayout() {
         binding.header.tvUserName.setText(sessionManager.getLoginData().getName());
-        Glide.with(this)
-                .load(sessionManager.getLoginData().getLogo())
-                .placeholder(R.mipmap.ic_launcher_round)
-                .error(R.mipmap.ic_launcher_round)
-                .into(binding.header.ivProfile);
+//        Glide.with(this)
+//                .load(sessionManager.getLoginData().getLogo())
+//                .placeholder(R.mipmap.ic_launcher_round)
+//                .error(R.mipmap.ic_launcher_round)
+//                .into(binding.header.ivProfile);
 
         binding.rvMenuList.setHasFixedSize(false);
 
@@ -258,6 +259,24 @@ public class HomeActivity extends BaseActivity implements RvMenuADP.OpenFragment
                dismissCustomLoader();
             }
         });
+    }
+
+    @Override
+    protected void onResume() {
+        if(sessionManager.isKeyExist(Constant.PROFILE_IMAGE)){
+            Glide.with(this)
+                    .load(sessionManager.getStringValue(Constant.PROFILE_IMAGE))
+                    .placeholder(R.mipmap.ic_launcher_round)
+                    .error(R.mipmap.ic_launcher_round)
+                    .into(binding.header.ivProfile);
+        }else{
+            Glide.with(this)
+                    .load(sessionManager.getLoginData().getLogo())
+                    .placeholder(R.mipmap.ic_launcher_round)
+                    .error(R.mipmap.ic_launcher_round)
+                    .into(binding.header.ivProfile);
+        }
+        super.onResume();
     }
 }
 

@@ -10,6 +10,7 @@ import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.databinding.DataBindingUtil;
@@ -130,47 +131,55 @@ public class RvTradeOfferADP extends RecyclerView.Adapter<RvTradeOfferADP.MyView
             binding.rlAddCart.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    binding.rlQuntity.setVisibility(View.VISIBLE);
-                    binding.rlAddCart.setVisibility(View.GONE);
+                    if (!freebies_arraylist.get(getAdapterPosition()).getMin_order_qty().equals("0") ||
+                            !binding.tvMOQ.getText().toString().equals("0") ||
+                            !binding.tvTotalPrice.getText().toString().equals("0")
+                    ) {
+                        binding.rlQuntity.setVisibility(View.VISIBLE);
+                        binding.rlAddCart.setVisibility(View.GONE);
 
-                    add_moq=0;
-                    FINAL_PRICE=0;
+                        add_moq = 0;
+                        FINAL_PRICE = 0;
 
-                    if (freebies_arraylist.get(getAdapterPosition()).getOther_margin_list().size()!=0) {
-                        first_moq = Integer.valueOf(binding.tvProductMOQ.getText().toString());
-                        binding.tvCartQuny.setText(String.valueOf(binding.tvProductMOQ.getText().toString()));
+                        if (freebies_arraylist.get(getAdapterPosition()).getOther_margin_list().size() != 0) {
+                            first_moq = Integer.valueOf(binding.tvProductMOQ.getText().toString());
+                            binding.tvCartQuny.setText(String.valueOf(binding.tvProductMOQ.getText().toString()));
 
-                        addToReviewCartList.addtoReviewCartList(freebies_arraylist.get(getAdapterPosition()).getProduct_id(),
-                                binding.tvProductMOQ.getText().toString(), getAdapterPosition());
+                            addToReviewCartList.addtoReviewCartList(freebies_arraylist.get(getAdapterPosition()).getProduct_id(),
+                                    binding.tvProductMOQ.getText().toString(), getAdapterPosition());
 
-                        if (Integer.parseInt(freebies_arraylist.get(getAdapterPosition()).getIs_free_product())!=0) {
-                            free = Integer.parseInt(binding.tvProductMOQ.getText().toString()) *
-                                    Integer.parseInt(freebies_arraylist.get(getAdapterPosition()).getPro_qty_for_free());
+                            if (Integer.parseInt(freebies_arraylist.get(getAdapterPosition()).getIs_free_product()) != 0) {
+                                free = Integer.parseInt(binding.tvProductMOQ.getText().toString()) *
+                                        Integer.parseInt(freebies_arraylist.get(getAdapterPosition()).getPro_qty_for_free());
+                            }
+
+                        } else {
+                            first_moq = Integer.valueOf(binding.tvMOQ.getText().toString());
+                            binding.tvCartQuny.setText(String.valueOf(binding.tvMOQ.getText().toString()));
+
+                            addToReviewCartList.addtoReviewCartList(
+                                    freebies_arraylist.get(getAdapterPosition()).getProduct_id(),
+                                    binding.tvMOQ.getText().toString(), getAdapterPosition());
+
+                            if (Integer.parseInt(freebies_arraylist.get(getAdapterPosition()).getIs_free_product()) != 0) {
+                                free = Integer.valueOf(binding.tvMOQ.getText().toString()) *
+                                        Integer.parseInt(freebies_arraylist.get(getAdapterPosition()).getPro_qty_for_free());
+                            }
                         }
 
-                    }else {
-                        first_moq = Integer.valueOf(binding.tvMOQ.getText().toString());
-                        binding.tvCartQuny.setText(String.valueOf(binding.tvMOQ.getText().toString()));
-
-                        addToReviewCartList.addtoReviewCartList(
-                                freebies_arraylist.get(getAdapterPosition()).getProduct_id(),
-                                binding.tvMOQ.getText().toString(), getAdapterPosition());
-
-                        if (Integer.parseInt(freebies_arraylist.get(getAdapterPosition()).getIs_free_product())!=0) {
-                            free = Integer.valueOf(binding.tvMOQ.getText().toString()) *
-                                    Integer.parseInt(freebies_arraylist.get(getAdapterPosition()).getPro_qty_for_free());
+                        if (Integer.parseInt(freebies_arraylist.get(getAdapterPosition()).getIs_free_product()) != 0) {
+                            free_product = free / Integer.parseInt(freebies_arraylist.get(getAdapterPosition()).getMin_qty_for_free());
                         }
-                    }
 
-                    if (Integer.parseInt(freebies_arraylist.get(getAdapterPosition()).getIs_free_product())!=0) {
-                        free_product = free / Integer.parseInt(freebies_arraylist.get(getAdapterPosition()).getMin_qty_for_free());
+                        binding.tvFree.setText(String.valueOf(free_product));
+                        Price = freebies_arraylist.get(getAdapterPosition()).getRetail_price();
+                        STR_PRICE = Price * first_moq;
+                        binding.tvTotalPrice.setText(String.valueOf(STR_PRICE));
+                    } else {
+                        Toast.makeText(activity, "Not added in cart", Toast.LENGTH_SHORT).show();
                     }
-
-                    binding.tvFree.setText(String.valueOf(free_product));
-                    Price = freebies_arraylist.get(getAdapterPosition()).getRetail_price();
-                    STR_PRICE = Price*first_moq;
-                    binding.tvTotalPrice.setText(String.valueOf(STR_PRICE));
                 }
+
             });
 
 
@@ -208,9 +217,6 @@ public class RvTradeOfferADP extends RecyclerView.Adapter<RvTradeOfferADP.MyView
                     updateReviewCart.updateReviewCart(freebies_arraylist.get(getAdapterPosition()).getProduct_id(),
                             binding.tvCartQuny.getText().toString());
 
-//                    Utility.BADGE_PRICE = Utility.BADGE_PRICE + STR;
-//                    HomeActivity.showBadge(activity, HomeActivity.bottomNavigationView, R.id.nav_Checkout,
-//                            Utility.BADGE_PRICE);
                 }
             });
 

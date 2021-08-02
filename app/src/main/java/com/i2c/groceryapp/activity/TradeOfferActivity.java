@@ -124,7 +124,7 @@ RvTradeOfferADP.AddToReviewCartList, RvTradeOfferADP.OpenMOQDialog,
         }
 
         POSTION = 0;
-        callTreadOfferAPI(Trade_position, true);
+        callTreadOfferAPI(POSTION, true);
 
         binding.rvTredeOffers.setOnScrollListener(new EndlessRecyclerOnScrollListenerNewGrid(manager) {
             @Override

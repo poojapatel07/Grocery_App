@@ -10,6 +10,7 @@ import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.databinding.DataBindingUtil;
@@ -82,7 +83,6 @@ public class RvMyFavouriteADP extends RecyclerView.Adapter<RvMyFavouriteADP.MyVi
         void updateReviewCart(String product_id, String update_quantity);
     }
 
-
     public class MyViewHolder extends RecyclerView.ViewHolder {
          ItemFreebiesBinding binding;
 
@@ -103,47 +103,54 @@ public class RvMyFavouriteADP extends RecyclerView.Adapter<RvMyFavouriteADP.MyVi
             binding.rlAddCart.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    binding.rlQuntity.setVisibility(View.VISIBLE);
-                    binding.rlAddCart.setVisibility(View.GONE);
+                    if (!favourite_list.get(getAdapterPosition()).getProduct_details().getMin_order_qty().equals("0") ||
+                            !binding.tvMOQ.getText().toString().equals("0") ||
+                            !binding.tvTotalPrice.getText().toString().equals("0")
+                    ) {
+                        binding.rlQuntity.setVisibility(View.VISIBLE);
+                        binding.rlAddCart.setVisibility(View.GONE);
 
-                    add_moq=0;
-                    FINAL_PRICE=0;
+                        add_moq = 0;
+                        FINAL_PRICE = 0;
 
-                    if (favourite_list.get(getAdapterPosition()).getProduct_details().getOther_margin_list().size()!=0) {
-                        first_moq = Integer.valueOf(binding.tvProductMOQ.getText().toString());
-                        binding.tvCartQuny.setText(String.valueOf(binding.tvProductMOQ.getText().toString()));
+                        if (favourite_list.get(getAdapterPosition()).getProduct_details().getOther_margin_list().size() != 0) {
+                            first_moq = Integer.valueOf(binding.tvProductMOQ.getText().toString());
+                            binding.tvCartQuny.setText(String.valueOf(binding.tvProductMOQ.getText().toString()));
 
-                        addToReviewCartList.addtoReviewCartList(
-                                favourite_list.get(getAdapterPosition()).getProduct_id(),
-                                binding.tvProductMOQ.getText().toString(),getAdapterPosition());
+                            addToReviewCartList.addtoReviewCartList(
+                                    favourite_list.get(getAdapterPosition()).getProduct_id(),
+                                    binding.tvProductMOQ.getText().toString(), getAdapterPosition());
 
-                        if (Integer.parseInt(favourite_list.get(getAdapterPosition()).getProduct_details().getIs_free_product())!=0) {
-                            free = Integer.parseInt(binding.tvProductMOQ.getText().toString()) *
-                                    Integer.parseInt(favourite_list.get(getAdapterPosition()).getProduct_details().getPro_qty_for_free());
+                            if (Integer.parseInt(favourite_list.get(getAdapterPosition()).getProduct_details().getIs_free_product()) != 0) {
+                                free = Integer.parseInt(binding.tvProductMOQ.getText().toString()) *
+                                        Integer.parseInt(favourite_list.get(getAdapterPosition()).getProduct_details().getPro_qty_for_free());
+                            }
+
+                        } else {
+                            first_moq = Integer.valueOf(binding.tvMOQ.getText().toString());
+                            binding.tvCartQuny.setText(String.valueOf(binding.tvMOQ.getText().toString()));
+
+                            addToReviewCartList.addtoReviewCartList(
+                                    favourite_list.get(getAdapterPosition()).getProduct_id(),
+                                    binding.tvMOQ.getText().toString(), getAdapterPosition());
+
+                            if (Integer.parseInt(favourite_list.get(getAdapterPosition()).getProduct_details().getIs_free_product()) != 0) {
+                                free = Integer.valueOf(binding.tvMOQ.getText().toString()) *
+                                        Integer.parseInt(favourite_list.get(getAdapterPosition()).getProduct_details().getPro_qty_for_free());
+                            }
                         }
 
-                    }else {
-                        first_moq = Integer.valueOf(binding.tvMOQ.getText().toString());
-                        binding.tvCartQuny.setText(String.valueOf(binding.tvMOQ.getText().toString()));
-
-                        addToReviewCartList.addtoReviewCartList(
-                                favourite_list.get(getAdapterPosition()).getProduct_id(),
-                                binding.tvMOQ.getText().toString(), getAdapterPosition());
-
-                        if (Integer.parseInt(favourite_list.get(getAdapterPosition()).getProduct_details().getIs_free_product())!=0) {
-                            free = Integer.valueOf(binding.tvMOQ.getText().toString()) *
-                                    Integer.parseInt(favourite_list.get(getAdapterPosition()).getProduct_details().getPro_qty_for_free());
+                        if (Integer.parseInt(favourite_list.get(getAdapterPosition()).getProduct_details().getIs_free_product()) != 0) {
+                            free_product = free / Integer.parseInt(favourite_list.get(getAdapterPosition()).getProduct_details().getMin_qty_for_free());
                         }
-                    }
 
-                    if (Integer.parseInt(favourite_list.get(getAdapterPosition()).getProduct_details().getIs_free_product())!=0) {
-                        free_product = free / Integer.parseInt(favourite_list.get(getAdapterPosition()).getProduct_details().getMin_qty_for_free());
+                        binding.tvFree.setText(String.valueOf(free_product));
+                        Price = favourite_list.get(getAdapterPosition()).getProduct_details().getRetail_price();
+                        STR_PRICE = Price * first_moq;
+                        binding.tvTotalPrice.setText(String.valueOf(STR_PRICE));
+                    } else {
+                        Toast.makeText(activity, "Not added in cart", Toast.LENGTH_SHORT).show();
                     }
-
-                    binding.tvFree.setText(String.valueOf(free_product));
-                    Price = favourite_list.get(getAdapterPosition()).getProduct_details().getRetail_price();
-                    STR_PRICE = Price*first_moq;
-                    binding.tvTotalPrice.setText(String.valueOf(STR_PRICE));
                 }
             });
 
@@ -371,7 +378,7 @@ public class RvMyFavouriteADP extends RecyclerView.Adapter<RvMyFavouriteADP.MyVi
         holder.binding.tvBuyOne.setText(buy_one);
         holder.binding.tvGetOne.setText(get_one);
 
-        if (favourite_list.get(position).getIn_cart_qty() == "0") {
+        if (favourite_list.get(position).getIn_cart_qty().equals("0")) {
             holder.binding.rlAddCart.setVisibility(View.VISIBLE);
             holder.binding.rlQuntity.setVisibility(View.GONE);
             holder.binding.tvTotalPrice.setText("0");
@@ -380,7 +387,7 @@ public class RvMyFavouriteADP extends RecyclerView.Adapter<RvMyFavouriteADP.MyVi
             holder.binding.rlAddCart.setVisibility(View.GONE);
             holder.binding.rlQuntity.setVisibility(View.VISIBLE);
 
-            holder.binding.tvCartQuny.setText(String.valueOf(favourite_list.get(position).getIn_cart_qty()));
+            holder.binding.tvCartQuny.setText(favourite_list.get(position).getIn_cart_qty());
 
             float total_price = Float.parseFloat(holder.binding.tvReatil.getText().toString()) *
                     Integer.valueOf(holder.binding.tvCartQuny.getText().toString());

@@ -396,4 +396,21 @@ public class PaymentActivity extends BaseActivity implements VolleyResponseListe
     }
 
 
+    @Override
+    protected void onResume() {
+        if (sessionManager.isKeyExist(Constant.PROFILE_SHIPPING_ADD)){
+            Shipping_add = sessionManager.getStringValue(Constant.PROFILE_SHIPPING_ADD);
+        }
+
+        if (sessionManager.isKeyExist(Constant.PROFILE_BILLING_ADD)){
+            Billing_add = sessionManager.getStringValue(Constant.PROFILE_BILLING_ADD);
+        }
+
+        if (Shipping_add==null||Billing_add==null){
+            binding.llNoAddress.setVisibility(View.VISIBLE);
+        }else {
+            binding.llNoAddress.setVisibility(View.GONE);
+        }
+        super.onResume();
+    }
 }
